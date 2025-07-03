@@ -58,7 +58,7 @@ def build_executable():
         sys.executable, "-m", "nuitka",
         "--standalone",
         "--enable-plugin=pyside6",
-        f"--include-qt-plugins={','.join(qt_plugins)}"
+        f"--include-qt-plugins={','.join(qt_plugins)}",
         "--report=compilation-report.xml",
         f"--output-dir={Path(__file__).parent / 'dist'}",
     ]
