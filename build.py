@@ -59,7 +59,6 @@ def build_executable():
         "--standalone",
         "--deployment",
         "--no-debug-immortal-assumptions",
-        "--plugin-enable=upx",
         "--enable-plugin=pyside6",
         f"--include-qt-plugins={','.join(qt_plugins)}",
         "--report=compilation-report.xml",

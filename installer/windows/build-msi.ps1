@@ -30,6 +30,12 @@ if (Test-Path $numpyDir) {
     Write-Host " - Removed numpy directory."
 }
 
+$upxPath = (Get-Command -ErrorAction SilentlyContinue upx).Source
+Get-ChildItem -Path $SourceDir -Recurse -Filter "*.exe" | ForEach-Object {
+if ($upxPath) { & $upxPath --best --force "$($_.FullName)" }
+else {
+Write-Warning "UPX not found or error, skipping compression for $($_.FullName)" }
+}
 
 New-Item -ItemType Directory -Force -Path $AbsoluteOutputDir | Out-Null
 
