@@ -57,7 +57,8 @@ def build_executable():
     nuitka_args = [
         sys.executable, "-m", "nuitka",
         "--standalone",
-        "--mingw64",
+        "--deployment",
+        "--no-debug-immortal-assumptions",
         "--plugin-enable=upx",
         "--enable-plugin=pyside6",
         f"--include-qt-plugins={','.join(qt_plugins)}",
