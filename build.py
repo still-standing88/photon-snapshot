@@ -8,11 +8,8 @@ from pathlib import Path
 qt_plugins = [
     "platforms",
     "styles",
-    "iconengines/qsvgicon",
-    "imageformats/qgif",
-    "imageformats/qico",
-    "imageformats/qjpeg",
-    "imageformats/qpng"     
+    "iconengines",
+    "imageformats",
 ]
 
 def compile_resources():
@@ -61,7 +58,7 @@ def build_executable():
         sys.executable, "-m", "nuitka",
         "--standalone",
         "--enable-plugin=pyside6",
-        f"--pyside6-plugin-options=qt-plugins={','.join(qt_plugins)}",
+        f"--include-qt-plugins={','.join(qt_plugins)}"
         "--report=compilation-report.xml",
         f"--output-dir={Path(__file__).parent / 'dist'}",
     ]
@@ -76,7 +73,7 @@ def build_executable():
         if icon_file.exists():
             nuitka_args.append(f"--windows-icon-from-ico={icon_file}")
     
-    elif current_platform == "darwin":  # macOS
+    elif current_platform == "darwin":
         icon_file = assets_dir / "photon-snapshot.icns"
         nuitka_args.extend([
             "--macos-create-app-bundle",
