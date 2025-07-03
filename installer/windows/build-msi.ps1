@@ -24,10 +24,16 @@ foreach ($dll in $unwantedDlls) {
     }
 }
 
+$numpyDir = Join-Path $AbsoluteSourceDir "numpy"
+if (Test-Path $numpyDir) {
+    Remove-Item -Recurse -Force $numpyDir
+    Write-Host " - Removed numpy directory."
+}
+
+
 New-Item -ItemType Directory -Force -Path $AbsoluteOutputDir | Out-Null
 
 $mainWxsFile = "installer/windows/product.wxs"
-(Get-Content $mainWxsFile -Raw) -creplace 'Version="[^"]*"', "Version=`"$Version`"" | Out-File $mainWxsFile -Encoding UTF8
 
 & heat.exe dir $AbsoluteSourceDir -cg HarvestedFiles -gg -scom -sreg -sfrag -srd -dr INSTALLFOLDER -out "$AbsoluteOutputDir/harvested.wxs"
 if ($LASTEXITCODE -ne 0) { Write-Error "Heat harvesting failed"; exit 1 }

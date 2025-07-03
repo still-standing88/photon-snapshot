@@ -8,9 +8,7 @@
     <MediaTemplate EmbedCab="yes" />
 
     <Feature Id="ProductFeature" Title="Photon Snapshot" Level="1">
-      <!-- This links to all the files harvested by heat.exe -->
       <ComponentGroupRef Id="HarvestedFiles" />
-      <!-- These link to the shortcut and folder components below -->
       <ComponentRef Id="ApplicationShortcut" />
       <ComponentRef Id="ProgramMenuFolder" />
     </Feature>
