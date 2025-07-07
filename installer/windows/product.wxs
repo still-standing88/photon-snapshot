@@ -1,0 +1,147 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+  <Product Id="*" Name="Photon Snapshot" Language="1033" Version="1.0.0"
+           Manufacturer="JoyBytes" UpgradeCode="12345678-1234-1234-1234-123456789012">
+
+    <Package InstallerVersion="200" Compressed="yes" InstallScope="perUser" 
+             Description="Photon Snapshot - Image Viewer/Editor"
+             Comments="An advanced  image viewing application" />
+    
+    <MajorUpgrade DowngradeErrorMessage="A newer version of Photon Snapshot is already installed." />
+    <MediaTemplate EmbedCab="yes" />
+
+    <UIRef Id="WixUI_InstallDir" />
+    <Property Id="WIXUI_INSTALLDIR" Value="INSTALLFOLDER" />
+    <WixVariable Id="WixUILicenseRtf" Value="installer\windows\License.rtf" />
+    
+    <!-- <WixVariable Id="WixUIBannerBmp" Value="installer\windows\banner.bmp" />
+    <WixVariable Id="WixUIDialogBmp" Value="installer\windows\dialog.bmp" /> -->
+
+    <Property Id="APPLICATIONFOLDER">
+      <RegistrySearch Id="ApplicationFolderRegistry" Root="HKCU" 
+                      Key="Software\JoyBytes\Photon Snapshot" Name="InstallDir" Type="raw" />
+    </Property>
+
+    <Feature Id="ProductFeature" Title="Photon Snapshot" Level="1" 
+             Description="Main application files">
+      <ComponentGroupRef Id="HarvestedFiles" />
+      <ComponentRef Id="ApplicationShortcut" />
+      <ComponentRef Id="DesktopShortcut" />
+      <ComponentRef Id="ProgramMenuFolder" />
+      <ComponentRef Id="FileAssociations" />
+    </Feature>
+
+    <Feature Id="DesktopShortcutFeature" Title="Desktop Shortcut" Level="1" 
+             Description="Create a shortcut on the desktop">
+      <ComponentRef Id="DesktopShortcut" />
+    </Feature>
+  </Product>
+
+  <Fragment>
+    <Directory Id="TARGETDIR" Name="SourceDir">
+      <Directory Id="LocalAppDataFolder">
+        <Directory Id="INSTALLFOLDER" Name="Photon Snapshot" />
+      </Directory>
+      
+      <!-- <Directory Id="ProgramFilesFolder">
+        <Directory Id="INSTALLFOLDER" Name="Photon Snapshot" />
+      </Directory> -->
+      
+      <Directory Id="ProgramMenuFolder">
+        <Directory Id="ApplicationProgramsFolder" Name="Photon Snapshot" />
+      </Directory>
+      
+      <Directory Id="DesktopFolder" Name="Desktop" />
+    </Directory>
+  </Fragment>
+
+  <Fragment>
+    <DirectoryRef Id="ApplicationProgramsFolder">
+      <Component Id="ApplicationShortcut" Guid="*">
+        <Shortcut Id="ApplicationStartMenuShortcut"
+                  Name="Photon Snapshot"
+                  Description="Photon Snapshot - Advanced Image Viewer"
+                  Target="[INSTALLFOLDER]PhotonSnapshot.exe"
+                  WorkingDirectory="INSTALLFOLDER"
+                  Icon="PhotonSnapshot.exe" />
+        <RemoveFolder Id="ApplicationProgramsFolder" On="uninstall" />
+        <RegistryValue Root="HKCU" 
+                       Key="Software\JoyBytes\Photon Snapshot" 
+                       Name="installed" 
+                       Type="integer" 
+                       Value="1" 
+                       KeyPath="yes" />
+      </Component>
+    </DirectoryRef>
+  </Fragment>
+
+  <Fragment>
+    <DirectoryRef Id="DesktopFolder">
+      <Component Id="DesktopShortcut" Guid="*">
+        <Shortcut Id="DesktopApplicationShortcut"
+                  Name="Photon Snapshot"
+                  Description="Photon Snapshot - Image Viewer/Editor"
+                  Target="[INSTALLFOLDER]PhotonSnapshot.exe"
+                  WorkingDirectory="INSTALLFOLDER"
+                  Icon="PhotonSnapshot.exe" />
+        <RegistryValue Root="HKCU"
+                       Key="Software\JoyBytes\Photon Snapshot"
+                       Name="DesktopShortcut"
+                       Type="integer"
+                       Value="1"
+                       KeyPath="yes" />
+      </Component>
+    </DirectoryRef>
+  </Fragment>
+
+  <Fragment>
+    <DirectoryRef Id="INSTALLFOLDER">
+      <Component Id="FileAssociations" Guid="*">
+        <RegistryValue Root="HKCU" Key="Software\Classes\.jpg\OpenWithProgids" 
+                       Name="PhotonSnapshot.jpg" Value="" Type="string" />
+        <RegistryValue Root="HKCU" Key="Software\Classes\.jpeg\OpenWithProgids" 
+                       Name="PhotonSnapshot.jpeg" Value="" Type="string" />
+        <RegistryValue Root="HKCU" Key="Software\Classes\.png\OpenWithProgids" 
+                       Name="PhotonSnapshot.png" Value="" Type="string" />
+        <RegistryValue Root="HKCU" Key="Software\Classes\.gif\OpenWithProgids" 
+                       Name="PhotonSnapshot.gif" Value="" Type="string" />
+        <RegistryValue Root="HKCU" Key="Software\Classes\.bmp\OpenWithProgids" 
+                       Name="PhotonSnapshot.bmp" Value="" Type="string" />
+        
+        <RegistryValue Root="HKCU" Key="Software\Classes\PhotonSnapshot.jpg" 
+                       Value="Photon Snapshot Image" Type="string" />
+        <RegistryValue Root="HKCU" Key="Software\Classes\PhotonSnapshot.jpg\shell\open\command" 
+                       Value="&quot;[INSTALLFOLDER]PhotonSnapshot.exe&quot; &quot;%1&quot;" Type="string" />
+        
+        <RegistryValue Root="HKCU"
+                       Key="Software\JoyBytes\Photon Snapshot"
+                       Name="FileAssociations"
+                       Type="integer"
+                       Value="1"
+                       KeyPath="yes" />
+      </Component>
+    </DirectoryRef>
+  </Fragment>
+
+  <Fragment>
+    <DirectoryRef Id="ProgramMenuFolder">
+      <Component Id="ProgramMenuFolder" Guid="*">
+        <RemoveFolder Id="ProgramMenuFolder" On="uninstall" />
+        <RegistryValue Root="HKCU"
+                       Key="Software\JoyBytes\Photon Snapshot"
+                       Name="InstallDir"
+                       Type="string"
+                       Value="[INSTALLFOLDER]"
+                       KeyPath="yes" />
+      </Component>
+    </DirectoryRef>
+  </Fragment>
+
+  <Icon Id="PhotonSnapshot.exe" SourceFile="PhotonSnapshot.exe" />
+  <Property Id="ARPPRODUCTICON" Value="PhotonSnapshot.exe" />
+  
+  <Property Id="ARPHELPLINK" Value="https://joybytes.com/photon-snapshot" />
+  <Property Id="ARPURLINFOABOUT" Value="https://joybytes.com" />
+  <Property Id="ARPNOREPAIR" Value="1" />
+  <Property Id="ARPNOMODIFY" Value="1" />
+</Wix>

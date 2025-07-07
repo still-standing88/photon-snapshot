@@ -1,0 +1,6 @@
+<RCC>
+    <qresource prefix="/icons">
+        <file>photon-snapshot.png</file>
+        <file>photon-snapshot.ico</file>
+    </qresource>
+</RCC>

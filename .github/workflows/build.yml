@@ -1,0 +1,179 @@
+name: Build and Release
+
+on:
+  push:
+    tags:
+      - "v*"
+  workflow_dispatch:
+
+jobs:
+  build:
+    strategy:
+      matrix:
+        include:
+          - os: windows-latest
+            platform: windows
+            arch: x64
+          - os: macos-latest
+            platform: macos
+            arch: x64
+          - os: macos-14
+            platform: macos
+            arch: arm64
+
+    runs-on: ${{ matrix.os }}
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.12"
+
+      - name: Setup MSVC (Windows)
+        if: matrix.platform == 'windows'
+        uses: ilammy/msvc-dev-cmd@v1
+        with:
+          arch: x64
+
+      - name: Install system dependencies (macOS)
+        if: matrix.platform == 'macos'
+        run: |
+          xcode-select --install || true
+
+      - name: Install Python dependencies
+        run: |
+          python -m pip install --upgrade pip
+          python build.py --install
+
+      - name: Get version from tag
+        id: get_version
+        shell: bash
+        run: |
+          if [[ $GITHUB_REF == refs/tags/* ]]; then
+            VERSION=${GITHUB_REF#refs/tags/v}
+          else
+            VERSION="dev-$(date +'%Y%m%d')-$(git rev-parse --short HEAD)"
+          fi
+          echo "version=$VERSION" >> $GITHUB_OUTPUT
+          echo "Version: $VERSION"
+
+      - name: Build executable
+        run: python build.py
+
+      - name: Debug - List dist directory contents
+        shell: bash
+        run: |
+          echo "Contents of dist directory:"
+          ls -la dist/ || echo "dist directory not found"
+          find dist/ -type f -name "*" | head -20 || echo "No files found in dist"
+
+      - name: Install WiX Toolset (Windows)
+        if: matrix.platform == 'windows'
+        run: |
+          choco install wixtoolset -y
+          echo "C:\Program Files (x86)\WiX Toolset v3.11\bin" | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8 -Append
+
+      - name: Build MSI (Windows)
+        if: matrix.platform == 'windows'
+        shell: powershell
+        run: |
+          $distDir = "dist/app.dist"
+          $outputDir = "dist/installer"
+          New-Item -ItemType Directory -Force -Path $outputDir
+          .\installer\windows\build-msi.ps1 -SourceDir $distDir -OutputDir $outputDir -Version "${{ steps.get_version.outputs.version }}"
+
+      - name: Create DMG (macOS)
+        if: matrix.platform == 'macos'
+        run: |
+          brew install create-dmg
+          mkdir -p dist/dmg
+
+          # On macOS, Nuitka with --macos-create-app-bundle creates app.app from app.py
+          if [ -d "dist/app.app" ]; then
+            cp -r "dist/app.app" dist/dmg/PhotonSnapshot.app
+            APP_NAME="PhotonSnapshot.app"
+          else
+            echo "Error: app.app bundle not found in dist directory"
+            echo "Directory contents:"
+            ls -la dist/
+            exit 1
+          fi
+
+          create-dmg \
+            --volname "Photon Snapshot" \
+            --window-pos 200 120 \
+            --window-size 600 300 \
+            --icon-size 100 \
+            --icon "$APP_NAME" 175 120 \
+            --hide-extension "$APP_NAME" \
+            --app-drop-link 425 120 \
+            "dist/PhotonSnapshot-${{ steps.get_version.outputs.version }}-${{ matrix.arch }}.dmg" \
+            "dist/dmg/"
+
+      - name: Prepare artifacts
+        shell: bash
+        run: |
+          mkdir -p artifacts
+          if [[ "${{ matrix.platform }}" == "windows" ]]; then
+            cp dist/installer/*.msi artifacts/
+            cp -r dist/app.dist artifacts/PhotonSnapshot-${{ steps.get_version.outputs.version }}-windows-${{ matrix.arch }}
+            cd artifacts && zip -r PhotonSnapshot-${{ steps.get_version.outputs.version }}-windows-${{ matrix.arch }}.zip PhotonSnapshot-${{ steps.get_version.outputs.version }}-windows-${{ matrix.arch }}/
+          elif [[ "${{ matrix.platform }}" == "macos" ]]; then
+            cp dist/*.dmg artifacts/
+            cp -r dist/app.dist artifacts/PhotonSnapshot-${{ steps.get_version.outputs.version }}-macos-${{ matrix.arch }}
+            cd artifacts && tar -czf PhotonSnapshot-${{ steps.get_version.outputs.version }}-macos-${{ matrix.arch }}.tar.gz PhotonSnapshot-${{ steps.get_version.outputs.version }}-macos-${{ matrix.arch }}/
+          fi
+
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: photon-snapshot-${{ matrix.platform }}-${{ matrix.arch }}
+          path: artifacts/*
+
+  release:
+    needs: build
+    runs-on: ubuntu-latest
+    if: startsWith(github.ref, 'refs/tags/')
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Download all artifacts
+        uses: actions/download-artifact@v4
+        with:
+          path: release-artifacts
+
+      - name: Get version from tag
+        id: get_version
+        run: |
+          VERSION=${GITHUB_REF#refs/tags/v}
+          echo "version=$VERSION" >> $GITHUB_OUTPUT
+
+      - name: Create Release
+        uses: softprops/action-gh-release@v1
+        with:
+          tag_name: ${{ github.ref_name }}
+          name: Photon Snapshot v${{ steps.get_version.outputs.version }}
+          draft: false
+          prerelease: false
+          files: |
+            release-artifacts/**/*.msi
+            release-artifacts/**/*.dmg
+            release-artifacts/**/*.zip
+            release-artifacts/**/*.tar.gz
+          body: |
+            ## What's Changed
+            - Release version ${{ steps.get_version.outputs.version }}
+
+            ## Downloads
+            - **Windows**: Download the MSI installer or ZIP archive
+            - **macOS (Intel)**: Download the DMG for x64
+            - **macOS (Apple Silicon)**: Download the DMG for arm64
+
+            ## Installation
+            - **Windows**: Run the MSI installer or extract the ZIP archive
+            - **macOS**: Mount the DMG and drag the app to Applications folder
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
