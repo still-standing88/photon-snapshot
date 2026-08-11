@@ -72,17 +72,29 @@ msgstr "Acción"
 msgid "Action shortcuts"
 msgstr "Atajos de acciones"
 
-msgid "Add Current Folder"
-msgstr "Añadir carpeta actual"
+msgid "Actual Size"
+msgstr "Tamaño real"
 
-msgid "Add current folder to library"
+msgid "Add Current Folder to Library"
 msgstr "Añadir la carpeta actual a la biblioteca"
 
-msgid "Add Text"
-msgstr "Añadir texto"
+msgid "Add Folder to Library"
+msgstr "Añadir carpeta a la biblioteca"
 
-msgid "Add text overlay"
+msgid "Add Text Overlay"
 msgstr "Añadir superposición de texto"
+
+msgid "Add text overlay dialog"
+msgstr "Cuadro de diálogo para añadir texto"
+
+msgid "Add Text Overlay..."
+msgstr "Añadir superposición de texto..."
+
+msgid "Add to Favorites"
+msgstr "Añadir a favoritos"
+
+msgid "Add to Library"
+msgstr "Añadir a la biblioteca"
 
 msgid "Adjustments"
 msgstr "Ajustes"
@@ -114,9 +126,6 @@ msgstr "Aplicar efecto sepia"
 msgid "Are you sure you want to reset all hotkeys to default?"
 msgstr "¿Seguro que quieres restablecer todos los atajos de teclado a los valores predeterminados?"
 
-msgid "Background"
-msgstr "Fondo"
-
 msgid "Bottom Center"
 msgstr "Inferior centro"
 
@@ -135,6 +144,9 @@ msgstr "Construyendo la interfaz..."
 msgid "Cancel"
 msgstr "Cancelar"
 
+msgid "Cancel/Escape Mode"
+msgstr "Cancelar/salir del modo"
+
 msgid "Canvas drawing tools"
 msgstr "Herramientas de dibujo en lienzo"
 
@@ -150,6 +162,9 @@ msgstr "Cambiar el idioma requiere reiniciar la aplicación."
 msgid "Check for &Updates..."
 msgstr "Buscar act&ualizaciones..."
 
+msgid "Check for Updates"
+msgstr "Buscar actualizaciones"
+
 msgid "Check for updates on startup"
 msgstr "Buscar actualizaciones al iniciar"
 
@@ -162,20 +177,20 @@ msgstr "Elegir el color del lápiz"
 msgid "Circle"
 msgstr "Círculo"
 
-msgid "Clear"
-msgstr "Borrar"
-
 msgid "Clear All Overlays"
 msgstr "Borrar todas las superposiciones"
 
 msgid "Clear all overlays"
 msgstr "Borrar todas las superposiciones"
 
+msgid "Clear Library"
+msgstr "Vaciar biblioteca"
+
+msgid "Clear Overlays"
+msgstr "Borrar superposiciones"
+
 msgid "Clear Recent Files"
 msgstr "Borrar archivos recientes"
-
-msgid "Clear search"
-msgstr "Borrar búsqueda"
 
 msgid "Click and drag on the image to draw. This permanently edits the pixels."
 msgstr "Haz clic y arrastra sobre la imagen para dibujar. Esto edita permanentemente los píxeles."
@@ -183,11 +198,17 @@ msgstr "Haz clic y arrastra sobre la imagen para dibujar. Esto edita permanentem
 msgid "Click to Place"
 msgstr "Clic para colocar"
 
+msgid "Color:"
+msgstr "Color:"
+
 msgid "Confirm before overwriting files"
 msgstr "Confirmar antes de sobrescribir archivos"
 
 msgid "Contrast"
 msgstr "Contraste"
+
+msgid "Copy Path"
+msgstr "Copiar ruta"
 
 msgid "Crop"
 msgstr "Recortar"
@@ -213,15 +234,6 @@ msgstr "Muestra la imagen cargada actualmente. Admite recorte, formas y modos de
 msgid "Draw"
 msgstr "Dibujar"
 
-msgid "Draw circle shape"
-msgstr "Dibujar un círculo"
-
-msgid "Draw line shape"
-msgstr "Dibujar una línea"
-
-msgid "Draw rectangle shape"
-msgstr "Dibujar un rectángulo"
-
 msgid "Drawing Mode"
 msgstr "Modo de dibujo"
 
@@ -240,9 +252,6 @@ msgstr "Herramientas de edición"
 msgid "Effects and adjustments"
 msgstr "Efectos y ajustes"
 
-msgid "Enter a folder path and press Enter"
-msgstr "Introduce una ruta de carpeta y pulsa Intro"
-
 msgid "Enter text..."
 msgstr "Introducir texto..."
 
@@ -255,14 +264,11 @@ msgstr "Error al cargar la imagen: {error}"
 msgid "Error saving image: {error}"
 msgstr "Error al guardar la imagen: {error}"
 
+msgid "Exit"
+msgstr "Salir"
+
 msgid "Explorer"
 msgstr "Explorador"
-
-msgid "Explorer Toolbar"
-msgstr "Barra de herramientas del explorador"
-
-msgid "Explorer toolbar"
-msgstr "Barra de herramientas del explorador"
 
 msgid "Failed to load image"
 msgstr "Error al cargar la imagen"
@@ -279,11 +285,11 @@ msgstr "Archivo no encontrado"
 msgid "File size"
 msgstr "Tamaño del archivo"
 
-msgid "Files"
-msgstr "Archivos"
-
 msgid "Files and folders in the current directory. Enter opens a folder or image, double-click opens images."
 msgstr "Archivos y carpetas del directorio actual. Intro abre una carpeta o imagen, doble clic abre imágenes."
+
+msgid "Fit to Window"
+msgstr "Ajustar a la ventana"
 
 msgid "Flip image horizontally"
 msgstr "Voltear la imagen horizontalmente"
@@ -291,17 +297,11 @@ msgstr "Voltear la imagen horizontalmente"
 msgid "Flip image vertically"
 msgstr "Voltear la imagen verticalmente"
 
-msgid "Go Back"
-msgstr "Atrás"
+msgid "Focus Explorer"
+msgstr "Enfocar el explorador"
 
-msgid "Go back"
-msgstr "Atrás"
-
-msgid "Go Forward"
-msgstr "Adelante"
-
-msgid "Go forward"
-msgstr "Adelante"
+msgid "Focus Viewer"
+msgstr "Enfocar el visor"
 
 msgid "Go to parent folder"
 msgstr "Ir a la carpeta superior"
@@ -312,8 +312,8 @@ msgstr "Subir"
 msgid "Grayscale"
 msgstr "Escala de grises"
 
-msgid "Grid Overlay"
-msgstr "Superposición de cuadrícula"
+msgid "Grid"
+msgstr "Cuadrícula"
 
 msgid "Hide"
 msgstr "Ocultar"
@@ -323,6 +323,9 @@ msgstr "Configuración de atajos de teclado"
 
 msgid "Hotkeys Configuration Dialog"
 msgstr "Cuadro de diálogo de configuración de atajos"
+
+msgid "Hotkeys Dialog"
+msgstr "Configuración de atajos"
 
 msgid "HTTP {status}"
 msgstr "HTTP {status}"
@@ -357,9 +360,6 @@ msgstr "Centro izquierda"
 msgid "Library"
 msgstr "Biblioteca"
 
-msgid "Library folders"
-msgstr "Carpetas de la biblioteca"
-
 msgid "Light"
 msgstr "Claro"
 
@@ -384,11 +384,17 @@ msgstr "Menú principal"
 msgid "Main toolbar"
 msgstr "Barra de herramientas principal"
 
+msgid "Main Window"
+msgstr "Ventana principal"
+
 msgid "Minimize to Tray"
 msgstr "Minimizar a la bandeja"
 
 msgid "Minimize to tray when window is closed"
 msgstr "Minimizar a la bandeja al cerrar la ventana"
+
+msgid "Next Pane"
+msgstr "Panel siguiente"
 
 msgid "No preview"
 msgstr "Sin vista previa"
@@ -411,6 +417,9 @@ msgstr "No hay actualizaciones disponibles"
 msgid "none"
 msgstr "ninguno"
 
+msgid "None"
+msgstr "Ninguna"
+
 msgid "OK"
 msgstr "Aceptar"
 
@@ -420,17 +429,29 @@ msgstr "Abrir &carpeta..."
 msgid "Open a folder in the explorer"
 msgstr "Abrir una carpeta en el explorador"
 
+msgid "Open add text overlay dialog"
+msgstr "Abrir el cuadro de diálogo para añadir texto"
+
 msgid "Open an image file"
 msgstr "Abrir un archivo de imagen"
 
 msgid "Open Download Page"
 msgstr "Abrir página de descarga"
 
+msgid "Open file"
+msgstr "Abrir archivo"
+
 msgid "Open Folder"
+msgstr "Abrir carpeta"
+
+msgid "Open folder"
 msgstr "Abrir carpeta"
 
 msgid "Open Image"
 msgstr "Abrir imagen"
+
+msgid "Open Selected"
+msgstr "Abrir selección"
 
 msgid "Overlay text"
 msgstr "Texto superpuesto"
@@ -447,8 +468,8 @@ msgstr "Superposiciones"
 msgid "Overwrite File?"
 msgstr "¿Sobrescribir archivo?"
 
-msgid "Path"
-msgstr "Ruta"
+msgid "Parent"
+msgstr "Superior"
 
 msgid "Pen Color"
 msgstr "Color del lápiz"
@@ -465,11 +486,11 @@ msgstr "Photon Snapshot"
 msgid "Photon Snapshot main window"
 msgstr "Ventana principal de Photon Snapshot"
 
-msgid "Pinned folders for quick access. Double-click or press Enter to open."
-msgstr "Carpetas fijadas para acceso rápido. Doble clic o Intro para abrir."
+msgid "Pinned folders for quick access. Double-click or press Enter to open. Right-click for more actions."
+msgstr "Carpetas fijadas para acceso rápido. Doble clic o Intro para abrir. Clic derecho para más acciones."
 
-msgid "Pixel Info Mode"
-msgstr "Modo de información de píxeles"
+msgid "Pixel Info"
+msgstr "Info píxel"
 
 msgid "Please restart {app} for the language change to take effect."
 msgstr "Reinicia {app} para que el cambio de idioma surta efecto."
@@ -489,6 +510,9 @@ msgstr "Pulsa la combinación de teclas deseada; pulsa Intro o cambia el foco pa
 msgid "Preview thumbnail"
 msgstr "Miniatura de vista previa"
 
+msgid "Previous Pane"
+msgstr "Panel anterior"
+
 msgid "Project website link"
 msgstr "Enlace al sitio web del proyecto"
 
@@ -504,6 +528,9 @@ msgstr "Archivos recientes"
 msgid "Rectangle"
 msgstr "Rectángulo"
 
+msgid "Redo"
+msgstr "Rehacer"
+
 msgid "Redone"
 msgstr "Rehecho"
 
@@ -513,11 +540,8 @@ msgstr "Actualizar"
 msgid "Release notes"
 msgstr "Notas de la versión"
 
-msgid "Remove"
-msgstr "Quitar"
-
-msgid "Remove selected folder from library"
-msgstr "Quitar la carpeta seleccionada de la biblioteca"
+msgid "Remove from Library"
+msgstr "Quitar de la biblioteca"
 
 msgid "Reset all shortcuts to default"
 msgstr "Restablecer todos los atajos a los valores predeterminados"
@@ -527,6 +551,9 @@ msgstr "Restablecer valores predeterminados"
 
 msgid "Reset to original"
 msgstr "Restablecido al original"
+
+msgid "Reset to Original"
+msgstr "Restablecer al original"
 
 msgid "Restart Required"
 msgstr "Reinicio necesario"
@@ -540,11 +567,17 @@ msgstr "Girar 90 grados en sentido horario"
 msgid "Rotate 90 degrees counterclockwise"
 msgstr "Girar 90 grados en sentido antihorario"
 
-msgid "Ruler Overlay"
-msgstr "Superposición de regla"
+msgid "Ruler"
+msgstr "Regla"
+
+msgid "Save"
+msgstr "Guardar"
 
 msgid "Save &As..."
 msgstr "Guardar &como..."
+
+msgid "Save As"
+msgstr "Guardar como"
 
 msgid "Save Image As"
 msgstr "Guardar imagen como"
@@ -557,6 +590,9 @@ msgstr "Buscar en la carpeta actual"
 
 msgid "Search current folder..."
 msgstr "Buscar en la carpeta actual..."
+
+msgid "Search files"
+msgstr "Buscar archivos"
 
 msgid "Section collapsed - activate to expand"
 msgstr "Sección contraída - activar para expandir"
@@ -576,14 +612,20 @@ msgstr "Vista previa del archivo seleccionado"
 msgid "Sepia"
 msgstr "Sepia"
 
-msgid "Shape Drawing"
-msgstr "Dibujo de formas"
+msgid "Shape drawing tool"
+msgstr "Herramienta de dibujo de formas"
+
+msgid "Shape:"
+msgstr "Forma:"
 
 msgid "Shortcut"
 msgstr "Atajo"
 
 msgid "Show"
 msgstr "Mostrar"
+
+msgid "Show background behind text"
+msgstr "Mostrar fondo detrás del texto"
 
 msgid "Show or hide the Explorer panel"
 msgstr "Mostrar u ocultar el panel Explorador"
@@ -612,11 +654,11 @@ msgstr "Predeterminado del sistema"
 msgid "Text Color"
 msgstr "Color del texto"
 
-msgid "Text Overlay"
-msgstr "Superposición de texto"
-
 msgid "Text overlay position"
 msgstr "Posición de la superposición de texto"
+
+msgid "Text:"
+msgstr "Texto:"
 
 msgid "The file '{path}' no longer exists and will be removed from recent files."
 msgstr "El archivo «{path}» ya no existe y se eliminará de los archivos recientes."
@@ -639,14 +681,35 @@ msgstr "Activar/desactivar el modo de dibujo"
 msgid "Toggle crop mode"
 msgstr "Activar/desactivar el modo de recorte"
 
+msgid "Toggle Crop Mode"
+msgstr "Mostrar/ocultar modo de recorte"
+
+msgid "Toggle Drawing Mode"
+msgstr "Mostrar/ocultar modo de dibujo"
+
+msgid "Toggle Explorer"
+msgstr "Mostrar/ocultar el explorador"
+
 msgid "Toggle grid overlay"
 msgstr "Mostrar/ocultar la superposición de cuadrícula"
+
+msgid "Toggle Grid Overlay"
+msgstr "Mostrar/ocultar cuadrícula"
+
+msgid "Toggle Pixel Info"
+msgstr "Mostrar/ocultar info de píxel"
 
 msgid "Toggle pixel info mode"
 msgstr "Activar/desactivar el modo de información de píxeles"
 
 msgid "Toggle ruler overlay"
 msgstr "Mostrar/ocultar la superposición de regla"
+
+msgid "Toggle Ruler Overlay"
+msgstr "Mostrar/ocultar regla"
+
+msgid "Toggle search"
+msgstr "Mostrar/ocultar búsqueda"
 
 msgid "Top Center"
 msgstr "Superior centro"
@@ -663,6 +726,9 @@ msgstr "Transformar"
 msgid "Transform tools"
 msgstr "Herramientas de transformación"
 
+msgid "Undo"
+msgstr "Deshacer"
+
 msgid "Undone"
 msgstr "Deshecho"
 
@@ -675,11 +741,20 @@ msgstr "Cuadro de diálogo de actualización disponible"
 msgid "Version {version}<br>{description}<br><br>{copyright}<br>License: {license}"
 msgstr "Versión {version}<br>{description}<br><br>{copyright}<br>Licencia: {license}"
 
+msgid "Viewer"
+msgstr "Visor"
+
 msgid "Zoom &In"
 msgstr "&Acercar"
 
 msgid "Zoom &Out"
 msgstr "A&lejar"
+
+msgid "Zoom In"
+msgstr "Acercar"
+
+msgid "Zoom Out"
+msgstr "Alejar"
 
 msgid "Zoom: 100%"
 msgstr "Zoom: 100 %"
