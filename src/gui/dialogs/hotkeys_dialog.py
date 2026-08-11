@@ -73,16 +73,21 @@ class HotkeysDialog(QDialog):
     def populate_tree(self):
         self.tree.clear()
         for section in key_config.all_sections():
-            category_item = QTreeWidgetItem(self.tree, [_(section), ""])
+            # section/action are dynamic lookups against msgids that live in
+            # app_constance/default_keys.py's key_dict, not literal _("...")
+            # calls here - scripts/extract_strings.py knows to pull its
+            # section/action names directly from key_dict for exactly this
+            # reason (see extract_key_config_labels() there).
+            category_item = QTreeWidgetItem(self.tree, [_(section), ""])  # i18n-dynamic: ok
             category_item.setFlags(category_item.flags() & ~Qt.ItemFlag.ItemIsSelectable)
-            category_item.setData(0, Qt.ItemDataRole.AccessibleDescriptionRole, _("Category: {name}").format(name=_(section)))
+            category_item.setData(0, Qt.ItemDataRole.AccessibleDescriptionRole, _("Category: {name}").format(name=_(section)))  # i18n-dynamic: ok
             for action in key_config.key_dict[section]:
                 sequence = key_config.get_sequence(section, action)
-                action_item = QTreeWidgetItem(category_item, [_(action), sequence])
+                action_item = QTreeWidgetItem(category_item, [_(action), sequence])  # i18n-dynamic: ok
                 action_item.setData(0, Qt.ItemDataRole.UserRole, section)
                 action_item.setData(0, Qt.ItemDataRole.UserRole + 1, action)
                 desc = _("{action} in {section}, current shortcut: {shortcut}").format(
-                    action=_(action), section=_(section), shortcut=sequence or _("none")
+                    action=_(action), section=_(section), shortcut=sequence or _("none")  # i18n-dynamic: ok
                 )
                 action_item.setData(0, Qt.ItemDataRole.AccessibleDescriptionRole, desc)
                 action_item.setData(1, Qt.ItemDataRole.AccessibleDescriptionRole, desc)
