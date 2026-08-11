@@ -4,3 +4,4 @@ PySide6
 PySide6_Essentials
 PySide6_Addons
 pillow
+peewee
