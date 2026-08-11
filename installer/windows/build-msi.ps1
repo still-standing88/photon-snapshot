@@ -42,7 +42,7 @@ if (-not (Test-Path $licenseFile)) {
 \par This software is provided "as is" without warranty of any kind.
 \par By installing this software, you agree to use it responsibly.
 \par 
-\par For full license terms, please visit: https://joybytes.com/license
+\par For full license terms, please visit: https://github.com/still-standing88/photon-snapshot/blob/main/LICENSE
 \par 
 }
 "@
