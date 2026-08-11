@@ -1,0 +1,718 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Photon Snapshot\n"
+"Language: ar\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+msgid " px"
+msgstr " بك"
+
+msgid "&About Photon Snapshot"
+msgstr "&حول Photon Snapshot"
+
+msgid "&Actual Size"
+msgstr "الحجم &الفعلي"
+
+msgid "&Edit"
+msgstr "&تحرير"
+
+msgid "&Explorer"
+msgstr "&المستكشف"
+
+msgid "&File"
+msgstr "&ملف"
+
+msgid "&Fit to Window"
+msgstr "م&لاءمة النافذة"
+
+msgid "&Hotkeys..."
+msgstr "ا&ختصارات لوحة المفاتيح..."
+
+msgid "&Open..."
+msgstr "&فتح..."
+
+msgid "&Options"
+msgstr "&خيارات"
+
+msgid "&Preferences..."
+msgstr "ت&فضيلات..."
+
+msgid "&Redo"
+msgstr "إ&عادة"
+
+msgid "&Reset to Original"
+msgstr "إ&عادة التعيين إلى الأصل"
+
+msgid "&Save"
+msgstr "&حفظ"
+
+msgid "&Toolbar"
+msgstr "شريط الأ&دوات"
+
+msgid "&Undo"
+msgstr "ت&راجع"
+
+msgid "&View"
+msgstr "&عرض"
+
+msgid "<b>A new version of {app} is available!</b><br>Your version: <b>{current}</b> -> New version: <b>{new}</b>"
+msgstr "<b>يتوفر إصدار جديد من {app}!</b><br>إصدارك الحالي: <b>{current}</b> -> الإصدار الجديد: <b>{new}</b>"
+
+msgid "About dialog"
+msgstr "مربع حوار حول البرنامج"
+
+msgid "About {app}"
+msgstr "حول {app}"
+
+msgid "Action"
+msgstr "الإجراء"
+
+msgid "Action shortcuts"
+msgstr "اختصارات الإجراءات"
+
+msgid "Add Current Folder"
+msgstr "إضافة المجلد الحالي"
+
+msgid "Add current folder to library"
+msgstr "إضافة المجلد الحالي إلى المكتبة"
+
+msgid "Add Text"
+msgstr "إضافة نص"
+
+msgid "Add text overlay"
+msgstr "إضافة تراكب نصي"
+
+msgid "Adjustments"
+msgstr "التعديلات"
+
+msgid "Application information"
+msgstr "معلومات التطبيق"
+
+msgid "Application language"
+msgstr "لغة التطبيق"
+
+msgid "Application theme"
+msgstr "سمة التطبيق"
+
+msgid "Apply"
+msgstr "تطبيق"
+
+msgid "Apply Crop"
+msgstr "تطبيق القص"
+
+msgid "Apply crop selection"
+msgstr "تطبيق تحديد القص"
+
+msgid "Apply grayscale effect"
+msgstr "تطبيق تأثير التدرج الرمادي"
+
+msgid "Apply sepia effect"
+msgstr "تطبيق تأثير السيبيا"
+
+msgid "Are you sure you want to reset all hotkeys to default?"
+msgstr "هل تريد بالتأكيد إعادة تعيين جميع الاختصارات إلى الوضع الافتراضي؟"
+
+msgid "Background"
+msgstr "الخلفية"
+
+msgid "Bottom Center"
+msgstr "أسفل الوسط"
+
+msgid "Bottom Left"
+msgstr "أسفل اليسار"
+
+msgid "Bottom Right"
+msgstr "أسفل اليمين"
+
+msgid "Brightness"
+msgstr "السطوع"
+
+msgid "Building interface..."
+msgstr "جارٍ إنشاء الواجهة..."
+
+msgid "Cancel"
+msgstr "إلغاء"
+
+msgid "Canvas drawing tools"
+msgstr "أدوات الرسم على اللوحة"
+
+msgid "Category: {name}"
+msgstr "الفئة: {name}"
+
+msgid "Center"
+msgstr "الوسط"
+
+msgid "Changing the language requires restarting the application."
+msgstr "يتطلب تغيير اللغة إعادة تشغيل التطبيق."
+
+msgid "Check for &Updates..."
+msgstr "التحقق من الت&حديثات..."
+
+msgid "Check for updates on startup"
+msgstr "التحقق من التحديثات عند بدء التشغيل"
+
+msgid "Choose overlay text color"
+msgstr "اختيار لون نص التراكب"
+
+msgid "Choose pen color"
+msgstr "اختيار لون القلم"
+
+msgid "Circle"
+msgstr "دائرة"
+
+msgid "Clear"
+msgstr "مسح"
+
+msgid "Clear All Overlays"
+msgstr "مسح جميع التراكبات"
+
+msgid "Clear all overlays"
+msgstr "مسح جميع التراكبات"
+
+msgid "Clear Recent Files"
+msgstr "مسح الملفات الأخيرة"
+
+msgid "Clear search"
+msgstr "مسح البحث"
+
+msgid "Click and drag on the image to draw. This permanently edits the pixels."
+msgstr "انقر واسحب على الصورة للرسم. هذا يعدّل البكسلات بشكل دائم."
+
+msgid "Click to Place"
+msgstr "انقر للوضع"
+
+msgid "Confirm before overwriting files"
+msgstr "التأكيد قبل الكتابة فوق الملفات"
+
+msgid "Contrast"
+msgstr "التباين"
+
+msgid "Crop"
+msgstr "قص"
+
+msgid "Crop Mode"
+msgstr "وضع القص"
+
+msgid "Crop tools"
+msgstr "أدوات القص"
+
+msgid "Current folder path"
+msgstr "مسار المجلد الحالي"
+
+msgid "Current zoom level"
+msgstr "مستوى التكبير الحالي"
+
+msgid "Dark"
+msgstr "داكن"
+
+msgid "Displays the currently loaded image. Supports crop, shape, and freehand drawing modes."
+msgstr "يعرض الصورة المحمّلة حاليًا. يدعم أوضاع القص والأشكال والرسم الحر."
+
+msgid "Draw"
+msgstr "رسم"
+
+msgid "Draw circle shape"
+msgstr "رسم شكل دائرة"
+
+msgid "Draw line shape"
+msgstr "رسم شكل خط"
+
+msgid "Draw rectangle shape"
+msgstr "رسم شكل مستطيل"
+
+msgid "Drawing Mode"
+msgstr "وضع الرسم"
+
+msgid "E&xit"
+msgstr "&خروج"
+
+msgid "Editing tool categories"
+msgstr "فئات أدوات التحرير"
+
+msgid "Editing tool panels"
+msgstr "ألواح أدوات التحرير"
+
+msgid "Editing tools"
+msgstr "أدوات التحرير"
+
+msgid "Effects and adjustments"
+msgstr "التأثيرات والتعديلات"
+
+msgid "Enter a folder path and press Enter"
+msgstr "أدخل مسار مجلد واضغط Enter"
+
+msgid "Enter text..."
+msgstr "أدخل نصًا..."
+
+msgid "Error"
+msgstr "خطأ"
+
+msgid "Error loading image: {error}"
+msgstr "خطأ في تحميل الصورة: {error}"
+
+msgid "Error saving image: {error}"
+msgstr "خطأ في حفظ الصورة: {error}"
+
+msgid "Explorer"
+msgstr "المستكشف"
+
+msgid "Explorer Toolbar"
+msgstr "شريط أدوات المستكشف"
+
+msgid "Explorer toolbar"
+msgstr "شريط أدوات المستكشف"
+
+msgid "Failed to load image"
+msgstr "فشل تحميل الصورة"
+
+msgid "File list"
+msgstr "قائمة الملفات"
+
+msgid "File name"
+msgstr "اسم الملف"
+
+msgid "File Not Found"
+msgstr "الملف غير موجود"
+
+msgid "File size"
+msgstr "حجم الملف"
+
+msgid "Files"
+msgstr "الملفات"
+
+msgid "Files and folders in the current directory. Enter opens a folder or image, double-click opens images."
+msgstr "الملفات والمجلدات في الدليل الحالي. يفتح Enter مجلدًا أو صورة، والنقر المزدوج يفتح الصور."
+
+msgid "Flip image horizontally"
+msgstr "قلب الصورة أفقيًا"
+
+msgid "Flip image vertically"
+msgstr "قلب الصورة رأسيًا"
+
+msgid "Go Back"
+msgstr "رجوع"
+
+msgid "Go back"
+msgstr "رجوع"
+
+msgid "Go Forward"
+msgstr "التالي"
+
+msgid "Go forward"
+msgstr "التالي"
+
+msgid "Go to parent folder"
+msgstr "الانتقال إلى المجلد الأصل"
+
+msgid "Go Up"
+msgstr "أعلى"
+
+msgid "Grayscale"
+msgstr "تدرج رمادي"
+
+msgid "Grid Overlay"
+msgstr "تراكب الشبكة"
+
+msgid "Hide"
+msgstr "إخفاء"
+
+msgid "Hotkeys Configuration"
+msgstr "إعداد اختصارات لوحة المفاتيح"
+
+msgid "Hotkeys Configuration Dialog"
+msgstr "مربع حوار إعداد الاختصارات"
+
+msgid "HTTP {status}"
+msgstr "HTTP {status}"
+
+msgid "Image canvas"
+msgstr "لوحة الصورة"
+
+msgid "Image dimensions"
+msgstr "أبعاد الصورة"
+
+msgid "Image saved"
+msgstr "تم حفظ الصورة"
+
+msgid "Image saved as {name}"
+msgstr "تم حفظ الصورة باسم {name}"
+
+msgid "Invert"
+msgstr "عكس الألوان"
+
+msgid "Invert colors"
+msgstr "عكس الألوان"
+
+msgid "Language:"
+msgstr "اللغة:"
+
+msgid "Later"
+msgstr "لاحقًا"
+
+msgid "Left Center"
+msgstr "منتصف اليسار"
+
+msgid "Library"
+msgstr "المكتبة"
+
+msgid "Library folders"
+msgstr "مجلدات المكتبة"
+
+msgid "Light"
+msgstr "فاتح"
+
+msgid "Line"
+msgstr "خط"
+
+msgid "Loaded: {name}"
+msgstr "تم التحميل: {name}"
+
+msgid "Loading key bindings..."
+msgstr "جارٍ تحميل اختصارات لوحة المفاتيح..."
+
+msgid "Loading..."
+msgstr "جارٍ التحميل..."
+
+msgid "Main"
+msgstr "الرئيسي"
+
+msgid "Main menu"
+msgstr "القائمة الرئيسية"
+
+msgid "Main toolbar"
+msgstr "شريط الأدوات الرئيسي"
+
+msgid "Minimize to Tray"
+msgstr "تصغير إلى شريط النظام"
+
+msgid "Minimize to tray when window is closed"
+msgstr "التصغير إلى شريط النظام عند إغلاق النافذة"
+
+msgid "No preview"
+msgstr "لا توجد معاينة"
+
+msgid "No recent files"
+msgstr "لا توجد ملفات حديثة"
+
+msgid "No release notes provided."
+msgstr "لم تُقدَّم ملاحظات إصدار."
+
+msgid "No Releases Found"
+msgstr "لم يُعثر على إصدارات"
+
+msgid "No releases have been published for this application yet."
+msgstr "لم يُنشر أي إصدار لهذا التطبيق بعد."
+
+msgid "No Update Available"
+msgstr "لا يوجد تحديث متاح"
+
+msgid "none"
+msgstr "لا شيء"
+
+msgid "OK"
+msgstr "موافق"
+
+msgid "Open &Folder..."
+msgstr "فتح &مجلد..."
+
+msgid "Open a folder in the explorer"
+msgstr "فتح مجلد في المستكشف"
+
+msgid "Open an image file"
+msgstr "فتح ملف صورة"
+
+msgid "Open Download Page"
+msgstr "فتح صفحة التنزيل"
+
+msgid "Open Folder"
+msgstr "فتح المجلد"
+
+msgid "Open Image"
+msgstr "فتح الصورة"
+
+msgid "Overlay text"
+msgstr "نص التراكب"
+
+msgid "Overlay text font size"
+msgstr "حجم خط نص التراكب"
+
+msgid "Overlay tools"
+msgstr "أدوات التراكب"
+
+msgid "Overlays"
+msgstr "التراكبات"
+
+msgid "Overwrite File?"
+msgstr "الكتابة فوق الملف؟"
+
+msgid "Path"
+msgstr "المسار"
+
+msgid "Pen Color"
+msgstr "لون القلم"
+
+msgid "Pen width in pixels"
+msgstr "سُمك القلم بالبكسل"
+
+msgid "Pen Width:"
+msgstr "سُمك القلم:"
+
+msgid "Photon Snapshot"
+msgstr "Photon Snapshot"
+
+msgid "Photon Snapshot main window"
+msgstr "النافذة الرئيسية لـ Photon Snapshot"
+
+msgid "Pinned folders for quick access. Double-click or press Enter to open."
+msgstr "مجلدات مثبّتة للوصول السريع. انقر نقرًا مزدوجًا أو اضغط Enter للفتح."
+
+msgid "Pixel Info Mode"
+msgstr "وضع معلومات البكسل"
+
+msgid "Please restart {app} for the language change to take effect."
+msgstr "يرجى إعادة تشغيل {app} ليصبح تغيير اللغة نافذ المفعول."
+
+msgid "Position:"
+msgstr "الموضع:"
+
+msgid "Preferences"
+msgstr "التفضيلات"
+
+msgid "Preferences dialog"
+msgstr "مربع حوار التفضيلات"
+
+msgid "Press the desired key combination; press Enter or change focus to accept."
+msgstr "اضغط تركيبة المفاتيح المطلوبة؛ اضغط Enter أو غيّر التركيز للقبول."
+
+msgid "Preview thumbnail"
+msgstr "صورة مصغرة للمعاينة"
+
+msgid "Project website link"
+msgstr "رابط موقع المشروع"
+
+msgid "Quit"
+msgstr "إنهاء"
+
+msgid "Ready"
+msgstr "جاهز"
+
+msgid "Recent Files"
+msgstr "الملفات الأخيرة"
+
+msgid "Rectangle"
+msgstr "مستطيل"
+
+msgid "Redone"
+msgstr "تمت الإعادة"
+
+msgid "Refresh"
+msgstr "تحديث"
+
+msgid "Release notes"
+msgstr "ملاحظات الإصدار"
+
+msgid "Remove"
+msgstr "إزالة"
+
+msgid "Remove selected folder from library"
+msgstr "إزالة المجلد المحدد من المكتبة"
+
+msgid "Reset all shortcuts to default"
+msgstr "إعادة تعيين جميع الاختصارات للوضع الافتراضي"
+
+msgid "Reset to Default"
+msgstr "إعادة التعيين للوضع الافتراضي"
+
+msgid "Reset to original"
+msgstr "أُعيد التعيين إلى الأصل"
+
+msgid "Restart Required"
+msgstr "يلزم إعادة التشغيل"
+
+msgid "Right Center"
+msgstr "منتصف اليمين"
+
+msgid "Rotate 90 degrees clockwise"
+msgstr "تدوير 90 درجة باتجاه عقارب الساعة"
+
+msgid "Rotate 90 degrees counterclockwise"
+msgstr "تدوير 90 درجة عكس عقارب الساعة"
+
+msgid "Ruler Overlay"
+msgstr "تراكب المسطرة"
+
+msgid "Save &As..."
+msgstr "حفظ &باسم..."
+
+msgid "Save Image As"
+msgstr "حفظ الصورة باسم"
+
+msgid "Search"
+msgstr "بحث"
+
+msgid "Search current folder"
+msgstr "البحث في المجلد الحالي"
+
+msgid "Search current folder..."
+msgstr "البحث في المجلد الحالي..."
+
+msgid "Section collapsed - activate to expand"
+msgstr "القسم مطوي - فعّله للتوسيع"
+
+msgid "Section expanded - activate to collapse"
+msgstr "القسم موسّع - فعّله للطي"
+
+msgid "Select Pen Color"
+msgstr "اختيار لون القلم"
+
+msgid "Select Text Color"
+msgstr "اختيار لون النص"
+
+msgid "Selected file preview"
+msgstr "معاينة الملف المحدد"
+
+msgid "Sepia"
+msgstr "بني داكن (سيبيا)"
+
+msgid "Shape Drawing"
+msgstr "رسم الأشكال"
+
+msgid "Shortcut"
+msgstr "الاختصار"
+
+msgid "Show"
+msgstr "إظهار"
+
+msgid "Show or hide the Explorer panel"
+msgstr "إظهار أو إخفاء لوحة المستكشف"
+
+msgid "Show text background"
+msgstr "إظهار خلفية النص"
+
+msgid "Size:"
+msgstr "الحجم:"
+
+msgid "Status &Bar"
+msgstr "&شريط الحالة"
+
+msgid "Status bar"
+msgstr "شريط الحالة"
+
+msgid "Status message"
+msgstr "رسالة الحالة"
+
+msgid "Stroke drawn"
+msgstr "تم رسم الخط"
+
+msgid "System Default"
+msgstr "افتراضي النظام"
+
+msgid "Text Color"
+msgstr "لون النص"
+
+msgid "Text Overlay"
+msgstr "تراكب النص"
+
+msgid "Text overlay position"
+msgstr "موضع تراكب النص"
+
+msgid "The file '{path}' no longer exists and will be removed from recent files."
+msgstr "الملف ‘{path}’ لم يعد موجودًا وسيُزال من الملفات الأخيرة."
+
+msgid "Theme:"
+msgstr "السمة:"
+
+msgid "Toggle &Grid"
+msgstr "إظهار/إخفاء ال&شبكة"
+
+msgid "Toggle &Pixel Info"
+msgstr "إظهار/إخفاء معلومات ال&بكسل"
+
+msgid "Toggle &Ruler"
+msgstr "إظهار/إخفاء الم&سطرة"
+
+msgid "Toggle canvas drawing mode"
+msgstr "تبديل وضع الرسم"
+
+msgid "Toggle crop mode"
+msgstr "تبديل وضع القص"
+
+msgid "Toggle grid overlay"
+msgstr "تبديل تراكب الشبكة"
+
+msgid "Toggle pixel info mode"
+msgstr "تبديل وضع معلومات البكسل"
+
+msgid "Toggle ruler overlay"
+msgstr "تبديل تراكب المسطرة"
+
+msgid "Top Center"
+msgstr "أعلى الوسط"
+
+msgid "Top Left"
+msgstr "أعلى اليسار"
+
+msgid "Top Right"
+msgstr "أعلى اليمين"
+
+msgid "Transform"
+msgstr "تحويل"
+
+msgid "Transform tools"
+msgstr "أدوات التحويل"
+
+msgid "Undone"
+msgstr "تم التراجع"
+
+msgid "Update Available - {title}"
+msgstr "يتوفر تحديث - {title}"
+
+msgid "Update available dialog"
+msgstr "مربع حوار توفر تحديث"
+
+msgid "Version {version}<br>{description}<br><br>{copyright}<br>License: {license}"
+msgstr "الإصدار {version}<br>{description}<br><br>{copyright}<br>الرخصة: {license}"
+
+msgid "Zoom &In"
+msgstr "ت&كبير"
+
+msgid "Zoom &Out"
+msgstr "ت&صغير"
+
+msgid "Zoom: 100%"
+msgstr "التكبير: 100%"
+
+msgid "Zoom: {percent:.0f}%"
+msgstr "التكبير: {percent:.0f}%"
+
+msgid "{action} in {section}, current shortcut: {shortcut}"
+msgstr "{action} في {section}، الاختصار الحالي: {shortcut}"
+
+msgid "{app} is up to date (version {version})."
+msgstr "{app} محدَّث (الإصدار {version})."
+
+msgid "{name} - collapsed"
+msgstr "{name} - مطوي"
+
+msgid "{name} - expanded"
+msgstr "{name} - موسّع"
+
+msgid "{name} already exists. Overwrite it?"
+msgstr "{name} موجود بالفعل. هل تريد الكتابة فوقه؟"
+
+msgid "{title} value"
+msgstr "قيمة {title}"
+
+msgid "↔ Flip H"
+msgstr "↔ قلب أفقي"
+
+msgid "↕ Flip V"
+msgstr "↕ قلب رأسي"
+
+msgid "↺ 90°"
+msgstr "↺ 90°"
+
+msgid "↻ 90°"
+msgstr "↻ 90°"
