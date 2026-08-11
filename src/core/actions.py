@@ -162,6 +162,29 @@ class CropAction(Action):
         return image
 
 
+class DrawStrokeAction(Action):
+    """One freehand pen stroke committed to the pixels, from Canvas Drawing
+    mode (see gui.viewer.ImageViewer.set_drawing_mode)."""
+
+    def __init__(self, points: list, color: tuple, width: int):
+        super().__init__("Draw Stroke")
+        self.points = points
+        self.color = color
+        self.width = width
+
+    def execute(self, image: PhotonImage) -> PhotonImage:
+        self.image_before = image.copy()
+        image.apply_freehand_stroke(self.points, self.color, self.width)
+        self.image_after = image.copy()
+        return image
+
+    def undo(self, image: PhotonImage) -> PhotonImage:
+        if self.image_before:
+            image.current = self.image_before.current.copy()
+            image.applied_filters = self.image_before.applied_filters.copy()
+        return image
+
+
 class ResizeAction(Action):
     def __init__(self, size: tuple, keep_aspect: bool = True):
         super().__init__(f"Resize {size}")

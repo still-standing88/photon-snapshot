@@ -88,6 +88,21 @@ class PhotonImage:
     def crop(self, box: Tuple[int, int, int, int]):
         self.current = self.current.crop(box)
         self.applied_filters.append(('crop', box))
+
+    def apply_freehand_stroke(self, points: List[Tuple[int, int]], color: Tuple[int, int, int, int], width: int):
+        """Permanently paints a freehand stroke onto the image (canvas
+        drawing mode), as opposed to the non-destructive ShapeOverlay/
+        TextOverlay drawn on top of the display in the viewer."""
+        if len(points) < 2:
+            return
+        if self.current.mode != 'RGBA':
+            self.current = self.current.convert('RGBA')
+        draw = ImageDraw.Draw(self.current)
+        draw.line(points, fill=color, width=max(1, width), joint='curve')
+        radius = max(1, width) / 2
+        for x, y in (points[0], points[-1]):
+            draw.ellipse((x - radius, y - radius, x + radius, y + radius), fill=color)
+        self.applied_filters.append(('freehand_stroke', (len(points), width)))
     
     def to_bytes(self, format: str = None) -> bytes:
         format = format or self.format

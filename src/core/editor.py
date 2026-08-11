@@ -143,6 +143,11 @@ class Editor:
         from .actions import CropAction
         action = CropAction(box)
         self.state.execute_action(action)
+
+    def draw_stroke(self, points: list, color: tuple, width: int):
+        from .actions import DrawStrokeAction
+        action = DrawStrokeAction(points, color, width)
+        self.state.execute_action(action)
     
     def resize(self, size: tuple, keep_aspect: bool = True):
         from .actions import ResizeAction
