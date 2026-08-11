@@ -1,20 +1,28 @@
+import os
+
 from PySide6.QtWidgets import (QWidget, QVBoxLayout, QHBoxLayout, QListWidget,
-                             QListWidgetItem, QLabel, QFrame, QPushButton,
-                             QLineEdit, QSplitter, QGroupBox, QToolBar, QMenu)
+                             QListWidgetItem, QLabel, QFrame, QToolButton,
+                             QLineEdit, QSplitter, QMenu, QTreeWidget, QTreeWidgetItem)
 from PySide6.QtCore import Qt, Signal, QSize
-from PySide6.QtGui import QIcon, QAction
+from PySide6.QtGui import QIcon, QAction, QGuiApplication
 from core.explorer import FileExplorer
 from core.utils import create_thumbnail, is_image_file, get_file_size_str
 from core.image import PhotonImage
 from gui_controls.common_controls import TabableLabel
-import os
-from pathlib import Path
 
 
 class FileListWidget(QListWidget):
+    """The file/folder list. All actions beyond plain navigation (open,
+    add to library, copy path, refresh) live in its right-click context
+    menu rather than dedicated toolbar buttons, mirroring playForm's
+    explorer_view - keeps the always-visible chrome down to just the
+    parent/search buttons above it."""
+
     file_selected = Signal(str)
     directory_entered = Signal(str)
     open_image = Signal(str)
+    add_to_library_requested = Signal(str)
+    refresh_requested = Signal()
 
     def __init__(self):
         super().__init__()
@@ -50,20 +58,36 @@ class FileListWidget(QListWidget):
 
     def _show_context_menu(self, position):
         item = self.itemAt(position)
-        if not item:
-            return
-        data = item.data(Qt.ItemDataRole.UserRole)
-        if not data:
-            return
         menu = QMenu(self)
-        if data["is_image"]:
-            open_action = QAction(_("Open Image"), self)
-            open_action.triggered.connect(lambda: self.open_image.emit(data["full_path"]))
-            menu.addAction(open_action)
-        elif data["is_directory"]:
-            open_action = QAction(_("Open Folder"), self)
-            open_action.triggered.connect(lambda: self.directory_entered.emit(data["full_path"]))
-            menu.addAction(open_action)
+
+        if item is not None:
+            data = item.data(Qt.ItemDataRole.UserRole)
+            if data and data["is_image"]:
+                open_action = QAction(_("Open Image"), self)
+                open_action.triggered.connect(lambda: self.open_image.emit(data["full_path"]))
+                menu.addAction(open_action)
+
+                copy_action = QAction(_("Copy Path"), self)
+                copy_action.triggered.connect(lambda: QGuiApplication.clipboard().setText(data["full_path"]))
+                menu.addAction(copy_action)
+            elif data and data["is_directory"]:
+                open_action = QAction(_("Open Folder"), self)
+                open_action.triggered.connect(lambda: self.directory_entered.emit(data["full_path"]))
+                menu.addAction(open_action)
+
+                add_lib_action = QAction(_("Add to Library"), self)
+                add_lib_action.triggered.connect(lambda: self.add_to_library_requested.emit(data["full_path"]))
+                menu.addAction(add_lib_action)
+
+                copy_action = QAction(_("Copy Path"), self)
+                copy_action.triggered.connect(lambda: QGuiApplication.clipboard().setText(data["full_path"]))
+                menu.addAction(copy_action)
+            menu.addSeparator()
+
+        refresh_action = QAction(_("Refresh"), self)
+        refresh_action.triggered.connect(self.refresh_requested.emit)
+        menu.addAction(refresh_action)
+
         menu.exec(self.mapToGlobal(position))
 
     def keyPressEvent(self, event):
@@ -131,134 +155,98 @@ class PreviewPane(QFrame):
         self.dimensions_label.setText("")
 
 
-class PathBar(QWidget):
-    path_changed = Signal(str)
-
-    def __init__(self):
-        super().__init__()
-        layout = QHBoxLayout()
-        layout.setContentsMargins(5, 5, 5, 5)
-
-        self.path_edit = QLineEdit()
-        self.path_edit.setAccessibleName(_("Current folder path"))
-        self.path_edit.setPlaceholderText(_("Enter a folder path and press Enter"))
-        self.path_edit.returnPressed.connect(self._on_path_entered)
-
-        layout.addWidget(self.path_edit)
-        self.setLayout(layout)
-
-    def set_path(self, path: str):
-        self.path_edit.setText(path)
-
-    def _on_path_entered(self):
-        path = self.path_edit.text().strip()
-        if path:
-            self.path_changed.emit(path)
-
-
-class NavigationBar(QWidget):
-    back_clicked = Signal()
-    forward_clicked = Signal()
-    up_clicked = Signal()
-
-    def __init__(self):
-        super().__init__()
-        layout = QHBoxLayout()
-        layout.setContentsMargins(5, 5, 5, 5)
-
-        style = self.style()
-
-        self.back_btn = QPushButton()
-        self.back_btn.setIcon(style.standardIcon(style.StandardPixmap.SP_ArrowLeft))
-        self.back_btn.setToolTip(_("Go Back"))
-        self.back_btn.setAccessibleName(_("Go back"))
-        self.back_btn.setFixedSize(30, 30)
-        self.back_btn.clicked.connect(self.back_clicked.emit)
-
-        self.forward_btn = QPushButton()
-        self.forward_btn.setIcon(style.standardIcon(style.StandardPixmap.SP_ArrowRight))
-        self.forward_btn.setToolTip(_("Go Forward"))
-        self.forward_btn.setAccessibleName(_("Go forward"))
-        self.forward_btn.setFixedSize(30, 30)
-        self.forward_btn.clicked.connect(self.forward_clicked.emit)
-
-        self.up_btn = QPushButton()
-        self.up_btn.setIcon(style.standardIcon(style.StandardPixmap.SP_ArrowUp))
-        self.up_btn.setToolTip(_("Go Up"))
-        self.up_btn.setAccessibleName(_("Go to parent folder"))
-        self.up_btn.setFixedSize(30, 30)
-        self.up_btn.clicked.connect(self.up_clicked.emit)
-
-        layout.addWidget(self.back_btn)
-        layout.addWidget(self.forward_btn)
-        layout.addWidget(self.up_btn)
-        layout.addStretch()
-
-        self.setLayout(layout)
-
-    def set_navigation_state(self, can_back: bool, can_forward: bool):
-        self.back_btn.setEnabled(can_back)
-        self.forward_btn.setEnabled(can_forward)
-
-
-class LibraryWidget(QGroupBox):
-    """Pinned-folder list: quick access to folders the user browses often.
-    Deliberately just a flat list of paths persisted in SQLite (see
+class LibraryTree(QTreeWidget):
+    """Pinned-folder tree, mirroring playForm's LibraryView: a single
+    "Library" root with one child per pinned folder. Deliberately just a
+    flat list of paths persisted in SQLite (see
     ``core.explorer.FileExplorer.get_library_folders``) - no media
-    catalog/scanning database sits behind it."""
+    catalog/scanning database sits behind it. All actions (add/remove/
+    clear) live in the right-click context menu, not buttons."""
 
     folder_activated = Signal(str)
 
     def __init__(self, explorer: FileExplorer):
-        super().__init__(_("Library"))
-        self.setAccessibleName(_("Library"))
+        super().__init__()
         self._explorer = explorer
+        self.setAccessibleName(_("Library"))
+        self.setAccessibleDescription(_("Pinned folders for quick access. Double-click or press Enter to open. Right-click for more actions."))
+        self.setHeaderHidden(True)
+        self.setColumnCount(1)
+        self.itemActivated.connect(self._on_activated)
+        self.setContextMenuPolicy(Qt.ContextMenuPolicy.CustomContextMenu)
+        self.customContextMenuRequested.connect(self._show_context_menu)
 
-        layout = QVBoxLayout(self)
-
-        self.list = QListWidget()
-        self.list.setAccessibleName(_("Library folders"))
-        self.list.setAccessibleDescription(_("Pinned folders for quick access. Double-click or press Enter to open."))
-        self.list.itemActivated.connect(self._on_activated)
-        layout.addWidget(self.list)
-
-        btn_row = QHBoxLayout()
-        self.add_btn = QPushButton(_("Add Current Folder"))
-        self.add_btn.setAccessibleName(_("Add current folder to library"))
-        self.add_btn.clicked.connect(self._on_add_clicked)
-        self.remove_btn = QPushButton(_("Remove"))
-        self.remove_btn.setAccessibleName(_("Remove selected folder from library"))
-        self.remove_btn.clicked.connect(self._on_remove_clicked)
-        btn_row.addWidget(self.add_btn)
-        btn_row.addWidget(self.remove_btn)
-        layout.addLayout(btn_row)
+        self._root = QTreeWidgetItem(self, [_("Library")])
+        self._root.setFlags(self._root.flags() & ~Qt.ItemFlag.ItemIsSelectable)
+        style = self.style()
+        self._root.setIcon(0, style.standardIcon(style.StandardPixmap.SP_DriveHDIcon))
+        self.addTopLevelItem(self._root)
+        self._root.setExpanded(True)
 
         self._explorer.library_updated.connect(self.refresh)
         self.refresh(self._explorer.get_library_folders())
 
     def refresh(self, folders=None):
         folders = folders if folders is not None else self._explorer.get_library_folders()
-        self.list.clear()
+        self._root.takeChildren()
         style = self.style()
         for folder in folders:
-            item = QListWidgetItem(style.standardIcon(style.StandardPixmap.SP_DirIcon), os.path.basename(folder) or folder)
-            item.setToolTip(folder)
-            item.setData(Qt.ItemDataRole.UserRole, folder)
-            self.list.addItem(item)
+            item = QTreeWidgetItem(self._root, [os.path.basename(folder) or folder])
+            item.setIcon(0, style.standardIcon(style.StandardPixmap.SP_DirIcon))
+            item.setToolTip(0, folder)
+            item.setData(0, Qt.ItemDataRole.UserRole, folder)
 
-    def _on_activated(self, item):
-        self.folder_activated.emit(item.data(Qt.ItemDataRole.UserRole))
+    def _on_activated(self, item, column):
+        path = item.data(0, Qt.ItemDataRole.UserRole)
+        if path:
+            self.folder_activated.emit(path)
 
-    def _on_add_clicked(self):
-        self._explorer.add_library_folder(self._explorer.current_path)
+    def _show_context_menu(self, position):
+        item = self.itemAt(position)
+        menu = QMenu(self)
 
-    def _on_remove_clicked(self):
-        item = self.list.currentItem()
-        if item:
-            self._explorer.remove_library_folder(item.data(Qt.ItemDataRole.UserRole))
+        add_action = QAction(_("Add Current Folder to Library"), self)
+        add_action.triggered.connect(lambda: self._explorer.add_library_folder(self._explorer.current_path))
+        menu.addAction(add_action)
+
+        if item is not None and item is not self._root:
+            remove_action = QAction(_("Remove from Library"), self)
+            remove_action.triggered.connect(lambda: self._explorer.remove_library_folder(item.data(0, Qt.ItemDataRole.UserRole)))
+            menu.addAction(remove_action)
+
+        menu.addSeparator()
+        clear_action = QAction(_("Clear Library"), self)
+        clear_action.triggered.connect(self._clear_library)
+        menu.addAction(clear_action)
+
+        menu.exec(self.mapToGlobal(position))
+
+    def _clear_library(self):
+        for folder in list(self._explorer.get_library_folders()):
+            self._explorer.remove_library_folder(folder)
+
+
+class SearchLineEdit(QLineEdit):
+    """A QLineEdit whose Escape key closes the search bar (via `closed`)
+    instead of being swallowed - lets the search button toggle work as a
+    single Escape-to-dismiss affordance without a separate Clear button."""
+
+    closed = Signal()
+
+    def keyPressEvent(self, event):
+        if event.key() == Qt.Key.Key_Escape:
+            self.closed.emit()
+            return
+        super().keyPressEvent(event)
 
 
 class ExplorerWidget(QWidget):
+    """Library tree + file list + a Parent button + a Search toggle -
+    mirroring playForm's explorer interface. Every other action (open,
+    add/remove library folder, copy path, refresh) is reached through
+    right-click context menus rather than dedicated buttons, keeping the
+    always-visible chrome minimal."""
+
     file_selected = Signal(str)
     open_image = Signal(str)
 
@@ -276,88 +264,108 @@ class ExplorerWidget(QWidget):
         layout.setContentsMargins(4, 4, 4, 4)
         layout.setSpacing(4)
 
-        self.library_widget = LibraryWidget(self.explorer)
-        layout.addWidget(self.library_widget)
+        style = self.style()
 
-        path_group = QGroupBox(_("Path"))
-        path_layout = QVBoxLayout(path_group)
-        self.nav_bar = NavigationBar()
-        self.path_bar = PathBar()
-        path_layout.addWidget(self.nav_bar)
-        path_layout.addWidget(self.path_bar)
-        layout.addWidget(path_group)
+        top_bar = QHBoxLayout()
 
-        search_group = QGroupBox(_("Search"))
-        search_layout = QHBoxLayout(search_group)
-        self.search_edit = QLineEdit()
-        self.search_edit.setAccessibleName(_("Search current folder"))
-        self.search_edit.setPlaceholderText(_("Search current folder..."))
-        self.search_edit.returnPressed.connect(self._on_search_submitted)
-        search_layout.addWidget(self.search_edit)
-        self.search_clear_btn = QPushButton(_("Clear"))
-        self.search_clear_btn.setAccessibleName(_("Clear search"))
-        self.search_clear_btn.clicked.connect(self._on_search_cleared)
-        search_layout.addWidget(self.search_clear_btn)
-        layout.addWidget(search_group)
+        self.parent_btn = QToolButton()
+        self.parent_btn.setIcon(style.standardIcon(style.StandardPixmap.SP_FileDialogToParent))
+        self.parent_btn.setText(_("Parent"))
+        self.parent_btn.setToolButtonStyle(Qt.ToolButtonStyle.ToolButtonTextBesideIcon)
+        self.parent_btn.setToolTip(_("Go to parent folder"))
+        self.parent_btn.setAccessibleName(_("Go to parent folder"))
+        self.parent_btn.clicked.connect(self.explorer.go_up)
+        top_bar.addWidget(self.parent_btn)
 
-        files_group = QGroupBox(_("Files"))
-        files_layout = QVBoxLayout(files_group)
+        self.search_toggle_btn = QToolButton()
+        self.search_toggle_btn.setIcon(style.standardIcon(style.StandardPixmap.SP_FileDialogContentsView))
+        self.search_toggle_btn.setText(_("Search"))
+        self.search_toggle_btn.setToolButtonStyle(Qt.ToolButtonStyle.ToolButtonTextBesideIcon)
+        self.search_toggle_btn.setCheckable(True)
+        self.search_toggle_btn.setToolTip(_("Search current folder"))
+        self.search_toggle_btn.setAccessibleName(_("Toggle search"))
+        self.search_toggle_btn.toggled.connect(self._on_search_toggled)
+        top_bar.addWidget(self.search_toggle_btn)
 
-        self.toolbar = QToolBar(_("Explorer Toolbar"))
-        self.toolbar.setAccessibleName(_("Explorer toolbar"))
-        self.toolbar.setToolButtonStyle(Qt.ToolButtonStyle.ToolButtonTextOnly)
-        self.refresh_action = QAction(_("Refresh"), self)
-        self.refresh_action.setShortcut("F5")
-        self.refresh_action.triggered.connect(self.refresh_view)
-        self.toolbar.addAction(self.refresh_action)
-        files_layout.addWidget(self.toolbar)
+        top_bar.addStretch()
 
-        content_splitter = QSplitter(Qt.Orientation.Horizontal)
+        self.path_label = TabableLabel("", accessible_name=_("Current folder path"))
+        self.path_label.setStyleSheet("color: #999999;")
+        top_bar.addWidget(self.path_label)
+
+        layout.addLayout(top_bar)
+
+        self.search_bar = SearchLineEdit()
+        self.search_bar.setAccessibleName(_("Search current folder"))
+        self.search_bar.setPlaceholderText(_("Search current folder..."))
+        self.search_bar.returnPressed.connect(self._on_search_submitted)
+        self.search_bar.closed.connect(lambda: self.search_toggle_btn.setChecked(False))
+        self.search_bar.setVisible(False)
+        layout.addWidget(self.search_bar)
+
+        main_splitter = QSplitter(Qt.Orientation.Horizontal)
+        self.library_tree = LibraryTree(self.explorer)
         self.file_list = FileListWidget()
         self.preview_pane = PreviewPane()
-        content_splitter.addWidget(self.file_list)
-        content_splitter.addWidget(self.preview_pane)
-        content_splitter.setSizes([300, 200])
-        files_layout.addWidget(content_splitter)
+        main_splitter.addWidget(self.library_tree)
+        main_splitter.addWidget(self.file_list)
+        main_splitter.addWidget(self.preview_pane)
+        main_splitter.setSizes([120, 320, 200])
+        main_splitter.setStretchFactor(0, 0)
+        main_splitter.setStretchFactor(1, 1)
+        main_splitter.setStretchFactor(2, 0)
 
-        layout.addWidget(files_group, 1)
+        layout.addWidget(main_splitter, 1)
+
+        # F5 still refreshes even without a visible toolbar button - added
+        # directly to the widget (not a QShortcut) so it only fires while
+        # something inside the Explorer has focus.
+        self.refresh_action = QAction(_("Refresh"), self)
+        self.refresh_action.setShortcut("F5")
+        self.refresh_action.setShortcutContext(Qt.ShortcutContext.WidgetWithChildrenShortcut)
+        self.refresh_action.triggered.connect(self.refresh_view)
+        self.addAction(self.refresh_action)
 
         self.setLayout(layout)
 
     def connect_signals(self):
         self.explorer.path_changed.connect(self._on_path_changed)
-        self.nav_bar.back_clicked.connect(self.explorer.go_back)
-        self.nav_bar.forward_clicked.connect(self.explorer.go_forward)
-        self.nav_bar.up_clicked.connect(self.explorer.go_up)
-        self.path_bar.path_changed.connect(self.explorer.navigate_to)
         self.file_list.directory_entered.connect(self.explorer.navigate_to)
         self.file_list.file_selected.connect(self._on_file_selected)
         self.file_list.open_image.connect(self.open_image.emit)
-        self.library_widget.folder_activated.connect(self.explorer.navigate_to)
+        self.file_list.add_to_library_requested.connect(self.explorer.add_library_folder)
+        self.file_list.refresh_requested.connect(self.refresh_view)
+        self.library_tree.folder_activated.connect(self.explorer.navigate_to)
+
+    def _on_search_toggled(self, checked: bool):
+        self.search_bar.setVisible(checked)
+        if checked:
+            self.search_bar.setFocus()
+            self.search_bar.selectAll()
+        else:
+            self.search_bar.clear()
+            self._search_active = False
+            self.refresh_view()
 
     def _on_path_changed(self, path: str):
-        self.path_bar.set_path(path)
-        self.nav_bar.set_navigation_state(self.explorer.can_go_back(), self.explorer.can_go_forward())
-        self._search_active = False
-        self.search_edit.clear()
-        self.refresh_view()
+        self.path_label.setText(path)
+        self.path_label.setToolTip(path)
+        if self.search_toggle_btn.isChecked():
+            self.search_toggle_btn.setChecked(False)  # triggers refresh_view() via _on_search_toggled
+        else:
+            self.refresh_view()
 
     def _on_file_selected(self, filepath: str):
         self.preview_pane.set_preview(filepath)
         self.file_selected.emit(filepath)
 
     def _on_search_submitted(self):
-        query = self.search_edit.text().strip()
+        query = self.search_bar.text().strip()
         if not query:
-            self._on_search_cleared()
+            self.search_toggle_btn.setChecked(False)
             return
         self._search_active = True
         self._populate(self.explorer.search(query))
-
-    def _on_search_cleared(self):
-        self.search_edit.clear()
-        self._search_active = False
-        self.refresh_view()
 
     def refresh_view(self):
         if self._search_active:
@@ -384,7 +392,7 @@ class ExplorerWidget(QWidget):
             self.file_list.addItem(item)
 
     def keyPressEvent(self, event):
-        if event.key() == Qt.Key.Key_Backspace and not self.path_bar.path_edit.hasFocus():
-            self.explorer.go_back()
+        if event.key() == Qt.Key.Key_Backspace and not self.search_bar.hasFocus():
+            self.explorer.go_up()
         else:
             super().keyPressEvent(event)
