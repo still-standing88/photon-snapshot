@@ -15,16 +15,6 @@ class TextOverlayDialog(QDialog):
     Values are read via :meth:`values` after ``exec()`` returns Accepted -
     nothing is applied until the caller does so."""
 
-    # (internal key, translated label) - the key is what
-    # viewer.add_text_overlay()'s position_map expects, and must never be
-    # translated (see the note in the old inline version this replaced).
-    _POSITIONS = (
-        ("Top Left", "Top Left"), ("Top Center", "Top Center"), ("Top Right", "Top Right"),
-        ("Left Center", "Left Center"), ("Center", "Center"), ("Right Center", "Right Center"),
-        ("Bottom Left", "Bottom Left"), ("Bottom Center", "Bottom Center"), ("Bottom Right", "Bottom Right"),
-        ("Click to Place", "Click to Place"),
-    )
-
     def __init__(self, parent=None):
         super().__init__(parent)
         self.setWindowTitle(_("Add Text Overlay"))
@@ -44,8 +34,22 @@ class TextOverlayDialog(QDialog):
 
         self.position_combo = QComboBox()
         self.position_combo.setAccessibleName(_("Text overlay position"))
-        for key, label in self._POSITIONS:
-            self.position_combo.addItem(_(label), key)
+        # Each addItem() call keeps _("...") as a literal string argument
+        # (not a variable) so scripts/extract_strings.py's AST-based
+        # extractor can actually find it - see the matching note in
+        # OverlayPanel.setup_ui() for why this matters. The second argument
+        # (itemData) is the internal English key viewer.add_text_overlay()'s
+        # position_map expects, and must never be translated.
+        self.position_combo.addItem(_("Top Left"), "Top Left")
+        self.position_combo.addItem(_("Top Center"), "Top Center")
+        self.position_combo.addItem(_("Top Right"), "Top Right")
+        self.position_combo.addItem(_("Left Center"), "Left Center")
+        self.position_combo.addItem(_("Center"), "Center")
+        self.position_combo.addItem(_("Right Center"), "Right Center")
+        self.position_combo.addItem(_("Bottom Left"), "Bottom Left")
+        self.position_combo.addItem(_("Bottom Center"), "Bottom Center")
+        self.position_combo.addItem(_("Bottom Right"), "Bottom Right")
+        self.position_combo.addItem(_("Click to Place"), "Click to Place")
         self.position_combo.setCurrentIndex(self.position_combo.count() - 1)
         form.addRow(_("Position:"), self.position_combo)
 

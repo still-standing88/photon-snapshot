@@ -29,7 +29,8 @@ class SliderGroup(QWidget):
         self._syncing = False
 
         layout = QVBoxLayout()
-        layout.setContentsMargins(5, 5, 5, 5)
+        layout.setContentsMargins(4, 2, 4, 2)
+        layout.setSpacing(2)
 
         self.title_label = TabableLabel(title, accessible_name=title)
         self.title_label.setStyleSheet("color: #ffffff; font-weight: bold;")
@@ -112,6 +113,8 @@ class EffectsPanel(QWidget):
         self.setAccessibleName(_("Effects and adjustments"))
 
         layout = QVBoxLayout()
+        layout.setContentsMargins(4, 4, 4, 4)
+        layout.setSpacing(4)
 
         self.brightness_slider = SliderGroup(_("Brightness"), 0.0, 3.0, 1.0)
         self.contrast_slider = SliderGroup(_("Contrast"), 0.0, 3.0, 1.0)
@@ -182,6 +185,8 @@ class TransformPanel(QWidget):
         self.setAccessibleName(_("Transform tools"))
 
         layout = QVBoxLayout()
+        layout.setContentsMargins(4, 4, 4, 4)
+        layout.setSpacing(4)
 
         rotate_layout = QHBoxLayout()
         self.rotate_cw_btn = QPushButton(_("↻ 90°"))
@@ -223,6 +228,8 @@ class CropPanel(QWidget):
         self.setAccessibleName(_("Crop tools"))
 
         layout = QVBoxLayout()
+        layout.setContentsMargins(4, 4, 4, 4)
+        layout.setSpacing(4)
 
         self.crop_mode_checkbox = QCheckBox(_("Crop Mode"))
         self.crop_mode_checkbox.setAccessibleName(_("Toggle crop mode"))
@@ -266,6 +273,8 @@ class DrawPanel(QWidget):
         self.pen_color = QColor(255, 0, 0)
 
         layout = QVBoxLayout()
+        layout.setContentsMargins(4, 4, 4, 4)
+        layout.setSpacing(4)
 
         self.draw_mode_checkbox = QCheckBox(_("Drawing Mode"))
         self.draw_mode_checkbox.setAccessibleName(_("Toggle canvas drawing mode"))

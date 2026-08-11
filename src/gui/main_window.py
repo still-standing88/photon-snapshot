@@ -573,8 +573,7 @@ class MainWindow(QMainWindow):
                 self.editor_panel.crop_panel.crop_mode_checkbox.setChecked(False)
             elif self.viewer.shape_drawing_mode:
                 self.viewer.set_shape_drawing_mode(None)
-                for btn in self.editor_panel.overlay_panel._shape_buttons.values():
-                    btn.setChecked(False)
+                self.editor_panel.overlay_panel.reset_shape_tool()
             elif self.viewer.drawing_mode:
                 self.editor_panel.draw_panel.draw_mode_checkbox.setChecked(False)
         else:
