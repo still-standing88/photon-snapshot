@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
-  <Product Id="*" Name="Photon Snapshot" Language="1033" Version="1.0.0"
-           Manufacturer="JoyBytes" UpgradeCode="12345678-1234-1234-1234-123456789012">
+  <Product Id="*" Name="Photon Snapshot" Language="1033" Version="1.1.0"
+           Manufacturer="still-standing88" UpgradeCode="12345678-1234-1234-1234-123456789012">
 
     <Package InstallerVersion="200" Compressed="yes" InstallScope="perUser" 
              Description="Photon Snapshot - Image Viewer/Editor"
@@ -19,7 +19,7 @@
 
     <Property Id="APPLICATIONFOLDER">
       <RegistrySearch Id="ApplicationFolderRegistry" Root="HKCU" 
-                      Key="Software\JoyBytes\Photon Snapshot" Name="InstallDir" Type="raw" />
+                      Key="Software\still-standing88\Photon Snapshot" Name="InstallDir" Type="raw" />
     </Property>
 
     <Feature Id="ProductFeature" Title="Photon Snapshot" Level="1" 
@@ -66,7 +66,7 @@
                   Icon="PhotonSnapshot.exe" />
         <RemoveFolder Id="ApplicationProgramsFolder" On="uninstall" />
         <RegistryValue Root="HKCU" 
-                       Key="Software\JoyBytes\Photon Snapshot" 
+                       Key="Software\still-standing88\Photon Snapshot" 
                        Name="installed" 
                        Type="integer" 
                        Value="1" 
@@ -85,7 +85,7 @@
                   WorkingDirectory="INSTALLFOLDER"
                   Icon="PhotonSnapshot.exe" />
         <RegistryValue Root="HKCU"
-                       Key="Software\JoyBytes\Photon Snapshot"
+                       Key="Software\still-standing88\Photon Snapshot"
                        Name="DesktopShortcut"
                        Type="integer"
                        Value="1"
@@ -114,7 +114,7 @@
                        Value="&quot;[INSTALLFOLDER]PhotonSnapshot.exe&quot; &quot;%1&quot;" Type="string" />
         
         <RegistryValue Root="HKCU"
-                       Key="Software\JoyBytes\Photon Snapshot"
+                       Key="Software\still-standing88\Photon Snapshot"
                        Name="FileAssociations"
                        Type="integer"
                        Value="1"
@@ -128,7 +128,7 @@
       <Component Id="ProgramMenuFolder" Guid="*">
         <RemoveFolder Id="ProgramMenuFolder" On="uninstall" />
         <RegistryValue Root="HKCU"
-                       Key="Software\JoyBytes\Photon Snapshot"
+                       Key="Software\still-standing88\Photon Snapshot"
                        Name="InstallDir"
                        Type="string"
                        Value="[INSTALLFOLDER]"
@@ -140,8 +140,8 @@
   <Icon Id="PhotonSnapshot.exe" SourceFile="PhotonSnapshot.exe" />
   <Property Id="ARPPRODUCTICON" Value="PhotonSnapshot.exe" />
   
-  <Property Id="ARPHELPLINK" Value="https://joybytes.com/photon-snapshot" />
-  <Property Id="ARPURLINFOABOUT" Value="https://joybytes.com" />
+  <Property Id="ARPHELPLINK" Value="https://github.com/still-standing88/photon-snapshot" />
+  <Property Id="ARPURLINFOABOUT" Value="https://github.com/still-standing88" />
   <Property Id="ARPNOREPAIR" Value="1" />
   <Property Id="ARPNOMODIFY" Value="1" />
 </Wix>
