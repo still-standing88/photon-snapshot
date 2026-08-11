@@ -137,6 +137,11 @@ class FileExplorer(QObject):
         files = [f for f in self._db().get_recent_files(self.max_recent_files) if os.path.exists(f)]
         return files
 
+    def remove_recent_file(self, file_path: str):
+        self._db().remove_recent_file(file_path)
+        self.recent_files = self.get_recent_files()
+        self.recent_files_updated.emit(self.recent_files)
+
     def clear_recent_files(self):
         self._db().clear_recent_files()
         self.recent_files = []
