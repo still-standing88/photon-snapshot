@@ -12,25 +12,28 @@ import math
 class ImageViewer(QScrollArea):
     image_clicked = Signal(int, int)
     zoom_changed = Signal(float)
-    
+    stroke_finished = Signal(list, tuple, int)  # image-space points, RGBA color, width
+
     def __init__(self):
         super().__init__()
         self.setWidgetResizable(True)
         self.setAlignment(Qt.AlignCenter)
+        self.setAccessibleName(_("Image canvas"))
+        self.setAccessibleDescription(_("Displays the currently loaded image. Supports crop, shape, and freehand drawing modes."))
         self.setStyleSheet("""
             QScrollArea {
                 background-color: #2b2b2b;
                 border: none;
             }
         """)
-        
+
         self.image_label = QLabel()
         self.image_label.setAlignment(Qt.AlignCenter)
         self.image_label.setStyleSheet("background-color: transparent;")
         self.image_label.setMinimumSize(100, 100)
-        
+
         self.setWidget(self.image_label)
-        
+
         self.current_pixmap = None
         self.original_pixmap = None
         self.zoom_factor = 1.0
@@ -39,14 +42,22 @@ class ImageViewer(QScrollArea):
         self.crop_start = None
         self.crop_end = None
         self.crop_rect = None
-        
+
         self.overlay_manager = OverlayManager()
         self.show_overlays = True
         self.pixel_info_mode = False
         self.shape_drawing_mode = None
         self.current_shape = None
         self.mouse_position = QPoint()
-        
+
+        # Canvas (freehand pen) drawing mode: paints directly onto the
+        # image's pixels via core.editor.Editor.draw_stroke(), unlike the
+        # non-destructive shape/text overlays above.
+        self.drawing_mode = False
+        self.pen_color = QColor(255, 0, 0)
+        self.pen_width = 3
+        self._stroke_points: list[QPoint] = []
+
         self.image_label.mousePressEvent = self._mouse_press_event
         self.image_label.mouseMoveEvent = self._mouse_move_event
         self.image_label.mouseReleaseEvent = self._mouse_release_event
@@ -97,6 +108,22 @@ class ImageViewer(QScrollArea):
     def set_shape_drawing_mode(self, shape_type: str):
         self.shape_drawing_mode = shape_type
         self.crop_mode = False
+        if shape_type:
+            self.drawing_mode = False
+
+    def set_drawing_mode(self, enabled: bool):
+        self.drawing_mode = enabled
+        if enabled:
+            self.crop_mode = False
+            self.shape_drawing_mode = None
+        self._stroke_points = []
+        self._update_display()
+
+    def set_pen_color(self, color: QColor):
+        self.pen_color = color
+
+    def set_pen_width(self, width: int):
+        self.pen_width = max(1, width)
     
     def toggle_grid_overlay(self):
         grid_overlays = self.overlay_manager.get_overlays_by_type(GridOverlay)
@@ -180,12 +207,14 @@ class ImageViewer(QScrollArea):
             image_pos = self._screen_to_image_pos(event.pos())
             self.current_shape = ShapeOverlay(self.shape_drawing_mode, image_pos, image_pos)
             self.overlay_manager.add_overlay(self.current_shape)
-        
+        elif self.drawing_mode and event.button() == Qt.LeftButton:
+            self._stroke_points = [self._screen_to_image_pos(event.pos())]
+
         self.mouse_position = event.pos()
-    
+
     def _mouse_move_event(self, event: QMouseEvent):
         self.mouse_position = event.pos()
-        
+
         if self.crop_mode and self.crop_start:
             self.crop_end = event.pos()
             self._update_crop_display()
@@ -193,21 +222,30 @@ class ImageViewer(QScrollArea):
             end_pos = self._screen_to_image_pos(event.pos())
             self.current_shape.set_points(self.current_shape.start_point, end_pos)
             self._update_display()
+        elif self.drawing_mode and self._stroke_points:
+            self._stroke_points.append(self._screen_to_image_pos(event.pos()))
+            self._update_display()
         elif self.pixel_info_mode and self.original_pixmap:
             self._update_pixel_info(event.pos())
-    
+
     def _mouse_release_event(self, event: QMouseEvent):
         if self.crop_mode and self.crop_start and self.crop_end:
             x1, y1 = self.crop_start.x(), self.crop_start.y()
             x2, y2 = self.crop_end.x(), self.crop_end.y()
-            
+
             if abs(x2 - x1) > 5 and abs(y2 - y1) > 5:
-                self.crop_rect = QRect(min(x1, x2), min(y1, y2), 
+                self.crop_rect = QRect(min(x1, x2), min(y1, y2),
                                        abs(x2 - x1), abs(y2 - y1))
                 self._update_display()
         elif self.shape_drawing_mode and self.current_shape:
             self.current_shape = None
             self.shape_drawing_mode = None
+        elif self.drawing_mode and self._stroke_points:
+            if len(self._stroke_points) > 1:
+                points = [(p.x(), p.y()) for p in self._stroke_points]
+                color = (self.pen_color.red(), self.pen_color.green(), self.pen_color.blue(), self.pen_color.alpha())
+                self.stroke_finished.emit(points, color, self.pen_width)
+            self._stroke_points = []
     
     def _screen_to_image_pos(self, screen_pos: QPoint) -> QPoint:
         if not self.current_pixmap:
@@ -268,11 +306,20 @@ class ImageViewer(QScrollArea):
         if self.crop_mode and self.crop_rect:
             self._draw_crop_overlay(painter)
         
+        actual_zoom = self.current_pixmap.width() / self.original_pixmap.width()
+
         if self.show_overlays:
             image_rect = QRect(0, 0, display_pixmap.width(), display_pixmap.height())
-            actual_zoom = self.current_pixmap.width() / self.original_pixmap.width()
             self.overlay_manager.draw_all(painter, image_rect, actual_zoom)
-        
+
+        if self.drawing_mode and len(self._stroke_points) > 1:
+            pen = QPen(self.pen_color, max(1, self.pen_width * actual_zoom), Qt.PenStyle.SolidLine,
+                       Qt.PenCapStyle.RoundCap, Qt.PenJoinStyle.RoundJoin)
+            painter.setPen(pen)
+            scaled_points = [QPoint(int(p.x() * actual_zoom), int(p.y() * actual_zoom)) for p in self._stroke_points]
+            for i in range(len(scaled_points) - 1):
+                painter.drawLine(scaled_points[i], scaled_points[i + 1])
+
         painter.end()
         
         self.image_label.setPixmap(display_pixmap)
