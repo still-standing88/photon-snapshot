@@ -167,6 +167,9 @@ jobs:
             ## What's Changed
             - Release version ${{ steps.get_version.outputs.version }}
 
+            Photon Snapshot is a modern, accessible image viewer and editor,
+            developed by still-standing88 (https://github.com/still-standing88).
+
             ## Downloads
             - **Windows**: Download the MSI installer or ZIP archive
             - **macOS (Intel)**: Download the DMG for x64
