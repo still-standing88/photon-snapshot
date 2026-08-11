@@ -4,6 +4,9 @@ import subprocess
 import platform
 from pathlib import Path
 
+sys.path.insert(0, str(Path(__file__).parent / "src"))
+import app_info  # noqa: E402 - needs the sys.path tweak above
+
 
 qt_plugins = [
     "platforms",
@@ -63,8 +66,19 @@ def build_executable():
         f"--include-qt-plugins={','.join(qt_plugins)}",
         "--report=compilation-report.xml",
         f"--output-dir={Path(__file__).parent / 'dist'}",
+        # Embed the real app identity (see src/app_info.py) into the built
+        # binary's version info / bundle metadata, instead of Nuitka's
+        # defaults - this is what shows up in Explorer's file properties
+        # dialog / Finder's Get Info, and is what the Windows/macOS
+        # installers below present as the app's publisher.
+        f"--company-name={app_info.APP_PUBLISHER}",
+        f"--product-name={app_info.APP_NAME}",
+        f"--file-version={app_info.APP_VERSION}",
+        f"--product-version={app_info.APP_VERSION}",
+        f"--copyright={app_info.APP_COPYRIGHT}",
+        f"--file-description={app_info.APP_DESCRIPTION}",
     ]
-    
+
     if current_platform == "windows":
         icon_file = assets_dir / "photon-snapshot.ico"
         nuitka_args.extend([
@@ -74,7 +88,7 @@ def build_executable():
         ])
         if icon_file.exists():
             nuitka_args.append(f"--windows-icon-from-ico={icon_file}")
-    
+
     elif current_platform == "darwin":
         icon_file = assets_dir / "photon-snapshot.icns"
         nuitka_args.extend([
@@ -83,8 +97,8 @@ def build_executable():
         ])
         if icon_file.exists():
             nuitka_args.append(f"--macos-app-icon={icon_file}")
-        nuitka_args.append("--macos-app-version=1.0.0")
-    
+        nuitka_args.append(f"--macos-app-version={app_info.APP_VERSION}")
+
     else:
         nuitka_args.append("--output-filename=PhotonSnapshot")
     
