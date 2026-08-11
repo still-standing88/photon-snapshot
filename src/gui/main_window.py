@@ -95,13 +95,13 @@ class MainWindow(QMainWindow):
 
         self.open_action = QAction(_("&Open..."), self)
         self.open_action.setShortcut(QKeySequence.StandardKey.Open)
-        self.open_action.setAccessibleName(_("Open an image file"))
+        self.open_action.setStatusTip(_("Open an image file"))
         self.open_action.triggered.connect(self.open_file)
         key_config.bind_action("Main Window", "Open file", self.open_action)
         file_menu.addAction(self.open_action)
 
         self.open_folder_action = QAction(_("Open &Folder..."), self)
-        self.open_folder_action.setAccessibleName(_("Open a folder in the explorer"))
+        self.open_folder_action.setStatusTip(_("Open a folder in the explorer"))
         self.open_folder_action.triggered.connect(self.open_folder)
         key_config.bind_action("Main Window", "Open folder", self.open_folder_action)
         file_menu.addAction(self.open_folder_action)
@@ -196,7 +196,7 @@ class MainWindow(QMainWindow):
 
         self.show_explorer_action = QAction(_("&Explorer"), self)
         self.show_explorer_action.setCheckable(True)
-        self.show_explorer_action.setAccessibleName(_("Show or hide the Explorer panel"))
+        self.show_explorer_action.setStatusTip(_("Show or hide the Explorer panel"))
         self.show_explorer_action.toggled.connect(self.dock_manager.toggle_explorer)
         key_config.bind_action("Main Window", "Toggle Explorer", self.show_explorer_action)
         view_menu.addAction(self.show_explorer_action)
