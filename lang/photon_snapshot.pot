@@ -1,0 +1,966 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Photon Snapshot\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: src/gui/editor_panel.py:294
+msgid " px"
+msgstr ""
+
+#: src/gui/main_window.py:253
+msgid "&About Photon Snapshot"
+msgstr ""
+
+#: src/gui/main_window.py:190
+msgid "&Actual Size"
+msgstr ""
+
+#: src/gui/main_window.py:148
+msgid "&Edit"
+msgstr ""
+
+#: src/gui/main_window.py:197
+msgid "&Explorer"
+msgstr ""
+
+#: src/gui/main_window.py:94
+msgid "&File"
+msgstr ""
+
+#: src/gui/main_window.py:185
+msgid "&Fit to Window"
+msgstr ""
+
+#: src/gui/main_window.py:241
+msgid "&Hotkeys..."
+msgstr ""
+
+#: src/gui/main_window.py:96
+msgid "&Open..."
+msgstr ""
+
+#: src/gui/main_window.py:234
+msgid "&Options"
+msgstr ""
+
+#: src/gui/main_window.py:236
+msgid "&Preferences..."
+msgstr ""
+
+#: src/gui/main_window.py:157
+msgid "&Redo"
+msgstr ""
+
+#: src/gui/main_window.py:166
+msgid "&Reset to Original"
+msgstr ""
+
+#: src/gui/main_window.py:111
+msgid "&Save"
+msgstr ""
+
+#: src/gui/main_window.py:204
+msgid "&Toolbar"
+msgstr ""
+
+#: src/gui/main_window.py:150
+msgid "&Undo"
+msgstr ""
+
+#: src/gui/main_window.py:173
+msgid "&View"
+msgstr ""
+
+#: src/update_checker.py:53
+msgid "<b>A new version of {app} is available!</b><br>Your version: <b>{current}</b> -> New version: <b>{new}</b>"
+msgstr ""
+
+#: src/gui/dialogs/about_dialog.py:17
+msgid "About dialog"
+msgstr ""
+
+#: src/gui/dialogs/about_dialog.py:16
+msgid "About {app}"
+msgstr ""
+
+#: src/gui/dialogs/hotkeys_dialog.py:34
+msgid "Action"
+msgstr ""
+
+#: src/gui/dialogs/hotkeys_dialog.py:35
+msgid "Action shortcuts"
+msgstr ""
+
+#: src/gui/explorer.py:226
+msgid "Add Current Folder"
+msgstr ""
+
+#: src/gui/explorer.py:227
+msgid "Add current folder to library"
+msgstr ""
+
+#: src/gui/overlay_panel.py:207
+msgid "Add Text"
+msgstr ""
+
+#: src/gui/overlay_panel.py:208
+msgid "Add text overlay"
+msgstr ""
+
+#: src/gui/editor_panel.py:365
+msgid "Adjustments"
+msgstr ""
+
+#: src/gui/dialogs/about_dialog.py:37
+msgid "Application information"
+msgstr ""
+
+#: src/gui/dialogs/preferences_dialog.py:26
+msgid "Application language"
+msgstr ""
+
+#: src/gui/dialogs/preferences_dialog.py:36
+msgid "Application theme"
+msgstr ""
+
+#: src/gui/dialogs/hotkeys_dialog.py:51
+msgid "Apply"
+msgstr ""
+
+#: src/gui/editor_panel.py:236
+msgid "Apply Crop"
+msgstr ""
+
+#: src/gui/editor_panel.py:237
+msgid "Apply crop selection"
+msgstr ""
+
+#: src/gui/editor_panel.py:125
+msgid "Apply grayscale effect"
+msgstr ""
+
+#: src/gui/editor_panel.py:127
+msgid "Apply sepia effect"
+msgstr ""
+
+#: src/gui/dialogs/hotkeys_dialog.py:150
+msgid "Are you sure you want to reset all hotkeys to default?"
+msgstr ""
+
+#: src/gui/overlay_panel.py:198
+msgid "Background"
+msgstr ""
+
+#: src/gui/overlay_panel.py:168
+msgid "Bottom Center"
+msgstr ""
+
+#: src/gui/overlay_panel.py:168
+msgid "Bottom Left"
+msgstr ""
+
+#: src/gui/overlay_panel.py:168
+msgid "Bottom Right"
+msgstr ""
+
+#: src/gui/editor_panel.py:116
+msgid "Brightness"
+msgstr ""
+
+#: src/app_init.py:75
+msgid "Building interface..."
+msgstr ""
+
+#: src/gui/dialogs/hotkeys_dialog.py:53
+msgid "Cancel"
+msgstr ""
+
+#: src/gui/editor_panel.py:265
+msgid "Canvas drawing tools"
+msgstr ""
+
+#: src/gui/dialogs/hotkeys_dialog.py:78
+msgid "Category: {name}"
+msgstr ""
+
+#: src/gui/overlay_panel.py:167
+msgid "Center"
+msgstr ""
+
+#: src/gui/dialogs/preferences_dialog.py:57
+msgid "Changing the language requires restarting the application."
+msgstr ""
+
+#: src/gui/main_window.py:248
+msgid "Check for &Updates..."
+msgstr ""
+
+#: src/gui/dialogs/preferences_dialog.py:45
+msgid "Check for updates on startup"
+msgstr ""
+
+#: src/gui/overlay_panel.py:192
+msgid "Choose overlay text color"
+msgstr ""
+
+#: src/gui/editor_panel.py:283
+msgid "Choose pen color"
+msgstr ""
+
+#: src/gui/overlay_panel.py:97
+msgid "Circle"
+msgstr ""
+
+#: src/gui/explorer.py:297
+msgid "Clear"
+msgstr ""
+
+#: src/gui/overlay_panel.py:40
+msgid "Clear All Overlays"
+msgstr ""
+
+#: src/gui/overlay_panel.py:41
+msgid "Clear all overlays"
+msgstr ""
+
+#: src/gui/main_window.py:130
+msgid "Clear Recent Files"
+msgstr ""
+
+#: src/gui/explorer.py:298
+msgid "Clear search"
+msgstr ""
+
+#: src/gui/editor_panel.py:300
+msgid "Click and drag on the image to draw. This permanently edits the pixels."
+msgstr ""
+
+#: src/gui/overlay_panel.py:169
+msgid "Click to Place"
+msgstr ""
+
+#: src/gui/dialogs/preferences_dialog.py:53
+msgid "Confirm before overwriting files"
+msgstr ""
+
+#: src/gui/editor_panel.py:117
+msgid "Contrast"
+msgstr ""
+
+#: src/gui/editor_panel.py:367
+msgid "Crop"
+msgstr ""
+
+#: src/gui/editor_panel.py:227
+msgid "Crop Mode"
+msgstr ""
+
+#: src/gui/editor_panel.py:223
+msgid "Crop tools"
+msgstr ""
+
+#: src/gui/explorer.py:143
+msgid "Current folder path"
+msgstr ""
+
+#: src/gui/main_window.py:296
+msgid "Current zoom level"
+msgstr ""
+
+#: src/gui/dialogs/preferences_dialog.py:37
+msgid "Dark"
+msgstr ""
+
+#: src/gui/viewer.py:22
+msgid "Displays the currently loaded image. Supports crop, shape, and freehand drawing modes."
+msgstr ""
+
+#: src/gui/editor_panel.py:369
+msgid "Draw"
+msgstr ""
+
+#: src/gui/overlay_panel.py:99
+msgid "Draw circle shape"
+msgstr ""
+
+#: src/gui/overlay_panel.py:104
+msgid "Draw line shape"
+msgstr ""
+
+#: src/gui/overlay_panel.py:94
+msgid "Draw rectangle shape"
+msgstr ""
+
+#: src/gui/editor_panel.py:270
+msgid "Drawing Mode"
+msgstr ""
+
+#: src/gui/main_window.py:142
+msgid "E&xit"
+msgstr ""
+
+#: src/gui_controls/accordion.py:71
+msgid "Editing tool categories"
+msgstr ""
+
+#: src/gui/editor_panel.py:355
+msgid "Editing tool panels"
+msgstr ""
+
+#: src/gui/editor_panel.py:341
+msgid "Editing tools"
+msgstr ""
+
+#: src/gui/editor_panel.py:112
+msgid "Effects and adjustments"
+msgstr ""
+
+#: src/gui/explorer.py:144
+msgid "Enter a folder path and press Enter"
+msgstr ""
+
+#: src/gui/overlay_panel.py:139
+msgid "Enter text..."
+msgstr ""
+
+#: src/gui/main_window.py:379
+#: src/gui/main_window.py:381
+#: src/gui/main_window.py:392
+#: src/gui/main_window.py:421
+msgid "Error"
+msgstr ""
+
+#: src/gui/main_window.py:381
+msgid "Error loading image: {error}"
+msgstr ""
+
+#: src/gui/main_window.py:392
+#: src/gui/main_window.py:421
+msgid "Error saving image: {error}"
+msgstr ""
+
+#: src/gui/explorer.py:267
+#: src/gui/managers/dock_manager.py:42
+msgid "Explorer"
+msgstr ""
+
+#: src/gui/explorer.py:306
+msgid "Explorer Toolbar"
+msgstr ""
+
+#: src/gui/explorer.py:307
+msgid "Explorer toolbar"
+msgstr ""
+
+#: src/gui/main_window.py:379
+msgid "Failed to load image"
+msgstr ""
+
+#: src/gui/explorer.py:21
+msgid "File list"
+msgstr ""
+
+#: src/gui/explorer.py:92
+msgid "File name"
+msgstr ""
+
+#: src/gui/main_window.py:528
+msgid "File Not Found"
+msgstr ""
+
+#: src/gui/explorer.py:95
+msgid "File size"
+msgstr ""
+
+#: src/gui/explorer.py:303
+msgid "Files"
+msgstr ""
+
+#: src/gui/explorer.py:22
+msgid "Files and folders in the current directory. Enter opens a folder or image, double-click opens images."
+msgstr ""
+
+#: src/gui/editor_panel.py:194
+msgid "Flip image horizontally"
+msgstr ""
+
+#: src/gui/editor_panel.py:196
+msgid "Flip image vertically"
+msgstr ""
+
+#: src/gui/explorer.py:173
+msgid "Go Back"
+msgstr ""
+
+#: src/gui/explorer.py:174
+msgid "Go back"
+msgstr ""
+
+#: src/gui/explorer.py:180
+msgid "Go Forward"
+msgstr ""
+
+#: src/gui/explorer.py:181
+msgid "Go forward"
+msgstr ""
+
+#: src/gui/explorer.py:188
+msgid "Go to parent folder"
+msgstr ""
+
+#: src/gui/explorer.py:187
+msgid "Go Up"
+msgstr ""
+
+#: src/gui/editor_panel.py:124
+msgid "Grayscale"
+msgstr ""
+
+#: src/gui/overlay_panel.py:52
+msgid "Grid Overlay"
+msgstr ""
+
+#: src/taskbar_icon.py:31
+#: src/taskbar_icon.py:54
+msgid "Hide"
+msgstr ""
+
+#: src/gui/dialogs/hotkeys_dialog.py:21
+msgid "Hotkeys Configuration"
+msgstr ""
+
+#: src/gui/dialogs/hotkeys_dialog.py:22
+msgid "Hotkeys Configuration Dialog"
+msgstr ""
+
+#: src/update_checker.py:148
+msgid "HTTP {status}"
+msgstr ""
+
+#: src/gui/viewer.py:21
+msgid "Image canvas"
+msgstr ""
+
+#: src/gui/explorer.py:96
+#: src/gui/main_window.py:297
+msgid "Image dimensions"
+msgstr ""
+
+#: src/gui/main_window.py:390
+msgid "Image saved"
+msgstr ""
+
+#: src/gui/main_window.py:418
+msgid "Image saved as {name}"
+msgstr ""
+
+#: src/gui/editor_panel.py:128
+msgid "Invert"
+msgstr ""
+
+#: src/gui/editor_panel.py:129
+msgid "Invert colors"
+msgstr ""
+
+#: src/gui/dialogs/preferences_dialog.py:33
+msgid "Language:"
+msgstr ""
+
+#: src/update_checker.py:71
+msgid "Later"
+msgstr ""
+
+#: src/gui/overlay_panel.py:167
+msgid "Left Center"
+msgstr ""
+
+#: src/gui/explorer.py:213
+#: src/gui/explorer.py:214
+msgid "Library"
+msgstr ""
+
+#: src/gui/explorer.py:220
+msgid "Library folders"
+msgstr ""
+
+#: src/gui/dialogs/preferences_dialog.py:38
+msgid "Light"
+msgstr ""
+
+#: src/gui/overlay_panel.py:102
+msgid "Line"
+msgstr ""
+
+#: src/gui/main_window.py:376
+msgid "Loaded: {name}"
+msgstr ""
+
+#: src/app_init.py:66
+msgid "Loading key bindings..."
+msgstr ""
+
+#: src/loading.py:27
+msgid "Loading..."
+msgstr ""
+
+#: src/gui/main_window.py:259
+msgid "Main"
+msgstr ""
+
+#: src/gui/main_window.py:91
+msgid "Main menu"
+msgstr ""
+
+#: src/gui/main_window.py:261
+msgid "Main toolbar"
+msgstr ""
+
+#: src/gui/main_window.py:137
+msgid "Minimize to Tray"
+msgstr ""
+
+#: src/gui/dialogs/preferences_dialog.py:49
+msgid "Minimize to tray when window is closed"
+msgstr ""
+
+#: src/gui/explorer.py:128
+msgid "No preview"
+msgstr ""
+
+#: src/gui/main_window.py:504
+msgid "No recent files"
+msgstr ""
+
+#: src/update_checker.py:66
+msgid "No release notes provided."
+msgstr ""
+
+#: src/update_checker.py:152
+msgid "No Releases Found"
+msgstr ""
+
+#: src/update_checker.py:153
+msgid "No releases have been published for this application yet."
+msgstr ""
+
+#: src/update_checker.py:165
+msgid "No Update Available"
+msgstr ""
+
+#: src/gui/dialogs/hotkeys_dialog.py:85
+msgid "none"
+msgstr ""
+
+#: src/gui/dialogs/hotkeys_dialog.py:55
+msgid "OK"
+msgstr ""
+
+#: src/gui/main_window.py:103
+msgid "Open &Folder..."
+msgstr ""
+
+#: src/gui/main_window.py:104
+msgid "Open a folder in the explorer"
+msgstr ""
+
+#: src/gui/main_window.py:98
+msgid "Open an image file"
+msgstr ""
+
+#: src/update_checker.py:74
+msgid "Open Download Page"
+msgstr ""
+
+#: src/gui/explorer.py:64
+#: src/gui/main_window.py:359
+msgid "Open Folder"
+msgstr ""
+
+#: src/gui/explorer.py:60
+#: src/gui/main_window.py:354
+msgid "Open Image"
+msgstr ""
+
+#: src/gui/overlay_panel.py:140
+msgid "Overlay text"
+msgstr ""
+
+#: src/gui/overlay_panel.py:181
+msgid "Overlay text font size"
+msgstr ""
+
+#: src/gui/overlay_panel.py:24
+msgid "Overlay tools"
+msgstr ""
+
+#: src/gui/editor_panel.py:368
+msgid "Overlays"
+msgstr ""
+
+#: src/gui/main_window.py:406
+msgid "Overwrite File?"
+msgstr ""
+
+#: src/gui/explorer.py:282
+msgid "Path"
+msgstr ""
+
+#: src/gui/editor_panel.py:282
+msgid "Pen Color"
+msgstr ""
+
+#: src/gui/editor_panel.py:295
+msgid "Pen width in pixels"
+msgstr ""
+
+#: src/gui/editor_panel.py:290
+msgid "Pen Width:"
+msgstr ""
+
+#: src/gui/dialogs/preferences_dialog.py:83
+msgid "Photon Snapshot"
+msgstr ""
+
+#: src/gui/main_window.py:36
+msgid "Photon Snapshot main window"
+msgstr ""
+
+#: src/gui/explorer.py:221
+msgid "Pinned folders for quick access. Double-click or press Enter to open."
+msgstr ""
+
+#: src/gui/overlay_panel.py:60
+msgid "Pixel Info Mode"
+msgstr ""
+
+#: src/gui/dialogs/preferences_dialog.py:82
+msgid "Please restart {app} for the language change to take effect."
+msgstr ""
+
+#: src/gui/overlay_panel.py:162
+msgid "Position:"
+msgstr ""
+
+#: src/gui/dialogs/preferences_dialog.py:16
+msgid "Preferences"
+msgstr ""
+
+#: src/gui/dialogs/preferences_dialog.py:17
+msgid "Preferences dialog"
+msgstr ""
+
+#: src/gui/dialogs/hotkeys_dialog.py:111
+msgid "Press the desired key combination; press Enter or change focus to accept."
+msgstr ""
+
+#: src/gui/explorer.py:90
+msgid "Preview thumbnail"
+msgstr ""
+
+#: src/gui/dialogs/about_dialog.py:42
+msgid "Project website link"
+msgstr ""
+
+#: src/taskbar_icon.py:37
+msgid "Quit"
+msgstr ""
+
+#: src/gui/main_window.py:295
+msgid "Ready"
+msgstr ""
+
+#: src/gui/main_window.py:127
+msgid "Recent Files"
+msgstr ""
+
+#: src/gui/overlay_panel.py:92
+msgid "Rectangle"
+msgstr ""
+
+#: src/gui/main_window.py:431
+msgid "Redone"
+msgstr ""
+
+#: src/gui/explorer.py:309
+msgid "Refresh"
+msgstr ""
+
+#: src/update_checker.py:65
+msgid "Release notes"
+msgstr ""
+
+#: src/gui/explorer.py:229
+msgid "Remove"
+msgstr ""
+
+#: src/gui/explorer.py:230
+msgid "Remove selected folder from library"
+msgstr ""
+
+#: src/gui/dialogs/hotkeys_dialog.py:49
+msgid "Reset all shortcuts to default"
+msgstr ""
+
+#: src/gui/dialogs/hotkeys_dialog.py:48
+#: src/gui/dialogs/hotkeys_dialog.py:149
+msgid "Reset to Default"
+msgstr ""
+
+#: src/gui/main_window.py:438
+msgid "Reset to original"
+msgstr ""
+
+#: src/gui/dialogs/preferences_dialog.py:81
+msgid "Restart Required"
+msgstr ""
+
+#: src/gui/overlay_panel.py:167
+msgid "Right Center"
+msgstr ""
+
+#: src/gui/editor_panel.py:188
+msgid "Rotate 90 degrees clockwise"
+msgstr ""
+
+#: src/gui/editor_panel.py:190
+msgid "Rotate 90 degrees counterclockwise"
+msgstr ""
+
+#: src/gui/overlay_panel.py:56
+msgid "Ruler Overlay"
+msgstr ""
+
+#: src/gui/main_window.py:118
+msgid "Save &As..."
+msgstr ""
+
+#: src/gui/main_window.py:400
+msgid "Save Image As"
+msgstr ""
+
+#: src/gui/explorer.py:290
+msgid "Search"
+msgstr ""
+
+#: src/gui/explorer.py:293
+msgid "Search current folder"
+msgstr ""
+
+#: src/gui/explorer.py:294
+msgid "Search current folder..."
+msgstr ""
+
+#: src/gui_controls/toggle_button.py:126
+msgid "Section collapsed - activate to expand"
+msgstr ""
+
+#: src/gui_controls/toggle_button.py:123
+msgid "Section expanded - activate to collapse"
+msgstr ""
+
+#: src/gui/editor_panel.py:308
+msgid "Select Pen Color"
+msgstr ""
+
+#: src/gui/overlay_panel.py:259
+msgid "Select Text Color"
+msgstr ""
+
+#: src/gui/explorer.py:82
+msgid "Selected file preview"
+msgstr ""
+
+#: src/gui/editor_panel.py:126
+msgid "Sepia"
+msgstr ""
+
+#: src/gui/overlay_panel.py:72
+msgid "Shape Drawing"
+msgstr ""
+
+#: src/gui/dialogs/hotkeys_dialog.py:34
+msgid "Shortcut"
+msgstr ""
+
+#: src/taskbar_icon.py:54
+msgid "Show"
+msgstr ""
+
+#: src/gui/main_window.py:199
+msgid "Show or hide the Explorer panel"
+msgstr ""
+
+#: src/gui/overlay_panel.py:200
+msgid "Show text background"
+msgstr ""
+
+#: src/gui/overlay_panel.py:177
+msgid "Size:"
+msgstr ""
+
+#: src/gui/main_window.py:210
+msgid "Status &Bar"
+msgstr ""
+
+#: src/gui/main_window.py:287
+msgid "Status bar"
+msgstr ""
+
+#: src/gui/main_window.py:295
+msgid "Status message"
+msgstr ""
+
+#: src/gui/main_window.py:456
+msgid "Stroke drawn"
+msgstr ""
+
+#: src/gui/dialogs/preferences_dialog.py:27
+msgid "System Default"
+msgstr ""
+
+#: src/gui/overlay_panel.py:191
+msgid "Text Color"
+msgstr ""
+
+#: src/gui/overlay_panel.py:117
+msgid "Text Overlay"
+msgstr ""
+
+#: src/gui/overlay_panel.py:164
+msgid "Text overlay position"
+msgstr ""
+
+#: src/gui/main_window.py:529
+msgid "The file '{path}' no longer exists and will be removed from recent files."
+msgstr ""
+
+#: src/gui/dialogs/preferences_dialog.py:41
+msgid "Theme:"
+msgstr ""
+
+#: src/gui/main_window.py:218
+msgid "Toggle &Grid"
+msgstr ""
+
+#: src/gui/main_window.py:228
+msgid "Toggle &Pixel Info"
+msgstr ""
+
+#: src/gui/main_window.py:223
+msgid "Toggle &Ruler"
+msgstr ""
+
+#: src/gui/editor_panel.py:271
+msgid "Toggle canvas drawing mode"
+msgstr ""
+
+#: src/gui/editor_panel.py:228
+msgid "Toggle crop mode"
+msgstr ""
+
+#: src/gui/overlay_panel.py:53
+msgid "Toggle grid overlay"
+msgstr ""
+
+#: src/gui/overlay_panel.py:61
+msgid "Toggle pixel info mode"
+msgstr ""
+
+#: src/gui/overlay_panel.py:57
+msgid "Toggle ruler overlay"
+msgstr ""
+
+#: src/gui/overlay_panel.py:166
+msgid "Top Center"
+msgstr ""
+
+#: src/gui/overlay_panel.py:166
+msgid "Top Left"
+msgstr ""
+
+#: src/gui/overlay_panel.py:166
+msgid "Top Right"
+msgstr ""
+
+#: src/gui/editor_panel.py:366
+msgid "Transform"
+msgstr ""
+
+#: src/gui/editor_panel.py:182
+msgid "Transform tools"
+msgstr ""
+
+#: src/gui/main_window.py:426
+msgid "Undone"
+msgstr ""
+
+#: src/update_checker.py:45
+msgid "Update Available - {title}"
+msgstr ""
+
+#: src/update_checker.py:46
+msgid "Update available dialog"
+msgstr ""
+
+#: src/gui/dialogs/about_dialog.py:28
+msgid "Version {version}<br>{description}<br><br>{copyright}<br>License: {license}"
+msgstr ""
+
+#: src/gui/main_window.py:175
+msgid "Zoom &In"
+msgstr ""
+
+#: src/gui/main_window.py:180
+msgid "Zoom &Out"
+msgstr ""
+
+#: src/gui/main_window.py:296
+msgid "Zoom: 100%"
+msgstr ""
+
+#: src/gui/main_window.py:459
+msgid "Zoom: {percent:.0f}%"
+msgstr ""
+
+#: src/gui/dialogs/hotkeys_dialog.py:84
+msgid "{action} in {section}, current shortcut: {shortcut}"
+msgstr ""
+
+#: src/update_checker.py:166
+msgid "{app} is up to date (version {version})."
+msgstr ""
+
+#: src/gui_controls/toggle_button.py:127
+msgid "{name} - collapsed"
+msgstr ""
+
+#: src/gui_controls/toggle_button.py:124
+msgid "{name} - expanded"
+msgstr ""
+
+#: src/gui/main_window.py:407
+msgid "{name} already exists. Overwrite it?"
+msgstr ""
+
+#: src/gui/editor_panel.py:52
+msgid "{title} value"
+msgstr ""
+
+#: src/gui/editor_panel.py:193
+msgid "↔ Flip H"
+msgstr ""
+
+#: src/gui/editor_panel.py:195
+msgid "↕ Flip V"
+msgstr ""
+
+#: src/gui/editor_panel.py:189
+msgid "↺ 90°"
+msgstr ""
+
+#: src/gui/editor_panel.py:187
+msgid "↻ 90°"
+msgstr ""
+
