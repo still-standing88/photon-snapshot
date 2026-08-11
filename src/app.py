@@ -24,6 +24,15 @@ def main():
     app.setApplicationName("Photon Snapshot")
     app.setApplicationVersion("1.1.0")
 
+    # Installs `_()` as a builtin using the system locale (or English if
+    # nothing matches) *before* anything - including the splash screen
+    # below - can call it. app_init.initialize_modules() re-installs it
+    # with the user's saved language preference once prefs are loaded;
+    # calling it here first is what makes LoadingSplash() safe to
+    # construct before that happens.
+    from utilities.i18n import install_translation
+    install_translation()
+
     splash = LoadingSplash()
     splash.show()
     app.processEvents()
