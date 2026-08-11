@@ -1,245 +1,190 @@
-"""SQLite-backed application database.
+"""peewee-backed application database.
 
-Replaces the old ``~/.photon_snapshot/config.json`` explorer config with a
-single ``photon_snapshot.db`` file holding:
+Public API is unchanged from the previous raw-sqlite3 implementation (same
+method names/signatures on `AppDatabase`/the module-level `db` singleton),
+so nothing in :mod:`core.explorer`, :mod:`app_config.prefs`, or
+:mod:`app_config.key_config` needed to change for this rewrite.
 
-* ``prefs``        - arbitrary JSON-encoded preference values (key/value)
-* ``user_files``    - recent / favorite / library-folder paths
-* ``key_bindings``  - the akeyconfig hotkey table (section, action, sequence)
-* ``window_state``  - saved geometry/dock layout blobs, hex-encoded
+Every write goes through :data:`app_db.base_database.write_queue`, which
+serializes it onto one background thread (see that module's docstring for
+why); every read runs directly on the calling thread, which peewee makes
+safe automatically.
 """
 
 from __future__ import annotations
 
 import json
-import sqlite3
-import threading
-from dataclasses import dataclass
 from datetime import datetime
 from typing import Any, Optional
 
-from utilities.functions import get_database_path
-
-
-SCHEMA = """
-CREATE TABLE IF NOT EXISTS prefs (
-    key TEXT PRIMARY KEY NOT NULL,
-    value TEXT NOT NULL
-);
-
-CREATE TABLE IF NOT EXISTS user_files (
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    path TEXT NOT NULL,
-    category TEXT CHECK(category IN ('RECENT', 'FAVORITE', 'LIBRARY')) NOT NULL,
-    date_added TEXT NOT NULL,
-    UNIQUE(path, category)
-);
-CREATE INDEX IF NOT EXISTS idx_user_files_category ON user_files(category);
-
-CREATE TABLE IF NOT EXISTS key_bindings (
-    section TEXT NOT NULL,
-    action TEXT NOT NULL,
-    sequence TEXT NOT NULL,
-    PRIMARY KEY (section, action)
-);
-
-CREATE TABLE IF NOT EXISTS window_state (
-    key TEXT PRIMARY KEY NOT NULL,
-    value TEXT NOT NULL
-);
-"""
-
-
-@dataclass
-class FileCategory:
-    RECENT = "RECENT"
-    FAVORITE = "FAVORITE"
-    LIBRARY = "LIBRARY"
+from . import base_database
+from .base_database import database, write_queue
+from .models import ALL_MODELS, FileCategory, KeyBinding, Pref, UserFile, WindowState
 
 
 class AppDatabase:
-    """Thread-safe-enough wrapper: one sqlite3 connection per thread
-    (Qt apps mostly touch this from the GUI thread, but background image
-    loading workers may not)."""
-
-    def __init__(self, db_path: Optional[str] = None):
-        self._db_path = db_path or get_database_path()
-        self._local = threading.local()
-        self._init_lock = threading.Lock()
+    def __init__(self):
         self._initialized = False
 
-    def _connection(self) -> sqlite3.Connection:
-        conn = getattr(self._local, "conn", None)
-        if conn is None:
-            conn = sqlite3.connect(self._db_path, check_same_thread=False)
-            conn.execute("PRAGMA journal_mode=WAL")
-            conn.execute("PRAGMA foreign_keys=ON")
-            self._local.conn = conn
-        return conn
-
+    # --------------------------------------------------------- lifecycle ----
     def initialize(self):
-        with self._init_lock:
-            if self._initialized:
-                return
-            conn = self._connection()
-            conn.executescript(SCHEMA)
-            conn.commit()
-            self._initialized = True
+        if self._initialized:
+            return
+        base_database.configure_database()
+        database.connect(reuse_if_open=True)
+        database.create_tables(ALL_MODELS, safe=True)
+        write_queue.start()
+        self._initialized = True
 
     def close(self):
-        conn = getattr(self._local, "conn", None)
-        if conn is not None:
-            conn.close()
-            self._local.conn = None
+        write_queue.stop()
+        if not database.is_closed():
+            database.close()
+        self._initialized = False
 
-    # ---------------------------------------------------------- prefs ----
+    # ---------------------------------------------------------------- prefs ----
     def get_pref(self, key: str, default: Any = None) -> Any:
-        cur = self._connection().execute("SELECT value FROM prefs WHERE key = ?", (key,))
-        row = cur.fetchone()
+        row = Pref.get_or_none(Pref.key == key)
         if row is None:
             return default
         try:
-            return json.loads(row[0])
+            return json.loads(row.value)
         except (TypeError, json.JSONDecodeError):
             return default
 
     def set_pref(self, key: str, value: Any):
-        conn = self._connection()
-        conn.execute(
-            "INSERT INTO prefs (key, value) VALUES (?, ?) "
-            "ON CONFLICT(key) DO UPDATE SET value = excluded.value",
-            (key, json.dumps(value)),
-        )
-        conn.commit()
+        write_queue.run(self._set_pref_impl, key, value)
+
+    @staticmethod
+    def _set_pref_impl(key: str, value: Any):
+        Pref.replace(key=key, value=json.dumps(value)).execute()
 
     def all_prefs(self) -> dict:
-        cur = self._connection().execute("SELECT key, value FROM prefs")
         result = {}
-        for key, value in cur.fetchall():
+        for row in Pref.select():
             try:
-                result[key] = json.loads(value)
+                result[row.key] = json.loads(row.value)
             except (TypeError, json.JSONDecodeError):
                 pass
         return result
 
-    # ------------------------------------------------------ user files ----
-    def _add_file(self, path: str, category: str):
-        conn = self._connection()
-        conn.execute(
-            "INSERT INTO user_files (path, category, date_added) VALUES (?, ?, ?) "
-            "ON CONFLICT(path, category) DO UPDATE SET date_added = excluded.date_added",
-            (path, category, datetime.now().isoformat()),
-        )
-        conn.commit()
-
+    # ------------------------------------------------------------ user files ----
     def _get_files(self, category: str, limit: Optional[int] = None) -> list[str]:
-        sql = "SELECT path FROM user_files WHERE category = ? ORDER BY date_added DESC"
-        params: tuple = (category,)
+        query = (
+            UserFile.select(UserFile.path)
+            .where(UserFile.category == category)
+            .order_by(UserFile.date_added.desc())
+        )
         if limit:
-            sql += " LIMIT ?"
-            params = (category, limit)
-        cur = self._connection().execute(sql, params)
-        return [row[0] for row in cur.fetchall()]
+            query = query.limit(limit)
+        return [row.path for row in query]
 
-    def _remove_file(self, path: str, category: str):
-        conn = self._connection()
-        conn.execute("DELETE FROM user_files WHERE path = ? AND category = ?", (path, category))
-        conn.commit()
+    @staticmethod
+    def _upsert_file_impl(path: str, category: str):
+        now = datetime.now().isoformat()
+        UserFile.insert(path=path, category=category, date_added=now).on_conflict(
+            conflict_target=[UserFile.path, UserFile.category],
+            update={UserFile.date_added: now},
+        ).execute()
 
-    def _clear_category(self, category: str):
-        conn = self._connection()
-        conn.execute("DELETE FROM user_files WHERE category = ?", (category,))
-        conn.commit()
+    @staticmethod
+    def _remove_file_impl(path: str, category: str):
+        UserFile.delete().where((UserFile.path == path) & (UserFile.category == category)).execute()
+
+    @staticmethod
+    def _clear_category_impl(category: str):
+        UserFile.delete().where(UserFile.category == category).execute()
+
+    @staticmethod
+    def _add_recent_file_impl(path: str, max_count: int):
+        AppDatabase._upsert_file_impl(path, FileCategory.RECENT)
+        keep_ids = [
+            row.id
+            for row in UserFile.select(UserFile.id)
+            .where(UserFile.category == FileCategory.RECENT)
+            .order_by(UserFile.date_added.desc())
+            .limit(max_count)
+        ]
+        if keep_ids:
+            UserFile.delete().where(
+                (UserFile.category == FileCategory.RECENT) & (UserFile.id.not_in(keep_ids))
+            ).execute()
 
     def add_recent_file(self, path: str, max_count: int = 20):
-        self._add_file(path, FileCategory.RECENT)
-        conn = self._connection()
-        conn.execute(
-            "DELETE FROM user_files WHERE category = ? AND id NOT IN "
-            "(SELECT id FROM user_files WHERE category = ? ORDER BY date_added DESC LIMIT ?)",
-            (FileCategory.RECENT, FileCategory.RECENT, max_count),
-        )
-        conn.commit()
+        write_queue.run(self._add_recent_file_impl, path, max_count)
 
     def get_recent_files(self, limit: Optional[int] = None) -> list[str]:
         return self._get_files(FileCategory.RECENT, limit)
 
     def remove_recent_file(self, path: str):
-        self._remove_file(path, FileCategory.RECENT)
+        write_queue.run(self._remove_file_impl, path, FileCategory.RECENT)
 
     def clear_recent_files(self):
-        self._clear_category(FileCategory.RECENT)
+        write_queue.run(self._clear_category_impl, FileCategory.RECENT)
 
     def add_favorite(self, path: str):
-        self._add_file(path, FileCategory.FAVORITE)
+        write_queue.run(self._upsert_file_impl, path, FileCategory.FAVORITE)
 
     def get_favorites(self) -> list[str]:
         return self._get_files(FileCategory.FAVORITE)
 
     def remove_favorite(self, path: str):
-        self._remove_file(path, FileCategory.FAVORITE)
+        write_queue.run(self._remove_file_impl, path, FileCategory.FAVORITE)
 
     def is_favorite(self, path: str) -> bool:
-        cur = self._connection().execute(
-            "SELECT 1 FROM user_files WHERE path = ? AND category = ?", (path, FileCategory.FAVORITE)
-        )
-        return cur.fetchone() is not None
+        return UserFile.select().where(
+            (UserFile.path == path) & (UserFile.category == FileCategory.FAVORITE)
+        ).exists()
 
     def add_library_folder(self, path: str):
-        self._add_file(path, FileCategory.LIBRARY)
+        write_queue.run(self._upsert_file_impl, path, FileCategory.LIBRARY)
 
     def get_library_folders(self) -> list[str]:
         return self._get_files(FileCategory.LIBRARY)
 
     def remove_library_folder(self, path: str):
-        self._remove_file(path, FileCategory.LIBRARY)
+        write_queue.run(self._remove_file_impl, path, FileCategory.LIBRARY)
 
-    # ---------------------------------------------------- key bindings ----
+    # ---------------------------------------------------------- key bindings ----
     def get_key_bindings(self, section: str) -> dict:
-        cur = self._connection().execute(
-            "SELECT action, sequence FROM key_bindings WHERE section = ?", (section,)
-        )
-        return {action: sequence for action, sequence in cur.fetchall()}
+        return {
+            row.action: row.sequence
+            for row in KeyBinding.select().where(KeyBinding.section == section)
+        }
 
     def get_all_key_bindings(self) -> dict:
-        cur = self._connection().execute("SELECT section, action, sequence FROM key_bindings")
         result: dict[str, dict[str, str]] = {}
-        for section, action, sequence in cur.fetchall():
-            result.setdefault(section, {})[action] = sequence
+        for row in KeyBinding.select():
+            result.setdefault(row.section, {})[row.action] = row.sequence
         return result
 
+    @staticmethod
+    def _set_key_binding_impl(section: str, action: str, sequence: str):
+        KeyBinding.insert(section=section, action=action, sequence=sequence).on_conflict(
+            conflict_target=[KeyBinding.section, KeyBinding.action],
+            update={KeyBinding.sequence: sequence},
+        ).execute()
+
     def set_key_binding(self, section: str, action: str, sequence: str):
-        conn = self._connection()
-        conn.execute(
-            "INSERT INTO key_bindings (section, action, sequence) VALUES (?, ?, ?) "
-            "ON CONFLICT(section, action) DO UPDATE SET sequence = excluded.sequence",
-            (section, action, sequence),
-        )
-        conn.commit()
+        write_queue.run(self._set_key_binding_impl, section, action, sequence)
 
     def clear_key_bindings(self):
-        conn = self._connection()
-        conn.execute("DELETE FROM key_bindings")
-        conn.commit()
+        write_queue.run(lambda: KeyBinding.delete().execute())
 
     def has_key_bindings(self) -> bool:
-        cur = self._connection().execute("SELECT 1 FROM key_bindings LIMIT 1")
-        return cur.fetchone() is not None
+        return KeyBinding.select().limit(1).exists()
 
-    # ----------------------------------------------------- window state ----
+    # ------------------------------------------------------------ window state ----
+    @staticmethod
+    def _save_window_state_impl(key: str, value: str):
+        WindowState.replace(key=key, value=value).execute()
+
     def save_window_state(self, key: str, value: str):
-        conn = self._connection()
-        conn.execute(
-            "INSERT INTO window_state (key, value) VALUES (?, ?) "
-            "ON CONFLICT(key) DO UPDATE SET value = excluded.value",
-            (key, value),
-        )
-        conn.commit()
+        write_queue.run(self._save_window_state_impl, key, value)
 
     def load_window_state(self, key: str) -> Optional[str]:
-        cur = self._connection().execute("SELECT value FROM window_state WHERE key = ?", (key,))
-        row = cur.fetchone()
-        return row[0] if row else None
+        row = WindowState.get_or_none(WindowState.key == key)
+        return row.value if row else None
 
 
 # Process-wide singleton, mirroring playForm's module-level `prefs`/`media_db`

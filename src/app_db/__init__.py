@@ -7,9 +7,12 @@ single SQLite database under the user's home directory
 :func:`utilities.functions.get_database_path`). No JSON/pickle/cfg files are
 used for persistence; this satisfies item 5 of the snapshot-rewrite task.
 
-Only the stdlib ``sqlite3`` module is used (no extra ORM dependency such as
-peewee/SQLAlchemy), keeping the dependency footprint identical to what was
-already declared in requirements.txt.
+Backed by the ``peewee`` ORM (see :mod:`app_db.models` for the schema and
+:mod:`app_db.base_database` for the shared ``Database`` object). Writes are
+serialized onto a single background thread via ``base_database.write_queue``
+so concurrent writers can't hit SQLite's "database is locked" error; reads
+run on the calling thread, which peewee's per-thread connection handling
+makes safe without any extra locking here.
 """
 
 from .database import AppDatabase, db
