@@ -152,7 +152,7 @@ FR = {
     "No recent files": "Aucun fichier récent",
     "No release notes provided.": "Aucune note de version fournie.",
     "No Releases Found": "Aucune version trouvée",
-    "No releases have been published for this application yet.": "Aucune version n'a encore été publiée pour cette application.",
+    "No releases have been published for {app} yet.": "Aucune version n'a encore été publiée pour {app}.",
     "No Update Available": "Aucune mise à jour disponible",
     "none": "aucun",
     "OK": "OK",
@@ -281,6 +281,26 @@ FR = {
     "Show background behind text": "Afficher un fond derrière le texte",
     "Text:": "Texte :",
     "Toggle search": "Afficher/masquer la recherche",
+    # Added with the update-checker rework and the CLI argument validation
+    # (app_init.clean_path_arg / is_image_file gate). "no response" and
+    # "The network is unreachable." are interpolated into {detail} above, so
+    # they stay lowercase/sentence-cased exactly as the English does.
+    "Could Not Check for Updates": "Impossible de vérifier les mises à jour",
+    "Could not reach GitHub to check for updates.\n\n{detail}":
+        "Impossible de contacter GitHub pour vérifier les mises à jour.\n\n{detail}",
+    "GitHub returned an unexpected response.\n\n{detail}":
+        "GitHub a renvoyé une réponse inattendue.\n\n{detail}",
+    "no response": "aucune réponse",
+    "The network is unreachable.": "Le réseau est inaccessible.",
+    "This build cannot check for updates because a required network component is missing.":
+        "Cette version ne peut pas vérifier les mises à jour car un composant réseau requis est manquant.",
+    "This build has no update source configured.":
+        "Aucune source de mise à jour n'est configurée dans cette version.",
+    "Unsupported File": "Fichier non pris en charge",
+    "Updates Unavailable": "Mises à jour indisponibles",
+    "{name} is not a supported image file.\n\nSupported types: {types}":
+        "{name} n'est pas un fichier image pris en charge.\n\nTypes pris en charge : {types}",
+    "{path} does not exist.": "{path} n'existe pas.",
     # akeyconfig section/action names (app_constance/default_keys.py),
     # looked up dynamically by the Hotkeys dialog - see
     # scripts/extract_strings.py's extract_key_config_labels().
@@ -454,7 +474,7 @@ ES = {
     "No recent files": "No hay archivos recientes",
     "No release notes provided.": "No se proporcionaron notas de la versión.",
     "No Releases Found": "No se encontraron versiones",
-    "No releases have been published for this application yet.": "Aún no se ha publicado ninguna versión de esta aplicación.",
+    "No releases have been published for {app} yet.": "Aún no se ha publicado ninguna versión de {app}.",
     "No Update Available": "No hay actualizaciones disponibles",
     "none": "ninguno",
     "OK": "Aceptar",
@@ -583,6 +603,26 @@ ES = {
     "Show background behind text": "Mostrar fondo detrás del texto",
     "Text:": "Texto:",
     "Toggle search": "Mostrar/ocultar búsqueda",
+    # Added with the update-checker rework and the CLI argument validation
+    # (app_init.clean_path_arg / is_image_file gate). "no response" and
+    # "The network is unreachable." are interpolated into {detail} above, so
+    # they stay lowercase/sentence-cased exactly as the English does.
+    "Could Not Check for Updates": "No se pudo comprobar si hay actualizaciones",
+    "Could not reach GitHub to check for updates.\n\n{detail}":
+        "No se pudo conectar con GitHub para comprobar si hay actualizaciones.\n\n{detail}",
+    "GitHub returned an unexpected response.\n\n{detail}":
+        "GitHub devolvió una respuesta inesperada.\n\n{detail}",
+    "no response": "sin respuesta",
+    "The network is unreachable.": "La red no está accesible.",
+    "This build cannot check for updates because a required network component is missing.":
+        "Esta compilación no puede comprobar si hay actualizaciones porque falta un componente de red necesario.",
+    "This build has no update source configured.":
+        "Esta compilación no tiene configurada ninguna fuente de actualizaciones.",
+    "Unsupported File": "Archivo no compatible",
+    "Updates Unavailable": "Actualizaciones no disponibles",
+    "{name} is not a supported image file.\n\nSupported types: {types}":
+        "{name} no es un archivo de imagen compatible.\n\nTipos compatibles: {types}",
+    "{path} does not exist.": "{path} no existe.",
     # akeyconfig section/action names (app_constance/default_keys.py),
     # looked up dynamically by the Hotkeys dialog - see
     # scripts/extract_strings.py's extract_key_config_labels().
@@ -761,7 +801,7 @@ AR = {
     "No recent files": "لا توجد ملفات حديثة",
     "No release notes provided.": "لم تُقدَّم ملاحظات إصدار.",
     "No Releases Found": "لم يُعثر على إصدارات",
-    "No releases have been published for this application yet.": "لم يُنشر أي إصدار لهذا التطبيق بعد.",
+    "No releases have been published for {app} yet.": "لم يُنشر أي إصدار لـ {app} بعد.",
     "No Update Available": "لا يوجد تحديث متاح",
     "none": "لا شيء",
     "OK": "موافق",
@@ -890,6 +930,25 @@ AR = {
     "Show background behind text": "إظهار خلفية خلف النص",
     "Text:": "النص:",
     "Toggle search": "تبديل البحث",
+    # Added with the update-checker rework and the CLI argument validation
+    # (app_init.clean_path_arg / is_image_file gate). "no response" and
+    # "The network is unreachable." are interpolated into {detail} above.
+    "Could Not Check for Updates": "تعذّر التحقق من التحديثات",
+    "Could not reach GitHub to check for updates.\n\n{detail}":
+        "تعذّر الوصول إلى GitHub للتحقق من التحديثات.\n\n{detail}",
+    "GitHub returned an unexpected response.\n\n{detail}":
+        "أرجع GitHub استجابة غير متوقعة.\n\n{detail}",
+    "no response": "لا توجد استجابة",
+    "The network is unreachable.": "الشبكة غير متاحة.",
+    "This build cannot check for updates because a required network component is missing.":
+        "لا يمكن لهذه النسخة التحقق من التحديثات لأن أحد مكوّنات الشبكة المطلوبة مفقود.",
+    "This build has no update source configured.":
+        "لا يوجد مصدر تحديثات مُهيَّأ في هذه النسخة.",
+    "Unsupported File": "ملف غير مدعوم",
+    "Updates Unavailable": "التحديثات غير متوفرة",
+    "{name} is not a supported image file.\n\nSupported types: {types}":
+        "{name} ليس ملف صورة مدعومًا.\n\nالأنواع المدعومة: {types}",
+    "{path} does not exist.": "{path} غير موجود.",
     # akeyconfig section/action names (app_constance/default_keys.py),
     # looked up dynamically by the Hotkeys dialog - see
     # scripts/extract_strings.py's extract_key_config_labels().

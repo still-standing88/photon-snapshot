@@ -126,6 +126,9 @@ msgstr "تطبيق تأثير السيبيا"
 msgid "Are you sure you want to reset all hotkeys to default?"
 msgstr "هل تريد بالتأكيد إعادة تعيين جميع الاختصارات إلى الوضع الافتراضي؟"
 
+msgid "Author"
+msgstr "Author"
+
 msgid "Bottom Center"
 msgstr "أسفل الوسط"
 
@@ -209,6 +212,12 @@ msgstr "التباين"
 
 msgid "Copy Path"
 msgstr "نسخ المسار"
+
+msgid "Could Not Check for Updates"
+msgstr "تعذّر التحقق من التحديثات"
+
+msgid "Could not reach GitHub to check for updates.\n\n{detail}"
+msgstr "تعذّر الوصول إلى GitHub للتحقق من التحديثات.\n\n{detail}"
 
 msgid "Crop"
 msgstr "قص"
@@ -302,6 +311,9 @@ msgstr "التركيز على المستكشف"
 
 msgid "Focus Viewer"
 msgstr "التركيز على العارض"
+
+msgid "GitHub returned an unexpected response.\n\n{detail}"
+msgstr "أرجع GitHub استجابة غير متوقعة.\n\n{detail}"
 
 msgid "Go to parent folder"
 msgstr "الانتقال إلى المجلد الأصل"
@@ -408,8 +420,11 @@ msgstr "لم تُقدَّم ملاحظات إصدار."
 msgid "No Releases Found"
 msgstr "لم يُعثر على إصدارات"
 
-msgid "No releases have been published for this application yet."
-msgstr "لم يُنشر أي إصدار لهذا التطبيق بعد."
+msgid "No releases have been published for {app} yet."
+msgstr "لم يُنشر أي إصدار لـ {app} بعد."
+
+msgid "no response"
+msgstr "لا توجد استجابة"
 
 msgid "No Update Available"
 msgstr "لا يوجد تحديث متاح"
@@ -515,6 +530,12 @@ msgstr "اللوحة السابقة"
 
 msgid "Project website link"
 msgstr "رابط موقع المشروع"
+
+msgid "Publisher"
+msgstr "Publisher"
+
+msgid "Publisher information"
+msgstr "Publisher information"
 
 msgid "Quit"
 msgstr "إنهاء"
@@ -636,6 +657,9 @@ msgstr "إظهار خلفية النص"
 msgid "Size:"
 msgstr "الحجم:"
 
+msgid "Starting application..."
+msgstr "Starting application..."
+
 msgid "Status &Bar"
 msgstr "&شريط الحالة"
 
@@ -647,6 +671,9 @@ msgstr "رسالة الحالة"
 
 msgid "Stroke drawn"
 msgstr "تم رسم الخط"
+
+msgid "Support"
+msgstr "Support"
 
 msgid "System"
 msgstr "النظام"
@@ -666,8 +693,17 @@ msgstr "النص:"
 msgid "The file '{path}' no longer exists and will be removed from recent files."
 msgstr "الملف ‘{path}’ لم يعد موجودًا وسيُزال من الملفات الأخيرة."
 
+msgid "The network is unreachable."
+msgstr "الشبكة غير متاحة."
+
 msgid "Theme:"
 msgstr "السمة:"
+
+msgid "This build cannot check for updates because a required network component is missing."
+msgstr "لا يمكن لهذه النسخة التحقق من التحديثات لأن أحد مكوّنات الشبكة المطلوبة مفقود."
+
+msgid "This build has no update source configured."
+msgstr "لا يوجد مصدر تحديثات مُهيَّأ في هذه النسخة."
 
 msgid "Toggle &Grid"
 msgstr "إظهار/إخفاء ال&شبكة"
@@ -735,11 +771,17 @@ msgstr "تراجع"
 msgid "Undone"
 msgstr "تم التراجع"
 
+msgid "Unsupported File"
+msgstr "ملف غير مدعوم"
+
 msgid "Update Available - {title}"
 msgstr "يتوفر تحديث - {title}"
 
 msgid "Update available dialog"
 msgstr "مربع حوار توفر تحديث"
+
+msgid "Updates Unavailable"
+msgstr "التحديثات غير متوفرة"
 
 msgid "Version {version}<br>{description}<br><br>{copyright}<br>License: {license}"
 msgstr "الإصدار {version}<br>{description}<br><br>{copyright}<br>الرخصة: {license}"
@@ -779,6 +821,12 @@ msgstr "{name} - موسّع"
 
 msgid "{name} already exists. Overwrite it?"
 msgstr "{name} موجود بالفعل. هل تريد الكتابة فوقه؟"
+
+msgid "{name} is not a supported image file.\n\nSupported types: {types}"
+msgstr "{name} ليس ملف صورة مدعومًا.\n\nالأنواع المدعومة: {types}"
+
+msgid "{path} does not exist."
+msgstr "{path} غير موجود."
 
 msgid "{title} value"
 msgstr "قيمة {title}"

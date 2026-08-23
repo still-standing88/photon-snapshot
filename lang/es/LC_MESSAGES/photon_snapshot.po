@@ -126,6 +126,9 @@ msgstr "Aplicar efecto sepia"
 msgid "Are you sure you want to reset all hotkeys to default?"
 msgstr "¿Seguro que quieres restablecer todos los atajos de teclado a los valores predeterminados?"
 
+msgid "Author"
+msgstr "Author"
+
 msgid "Bottom Center"
 msgstr "Inferior centro"
 
@@ -209,6 +212,12 @@ msgstr "Contraste"
 
 msgid "Copy Path"
 msgstr "Copiar ruta"
+
+msgid "Could Not Check for Updates"
+msgstr "No se pudo comprobar si hay actualizaciones"
+
+msgid "Could not reach GitHub to check for updates.\n\n{detail}"
+msgstr "No se pudo conectar con GitHub para comprobar si hay actualizaciones.\n\n{detail}"
 
 msgid "Crop"
 msgstr "Recortar"
@@ -302,6 +311,9 @@ msgstr "Enfocar el explorador"
 
 msgid "Focus Viewer"
 msgstr "Enfocar el visor"
+
+msgid "GitHub returned an unexpected response.\n\n{detail}"
+msgstr "GitHub devolvió una respuesta inesperada.\n\n{detail}"
 
 msgid "Go to parent folder"
 msgstr "Ir a la carpeta superior"
@@ -408,8 +420,11 @@ msgstr "No se proporcionaron notas de la versión."
 msgid "No Releases Found"
 msgstr "No se encontraron versiones"
 
-msgid "No releases have been published for this application yet."
-msgstr "Aún no se ha publicado ninguna versión de esta aplicación."
+msgid "No releases have been published for {app} yet."
+msgstr "Aún no se ha publicado ninguna versión de {app}."
+
+msgid "no response"
+msgstr "sin respuesta"
 
 msgid "No Update Available"
 msgstr "No hay actualizaciones disponibles"
@@ -515,6 +530,12 @@ msgstr "Panel anterior"
 
 msgid "Project website link"
 msgstr "Enlace al sitio web del proyecto"
+
+msgid "Publisher"
+msgstr "Publisher"
+
+msgid "Publisher information"
+msgstr "Publisher information"
 
 msgid "Quit"
 msgstr "Salir"
@@ -636,6 +657,9 @@ msgstr "Mostrar fondo del texto"
 msgid "Size:"
 msgstr "Tamaño:"
 
+msgid "Starting application..."
+msgstr "Starting application..."
+
 msgid "Status &Bar"
 msgstr "&Barra de estado"
 
@@ -647,6 +671,9 @@ msgstr "Mensaje de estado"
 
 msgid "Stroke drawn"
 msgstr "Trazo dibujado"
+
+msgid "Support"
+msgstr "Support"
 
 msgid "System"
 msgstr "Sistema"
@@ -666,8 +693,17 @@ msgstr "Texto:"
 msgid "The file '{path}' no longer exists and will be removed from recent files."
 msgstr "El archivo «{path}» ya no existe y se eliminará de los archivos recientes."
 
+msgid "The network is unreachable."
+msgstr "La red no está accesible."
+
 msgid "Theme:"
 msgstr "Tema:"
+
+msgid "This build cannot check for updates because a required network component is missing."
+msgstr "Esta compilación no puede comprobar si hay actualizaciones porque falta un componente de red necesario."
+
+msgid "This build has no update source configured."
+msgstr "Esta compilación no tiene configurada ninguna fuente de actualizaciones."
 
 msgid "Toggle &Grid"
 msgstr "Mostrar/ocultar c&uadrícula"
@@ -735,11 +771,17 @@ msgstr "Deshacer"
 msgid "Undone"
 msgstr "Deshecho"
 
+msgid "Unsupported File"
+msgstr "Archivo no compatible"
+
 msgid "Update Available - {title}"
 msgstr "Actualización disponible - {title}"
 
 msgid "Update available dialog"
 msgstr "Cuadro de diálogo de actualización disponible"
+
+msgid "Updates Unavailable"
+msgstr "Actualizaciones no disponibles"
 
 msgid "Version {version}<br>{description}<br><br>{copyright}<br>License: {license}"
 msgstr "Versión {version}<br>{description}<br><br>{copyright}<br>Licencia: {license}"
@@ -779,6 +821,12 @@ msgstr "{name} - expandido"
 
 msgid "{name} already exists. Overwrite it?"
 msgstr "{name} ya existe. ¿Sobrescribirlo?"
+
+msgid "{name} is not a supported image file.\n\nSupported types: {types}"
+msgstr "{name} no es un archivo de imagen compatible.\n\nTipos compatibles: {types}"
+
+msgid "{path} does not exist."
+msgstr "{path} no existe."
 
 msgid "{title} value"
 msgstr "Valor de {title}"

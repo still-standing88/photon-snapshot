@@ -9,71 +9,71 @@ msgstr ""
 msgid " px"
 msgstr ""
 
-#: src/gui/main_window.py:253
+#: src/gui/main_window.py:257
 msgid "&About Photon Snapshot"
 msgstr ""
 
-#: src/gui/main_window.py:190
+#: src/gui/main_window.py:194
 msgid "&Actual Size"
 msgstr ""
 
-#: src/gui/main_window.py:148
+#: src/gui/main_window.py:152
 msgid "&Edit"
 msgstr ""
 
-#: src/gui/main_window.py:197
+#: src/gui/main_window.py:201
 msgid "&Explorer"
 msgstr ""
 
-#: src/gui/main_window.py:94
+#: src/gui/main_window.py:98
 msgid "&File"
 msgstr ""
 
-#: src/gui/main_window.py:185
+#: src/gui/main_window.py:189
 msgid "&Fit to Window"
 msgstr ""
 
-#: src/gui/main_window.py:241
+#: src/gui/main_window.py:245
 msgid "&Hotkeys..."
 msgstr ""
 
-#: src/gui/main_window.py:96
+#: src/gui/main_window.py:100
 msgid "&Open..."
 msgstr ""
 
-#: src/gui/main_window.py:234
+#: src/gui/main_window.py:238
 msgid "&Options"
 msgstr ""
 
-#: src/gui/main_window.py:236
+#: src/gui/main_window.py:240
 msgid "&Preferences..."
 msgstr ""
 
-#: src/gui/main_window.py:157
+#: src/gui/main_window.py:161
 msgid "&Redo"
 msgstr ""
 
-#: src/gui/main_window.py:166
+#: src/gui/main_window.py:170
 msgid "&Reset to Original"
 msgstr ""
 
-#: src/gui/main_window.py:111
+#: src/gui/main_window.py:115
 msgid "&Save"
 msgstr ""
 
-#: src/gui/main_window.py:204
+#: src/gui/main_window.py:208
 msgid "&Toolbar"
 msgstr ""
 
-#: src/gui/main_window.py:150
+#: src/gui/main_window.py:154
 msgid "&Undo"
 msgstr ""
 
-#: src/gui/main_window.py:173
+#: src/gui/main_window.py:177
 msgid "&View"
 msgstr ""
 
-#: src/update_checker.py:53
+#: src/update_checker.py:81
 msgid "<b>A new version of {app} is available!</b><br>Your version: <b>{current}</b> -> New version: <b>{new}</b>"
 msgstr ""
 
@@ -165,6 +165,10 @@ msgstr ""
 msgid "Are you sure you want to reset all hotkeys to default?"
 msgstr ""
 
+#: src/gui/dialogs/about_dialog.py:47
+msgid "Author"
+msgstr ""
+
 #: src/gui/dialogs/text_overlay_dialog.py:50
 msgid "Bottom Center"
 msgstr ""
@@ -181,7 +185,7 @@ msgstr ""
 msgid "Brightness"
 msgstr ""
 
-#: src/app_init.py:74
+#: src/app_init.py:165
 msgid "Building interface..."
 msgstr ""
 
@@ -209,7 +213,7 @@ msgstr ""
 msgid "Changing the language requires restarting the application."
 msgstr ""
 
-#: src/gui/main_window.py:248
+#: src/gui/main_window.py:252
 msgid "Check for &Updates..."
 msgstr ""
 
@@ -249,7 +253,7 @@ msgstr ""
 msgid "Clear Overlays"
 msgstr ""
 
-#: src/gui/main_window.py:130
+#: src/gui/main_window.py:134
 msgid "Clear Recent Files"
 msgstr ""
 
@@ -278,6 +282,15 @@ msgstr ""
 msgid "Copy Path"
 msgstr ""
 
+#: src/update_checker.py:220
+#: src/update_checker.py:242
+msgid "Could Not Check for Updates"
+msgstr ""
+
+#: src/update_checker.py:221
+msgid "Could not reach GitHub to check for updates.\n\n{detail}"
+msgstr ""
+
 #: src/gui/editor_panel.py:374
 msgid "Crop"
 msgstr ""
@@ -294,7 +307,7 @@ msgstr ""
 msgid "Current folder path"
 msgstr ""
 
-#: src/gui/main_window.py:286
+#: src/gui/main_window.py:290
 msgid "Current zoom level"
 msgstr ""
 
@@ -314,7 +327,7 @@ msgstr ""
 msgid "Drawing Mode"
 msgstr ""
 
-#: src/gui/main_window.py:142
+#: src/gui/main_window.py:146
 msgid "E&xit"
 msgstr ""
 
@@ -338,19 +351,19 @@ msgstr ""
 msgid "Enter text..."
 msgstr ""
 
-#: src/gui/main_window.py:369
-#: src/gui/main_window.py:371
-#: src/gui/main_window.py:382
-#: src/gui/main_window.py:411
+#: src/gui/main_window.py:428
+#: src/gui/main_window.py:431
+#: src/gui/main_window.py:444
+#: src/gui/main_window.py:474
 msgid "Error"
 msgstr ""
 
-#: src/gui/main_window.py:371
+#: src/gui/main_window.py:431
 msgid "Error loading image: {error}"
 msgstr ""
 
-#: src/gui/main_window.py:382
-#: src/gui/main_window.py:411
+#: src/gui/main_window.py:444
+#: src/gui/main_window.py:474
 msgid "Error saving image: {error}"
 msgstr ""
 
@@ -364,7 +377,7 @@ msgstr ""
 msgid "Explorer"
 msgstr ""
 
-#: src/gui/main_window.py:369
+#: src/gui/main_window.py:428
 msgid "Failed to load image"
 msgstr ""
 
@@ -376,7 +389,8 @@ msgstr ""
 msgid "File name"
 msgstr ""
 
-#: src/gui/main_window.py:518
+#: src/gui/main_window.py:384
+#: src/gui/main_window.py:581
 msgid "File Not Found"
 msgstr ""
 
@@ -406,6 +420,10 @@ msgstr ""
 
 #: src/app_constance/default_keys.py:key_dict
 msgid "Focus Viewer"
+msgstr ""
+
+#: src/update_checker.py:243
+msgid "GitHub returned an unexpected response.\n\n{detail}"
 msgstr ""
 
 #: src/gui/explorer.py:275
@@ -442,7 +460,7 @@ msgstr ""
 msgid "Hotkeys Dialog"
 msgstr ""
 
-#: src/update_checker.py:148
+#: src/update_checker.py:239
 msgid "HTTP {status}"
 msgstr ""
 
@@ -451,15 +469,15 @@ msgid "Image canvas"
 msgstr ""
 
 #: src/gui/explorer.py:120
-#: src/gui/main_window.py:287
+#: src/gui/main_window.py:291
 msgid "Image dimensions"
 msgstr ""
 
-#: src/gui/main_window.py:380
+#: src/gui/main_window.py:441
 msgid "Image saved"
 msgstr ""
 
-#: src/gui/main_window.py:408
+#: src/gui/main_window.py:470
 msgid "Image saved as {name}"
 msgstr ""
 
@@ -475,7 +493,7 @@ msgstr ""
 msgid "Language:"
 msgstr ""
 
-#: src/update_checker.py:71
+#: src/update_checker.py:99
 msgid "Later"
 msgstr ""
 
@@ -496,11 +514,11 @@ msgstr ""
 msgid "Line"
 msgstr ""
 
-#: src/gui/main_window.py:366
+#: src/gui/main_window.py:424
 msgid "Loaded: {name}"
 msgstr ""
 
-#: src/app_init.py:65
+#: src/app_init.py:156
 msgid "Loading key bindings..."
 msgstr ""
 
@@ -508,15 +526,15 @@ msgstr ""
 msgid "Loading..."
 msgstr ""
 
-#: src/gui/main_window.py:259
+#: src/gui/main_window.py:263
 msgid "Main"
 msgstr ""
 
-#: src/gui/main_window.py:91
+#: src/gui/main_window.py:95
 msgid "Main menu"
 msgstr ""
 
-#: src/gui/main_window.py:261
+#: src/gui/main_window.py:265
 msgid "Main toolbar"
 msgstr ""
 
@@ -524,7 +542,7 @@ msgstr ""
 msgid "Main Window"
 msgstr ""
 
-#: src/gui/main_window.py:137
+#: src/gui/main_window.py:141
 #: src/app_constance/default_keys.py:key_dict
 msgid "Minimize to Tray"
 msgstr ""
@@ -541,23 +559,27 @@ msgstr ""
 msgid "No preview"
 msgstr ""
 
-#: src/gui/main_window.py:494
+#: src/gui/main_window.py:557
 msgid "No recent files"
 msgstr ""
 
-#: src/update_checker.py:66
+#: src/update_checker.py:94
 msgid "No release notes provided."
 msgstr ""
 
-#: src/update_checker.py:152
+#: src/update_checker.py:231
 msgid "No Releases Found"
 msgstr ""
 
-#: src/update_checker.py:153
-msgid "No releases have been published for this application yet."
+#: src/update_checker.py:232
+msgid "No releases have been published for {app} yet."
 msgstr ""
 
-#: src/update_checker.py:165
+#: src/update_checker.py:219
+msgid "no response"
+msgstr ""
+
+#: src/update_checker.py:255
 msgid "No Update Available"
 msgstr ""
 
@@ -573,11 +595,11 @@ msgstr ""
 msgid "OK"
 msgstr ""
 
-#: src/gui/main_window.py:103
+#: src/gui/main_window.py:107
 msgid "Open &Folder..."
 msgstr ""
 
-#: src/gui/main_window.py:104
+#: src/gui/main_window.py:108
 msgid "Open a folder in the explorer"
 msgstr ""
 
@@ -585,11 +607,11 @@ msgstr ""
 msgid "Open add text overlay dialog"
 msgstr ""
 
-#: src/gui/main_window.py:98
+#: src/gui/main_window.py:102
 msgid "Open an image file"
 msgstr ""
 
-#: src/update_checker.py:74
+#: src/update_checker.py:102
 msgid "Open Download Page"
 msgstr ""
 
@@ -598,7 +620,7 @@ msgid "Open file"
 msgstr ""
 
 #: src/gui/explorer.py:74
-#: src/gui/main_window.py:349
+#: src/gui/main_window.py:353
 msgid "Open Folder"
 msgstr ""
 
@@ -607,7 +629,7 @@ msgid "Open folder"
 msgstr ""
 
 #: src/gui/explorer.py:66
-#: src/gui/main_window.py:344
+#: src/gui/main_window.py:348
 msgid "Open Image"
 msgstr ""
 
@@ -631,7 +653,7 @@ msgstr ""
 msgid "Overlays"
 msgstr ""
 
-#: src/gui/main_window.py:396
+#: src/gui/main_window.py:458
 msgid "Overwrite File?"
 msgstr ""
 
@@ -655,7 +677,7 @@ msgstr ""
 msgid "Photon Snapshot"
 msgstr ""
 
-#: src/gui/main_window.py:36
+#: src/gui/main_window.py:40
 msgid "Photon Snapshot main window"
 msgstr ""
 
@@ -696,19 +718,27 @@ msgstr ""
 msgid "Previous Pane"
 msgstr ""
 
-#: src/gui/dialogs/about_dialog.py:42
+#: src/gui/dialogs/about_dialog.py:62
 msgid "Project website link"
+msgstr ""
+
+#: src/gui/dialogs/about_dialog.py:46
+msgid "Publisher"
+msgstr ""
+
+#: src/gui/dialogs/about_dialog.py:57
+msgid "Publisher information"
 msgstr ""
 
 #: src/taskbar_icon.py:37
 msgid "Quit"
 msgstr ""
 
-#: src/gui/main_window.py:285
+#: src/gui/main_window.py:289
 msgid "Ready"
 msgstr ""
 
-#: src/gui/main_window.py:127
+#: src/gui/main_window.py:131
 msgid "Recent Files"
 msgstr ""
 
@@ -720,7 +750,7 @@ msgstr ""
 msgid "Redo"
 msgstr ""
 
-#: src/gui/main_window.py:421
+#: src/gui/main_window.py:484
 msgid "Redone"
 msgstr ""
 
@@ -730,7 +760,7 @@ msgstr ""
 msgid "Refresh"
 msgstr ""
 
-#: src/update_checker.py:65
+#: src/update_checker.py:93
 msgid "Release notes"
 msgstr ""
 
@@ -747,7 +777,7 @@ msgstr ""
 msgid "Reset to Default"
 msgstr ""
 
-#: src/gui/main_window.py:428
+#: src/gui/main_window.py:491
 msgid "Reset to original"
 msgstr ""
 
@@ -779,7 +809,7 @@ msgstr ""
 msgid "Save"
 msgstr ""
 
-#: src/gui/main_window.py:118
+#: src/gui/main_window.py:122
 msgid "Save &As..."
 msgstr ""
 
@@ -787,7 +817,7 @@ msgstr ""
 msgid "Save As"
 msgstr ""
 
-#: src/gui/main_window.py:390
+#: src/gui/main_window.py:452
 msgid "Save Image As"
 msgstr ""
 
@@ -852,7 +882,7 @@ msgstr ""
 msgid "Show background behind text"
 msgstr ""
 
-#: src/gui/main_window.py:199
+#: src/gui/main_window.py:203
 msgid "Show or hide the Explorer panel"
 msgstr ""
 
@@ -864,20 +894,28 @@ msgstr ""
 msgid "Size:"
 msgstr ""
 
-#: src/gui/main_window.py:210
+#: src/app.py:141
+msgid "Starting application..."
+msgstr ""
+
+#: src/gui/main_window.py:214
 msgid "Status &Bar"
 msgstr ""
 
-#: src/gui/main_window.py:280
+#: src/gui/main_window.py:284
 msgid "Status bar"
 msgstr ""
 
-#: src/gui/main_window.py:285
+#: src/gui/main_window.py:289
 msgid "Status message"
 msgstr ""
 
-#: src/gui/main_window.py:446
+#: src/gui/main_window.py:509
 msgid "Stroke drawn"
+msgstr ""
+
+#: src/gui/dialogs/about_dialog.py:48
+msgid "Support"
 msgstr ""
 
 #: src/gui/dialogs/preferences_dialog.py:37
@@ -900,23 +938,35 @@ msgstr ""
 msgid "Text:"
 msgstr ""
 
-#: src/gui/main_window.py:519
+#: src/gui/main_window.py:582
 msgid "The file '{path}' no longer exists and will be removed from recent files."
+msgstr ""
+
+#: src/update_checker.py:222
+msgid "The network is unreachable."
 msgstr ""
 
 #: src/gui/dialogs/preferences_dialog.py:42
 msgid "Theme:"
 msgstr ""
 
-#: src/gui/main_window.py:218
+#: src/gui/main_window.py:611
+msgid "This build cannot check for updates because a required network component is missing."
+msgstr ""
+
+#: src/update_checker.py:174
+msgid "This build has no update source configured."
+msgstr ""
+
+#: src/gui/main_window.py:222
 msgid "Toggle &Grid"
 msgstr ""
 
-#: src/gui/main_window.py:228
+#: src/gui/main_window.py:232
 msgid "Toggle &Pixel Info"
 msgstr ""
 
-#: src/gui/main_window.py:223
+#: src/gui/main_window.py:227
 msgid "Toggle &Ruler"
 msgstr ""
 
@@ -992,16 +1042,25 @@ msgstr ""
 msgid "Undo"
 msgstr ""
 
-#: src/gui/main_window.py:416
+#: src/gui/main_window.py:479
 msgid "Undone"
 msgstr ""
 
-#: src/update_checker.py:45
+#: src/gui/main_window.py:392
+msgid "Unsupported File"
+msgstr ""
+
+#: src/update_checker.py:73
 msgid "Update Available - {title}"
 msgstr ""
 
-#: src/update_checker.py:46
+#: src/update_checker.py:74
 msgid "Update available dialog"
+msgstr ""
+
+#: src/gui/main_window.py:610
+#: src/update_checker.py:173
+msgid "Updates Unavailable"
 msgstr ""
 
 #: src/gui/dialogs/about_dialog.py:28
@@ -1012,11 +1071,11 @@ msgstr ""
 msgid "Viewer"
 msgstr ""
 
-#: src/gui/main_window.py:175
+#: src/gui/main_window.py:179
 msgid "Zoom &In"
 msgstr ""
 
-#: src/gui/main_window.py:180
+#: src/gui/main_window.py:184
 msgid "Zoom &Out"
 msgstr ""
 
@@ -1028,11 +1087,11 @@ msgstr ""
 msgid "Zoom Out"
 msgstr ""
 
-#: src/gui/main_window.py:286
+#: src/gui/main_window.py:290
 msgid "Zoom: 100%"
 msgstr ""
 
-#: src/gui/main_window.py:449
+#: src/gui/main_window.py:512
 msgid "Zoom: {percent:.0f}%"
 msgstr ""
 
@@ -1040,7 +1099,7 @@ msgstr ""
 msgid "{action} in {section}, current shortcut: {shortcut}"
 msgstr ""
 
-#: src/update_checker.py:166
+#: src/update_checker.py:256
 msgid "{app} is up to date (version {version})."
 msgstr ""
 
@@ -1052,8 +1111,16 @@ msgstr ""
 msgid "{name} - expanded"
 msgstr ""
 
-#: src/gui/main_window.py:397
+#: src/gui/main_window.py:459
 msgid "{name} already exists. Overwrite it?"
+msgstr ""
+
+#: src/gui/main_window.py:393
+msgid "{name} is not a supported image file.\n\nSupported types: {types}"
+msgstr ""
+
+#: src/gui/main_window.py:385
+msgid "{path} does not exist."
 msgstr ""
 
 #: src/gui/editor_panel.py:53
