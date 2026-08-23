@@ -4,11 +4,31 @@ param(
     [string]$Version = "1.0.0"
 )
 
+function Add-WixToPath {
+    # The bin directory is versioned ("WiX Toolset v3.11", "v3.14", ...), so
+    # appending one hardcoded version to PATH silently fails as soon as choco
+    # ships a different one. Take whatever is actually on disk, newest first.
+    $candidates = Get-ChildItem -Path "${env:ProgramFiles(x86)}", $env:ProgramFiles `
+                                -Filter "WiX Toolset v*" -Directory -ErrorAction SilentlyContinue |
+                  Sort-Object Name -Descending
+    foreach ($dir in $candidates) {
+        $bin = Join-Path $dir.FullName "bin"
+        if (Test-Path (Join-Path $bin "candle.exe")) {
+            $env:PATH += ";$bin"
+            Write-Host "Using WiX Toolset at: $bin" -ForegroundColor Gray
+            return $true
+        }
+    }
+    return $false
+}
+
 if (-not (Get-Command "candle.exe" -ErrorAction SilentlyContinue)) {
-    Write-Host "Installing WiX Toolset..." -ForegroundColor Yellow
-    choco install wixtoolset -y
-    $env:PATH += ";C:\Program Files (x86)\WiX Toolset v3.11\bin"
-    
+    if (-not (Add-WixToPath)) {
+        Write-Host "Installing WiX Toolset..." -ForegroundColor Yellow
+        choco install wixtoolset -y
+        Add-WixToPath | Out-Null
+    }
+
     if (-not (Get-Command "candle.exe" -ErrorAction SilentlyContinue)) {
         Write-Error "WiX Toolset installation failed. Please install manually from https://wixtoolset.org/"
         exit 1
@@ -18,10 +38,22 @@ if (-not (Get-Command "candle.exe" -ErrorAction SilentlyContinue)) {
 $AbsoluteSourceDir = (Resolve-Path -Path $SourceDir).Path
 $AbsoluteOutputDir = (Resolve-Path -Path $OutputDir).Path
 
+# Windows Installer's ProductVersion must be numeric (a.b.c[.d]) and only the
+# first three fields take part in upgrade detection; candle rejects anything
+# else outright. Tag builds pass "1.2.0", but the CI's non-tag path passes
+# something like "dev-20260823-a1b2c3d", so derive a valid ProductVersion and
+# keep the caller's string for the MSI file name only.
+$ProductVersion = "0.0.0"
+if ($Version -match '^v?(\d+(\.\d+){0,2})') {
+    $ProductVersion = $Matches[1]
+} else {
+    Write-Host "Version '$Version' is not a numeric release version; stamping the MSI as $ProductVersion" -ForegroundColor Yellow
+}
+
 Write-Host "=== Photon Snapshot MSI Builder ===" -ForegroundColor Cyan
 Write-Host "Source: $AbsoluteSourceDir" -ForegroundColor Gray
 Write-Host "Output: $AbsoluteOutputDir" -ForegroundColor Gray
-Write-Host "Version: $Version" -ForegroundColor Gray
+Write-Host "Version: $Version (ProductVersion $ProductVersion)" -ForegroundColor Gray
 Write-Host ""
 
 # Create required directories
@@ -57,7 +89,14 @@ Get-ChildItem -Path $AbsoluteSourceDir -Recurse -Include *.pdb | Remove-Item -Fo
 Write-Host " ✓ Removed PDB debug files"
 
 # Remove unwanted DLLs
-$unwantedDlls = @("Qt6Network.dll", "Qt6Pdf.dll", "Qt6WebEngineCore.dll", "Qt6WebEngineWidgets.dll")
+#
+# Qt6Network.dll used to be on this list. src/update_checker.py imports
+# PySide6.QtNetwork, and app_init imports the update checker on the default
+# startup path, so stripping this DLL made every MSI-installed copy of the app
+# raise ImportError before the main window appeared. The application is now
+# tolerant of a missing QtNetwork (see app_init.start_update_checker), but the
+# update checker is a shipped feature, so the DLL has to ship with it.
+$unwantedDlls = @("Qt6Pdf.dll", "Qt6WebEngineCore.dll", "Qt6WebEngineWidgets.dll")
 foreach ($dll in $unwantedDlls) {
     $file_path = Join-Path $AbsoluteSourceDir $dll
     if (Test-Path $file_path) {
@@ -117,7 +156,11 @@ Write-Host " ✓ Harvested files compiled"
 
 # Step 3: Compile main WiX file
 Write-Host "Step 3: Compiling main installer file..." -ForegroundColor Yellow
-& candle.exe -out $productObj $mainWxsFile
+# product.wxs reads $(var.Version); without this the MSI was stamped with the
+# hardcoded version in the .wxs and MajorUpgrade never saw a version change.
+# The define is quoted as a single token because PowerShell otherwise splits
+# "-dVersion=1.2.3" across arguments when passing it to a native executable.
+& candle.exe -out $productObj "-dVersion=$ProductVersion" $mainWxsFile
 if ($LASTEXITCODE -ne 0) { 
     Write-Error "Candle compilation of main file failed with exit code $LASTEXITCODE"
     exit 1 
@@ -146,7 +189,7 @@ Write-Host " • End User License Agreement (EULA)"
 Write-Host " • Installs to %LocalAppData%\Photon Snapshot (per-user)"
 Write-Host " • Desktop shortcut (optional)"
 Write-Host " • Start menu shortcut"
-Write-Host " • File associations for common image formats"
+Write-Host " • File associations for .jpg/.jpeg/.png/.bmp/.gif/.tiff/.tif/.webp"
 Write-Host " • Proper uninstall support"
 Write-Host ""
 

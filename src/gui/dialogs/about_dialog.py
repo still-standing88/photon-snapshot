@@ -37,6 +37,26 @@ class AboutDialog(QDialog):
         info.setAccessibleName(_("Application information"))
         layout.addWidget(info)
 
+        # Publisher/author/support rows, matching what playForm's About dialog
+        # shows. These were absent here, so app_info.APP_PUBLISHER and
+        # APP_AUTHOR had no route to the UI at all. Rendered as one focusable
+        # label rather than a QGridLayout of label/value pairs so a screen
+        # reader reads the block in a single stop instead of six.
+        detail_rows = [
+            (_("Publisher"), os.environ.get(app_info.ENV_APP_PUBLISHER, app_info.APP_PUBLISHER)),
+            (_("Author"), os.environ.get(app_info.ENV_APP_AUTHOR, app_info.APP_AUTHOR)),
+            (_("Support"), os.environ.get(app_info.ENV_APP_SUPPORT_EMAIL, app_info.APP_SUPPORT_EMAIL)),
+        ]
+        detail_html = "<br>".join(
+            f"<b>{label}:</b> {value}" for label, value in detail_rows if value
+        )
+        if detail_html:
+            details = QLabel(detail_html)
+            details.setWordWrap(True)
+            details.setFocusPolicy(Qt.FocusPolicy.TabFocus)
+            details.setAccessibleName(_("Publisher information"))
+            layout.addWidget(details)
+
         link = QLabel(f'<a href="{app_info.APP_WEBSITE}">{app_info.APP_WEBSITE}</a>')
         link.setOpenExternalLinks(True)
         link.setAccessibleName(_("Project website link"))

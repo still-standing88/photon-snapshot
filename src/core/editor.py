@@ -1,6 +1,9 @@
 from typing import List, Optional, Callable
 from .image import PhotonImage
 from .actions import Action
+from log_handler import get_logger
+
+logger = get_logger()
 
 
 class EditorState:
@@ -92,8 +95,13 @@ class Editor:
             image = PhotonImage.from_file(filepath)
             self.state.load_image(image)
             return True
-        except Exception as e:
-            print(f"Error loading image: {e}")
+        except Exception:
+            # Was a bare print(), which is a live bug in the shipped build:
+            # --windows-console-mode=disable leaves sys.stdout as None, so the
+            # print itself raised AttributeError out of this except block and
+            # the user saw "Error loading image: 'NoneType' object has no
+            # attribute 'write'" instead of the real cause.
+            logger.exception("Error loading image: %s", filepath)
             return False
     
     def load_image(self, image: PhotonImage):

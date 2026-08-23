@@ -7,23 +7,47 @@ helpers) can read them via ``os.environ``. Pattern adapted from playForm's
 import os
 
 
+# Version bumped in one place only when building from source. Release builds
+# override it from the git tag: build.py --version=X.Y.Z writes
+# src/_build_version.py (gitignored, generated) and the import below picks it
+# up, so a binary produced by the tag-triggered CI workflow self-reports the
+# version that was actually released. Without that, the compiled app reported
+# this literal forever and the update checker saw every release as "newer"
+# than itself on every launch.
+_FALLBACK_VERSION = "1.1.0"
+
+try:
+    from _build_version import BUILD_VERSION as _BUILD_VERSION
+except ImportError:  # running from source, or built without --version
+    _BUILD_VERSION = None
+
+
 APP_NAME = "Photon Snapshot"
 APP_DESCRIPTION = "A modern, accessible image viewer and editor."
-APP_VERSION = "1.1.0"
-APP_PUBLISHER = "still-standing88"
-APP_AUTHOR = "still-standing88"
+APP_VERSION = _BUILD_VERSION or _FALLBACK_VERSION
+# Numeric version build.py falls back to for the Windows version resource when
+# the build version isn't a release number (CI's non-tag "dev-<date>-<sha>").
+APP_VERSION_FALLBACK = _FALLBACK_VERSION
+# Publisher/author/support match playForm's - same developer, same imprint.
+# The license differs deliberately: see ./LICENSE (MIT here, GPL-3.0 there).
+APP_PUBLISHER = "Joybytes"
+APP_AUTHOR = "Still Standing"
 APP_LICENSE = "MIT"
-APP_COPYRIGHT = "Copyright © 2026 still-standing88"
+APP_COPYRIGHT = "Copyright © 2026 Still Standing"
 
 APP_WEBSITE = "https://github.com/still-standing88/photon-snapshot"
 APP_GITHUB_REPO = "still-standing88/photon-snapshot"  # owner/repo
-APP_SUPPORT_EMAIL = ""
+APP_SUPPORT_EMAIL = "support@joybytes.dev"
 
 # Folder name under the user's home directory where all app data (SQLite
 # database, logs, screenshots, lang overrides, ...) is stored.
 APP_DATA_DIRNAME = ".photon-snapshot"
 
 
+# Deliberately prefixed, unlike playForm's bare APP_NAME/APP_VERSION/...:
+# these leak into the environment of anything the app spawns, and bare names
+# are easy for a child process to collide with. Every read goes through the
+# ENV_* constants below, so the prefix costs nothing.
 ENV_APP_NAME = "PHOTON_APP_NAME"
 ENV_APP_DESCRIPTION = "PHOTON_APP_DESCRIPTION"
 ENV_APP_VERSION = "PHOTON_APP_VERSION"

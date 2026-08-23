@@ -14,10 +14,14 @@ from .dialogs.hotkeys_dialog import HotkeysDialog
 from .dialogs.preferences_dialog import PreferencesDialog
 from .dialogs.about_dialog import AboutDialog
 from core.editor import Editor
-from core.utils import get_all_image_filter, get_save_formats
+from core.utils import (get_all_image_filter, get_save_formats, is_image_file,
+                        get_supported_extensions_str)
 from gui_controls.common_controls import TabableLabel
 from app_config import key_config
 from app_config.prefs import prefs
+from log_handler import get_logger
+
+logger = get_logger()
 
 
 class MainWindow(QMainWindow):
@@ -355,6 +359,60 @@ class MainWindow(QMainWindow):
         if file_path:
             self.load_image_file(file_path)
 
+    def load_external_path(self, path: str):
+        """Open a path that came from outside the app (argv or IPC).
+
+        Everything reaching us this way is untrusted input, so it is validated
+        before PIL ever sees it: previously argv[1] went straight into
+        ``load_file`` -> ``PIL.Image.open``, and a missing file, a directory, or
+        a .txt produced the same opaque "Failed to load image" box. A directory
+        is routed to the explorer, which is what a user dragging a folder onto
+        the exe means.
+        """
+        if not path:
+            return
+
+        if os.path.isdir(path):
+            self.show_explorer_action.setChecked(True)
+            self.explorer_widget.explorer.navigate_to(path)
+            self._raise_to_front()
+            return
+
+        if not os.path.isfile(path):
+            logger.warning("Ignoring non-existent path from external caller: %s", path)
+            QMessageBox.warning(
+                self, _("File Not Found"),
+                _("{path} does not exist.").format(path=path),
+            )
+            return
+
+        if not is_image_file(path):
+            logger.warning("Ignoring unsupported file type from external caller: %s", path)
+            QMessageBox.warning(
+                self, _("Unsupported File"),
+                _("{name} is not a supported image file.\n\nSupported types: {types}").format(
+                    name=os.path.basename(path),
+                    types=get_supported_extensions_str(),
+                ),
+            )
+            return
+
+        self.load_image_file(path)
+        self._raise_to_front()
+
+    def _raise_to_front(self):
+        """Bring the window up when another launch hands us a file.
+
+        The secondary process calls app_guard's focus_window(), but that only
+        helps if this window is actually visible - it may be hidden in the tray.
+        """
+        if not self.isVisible():
+            self.show()
+        if self.isMinimized():
+            self.showNormal()
+        self.raise_()
+        self.activateWindow()
+
     def load_image_file(self, file_path: str):
         try:
             if self.editor.load_image_from_file(file_path):
@@ -366,12 +424,15 @@ class MainWindow(QMainWindow):
                 self.status_label.setText(_("Loaded: {name}").format(name=os.path.basename(file_path)))
                 self.explorer_widget.explorer.add_recent_file(file_path)
             else:
+                logger.error("Editor reported failure loading %s", file_path)
                 QMessageBox.warning(self, _("Error"), _("Failed to load image"))
         except Exception as e:
+            logger.exception("Error loading image %s", file_path)
             QMessageBox.critical(self, _("Error"), _("Error loading image: {error}").format(error=str(e)))
 
     def cli_load_file(self, ipc_msg_data: dict):
-        self.load_file(ipc_msg_data["msg_data"])
+        """IPC handler: a later launch handed us a path to open."""
+        self.load_external_path(ipc_msg_data.get("msg_data", ""))
 
     def save_file(self):
         if self.current_file_path and self.editor.current_image:
@@ -379,6 +440,7 @@ class MainWindow(QMainWindow):
                 self.editor.save_image(self.current_file_path)
                 self.status_label.setText(_("Image saved"))
             except Exception as e:
+                logger.exception("Error saving image %s", self.current_file_path)
                 QMessageBox.critical(self, _("Error"), _("Error saving image: {error}").format(error=str(e)))
 
     def save_file_as(self):
@@ -408,6 +470,7 @@ class MainWindow(QMainWindow):
             self.status_label.setText(_("Image saved as {name}").format(name=os.path.basename(file_path)))
             self.explorer_widget.explorer.add_recent_file(file_path)
         except Exception as e:
+            logger.exception("Error saving image as %s", file_path)
             QMessageBox.critical(self, _("Error"), _("Error saving image: {error}").format(error=str(e)))
 
     def undo(self):
@@ -536,7 +599,21 @@ class MainWindow(QMainWindow):
         AboutDialog(self).exec()
 
     def check_for_updates(self):
-        from update_checker import UpdateChecker
+        # Guarded like app_init.start_update_checker: update_checker pulls in
+        # PySide6.QtNetwork, and an unhandled ImportError in a menu slot would
+        # surface as a crash dialog rather than an explanation.
+        try:
+            from update_checker import UpdateChecker
+        except ImportError as e:
+            logger.warning("Update checker unavailable (QtNetwork missing?): %s", e)
+            QMessageBox.information(
+                self, _("Updates Unavailable"),
+                _("This build cannot check for updates because a required "
+                  "network component is missing."),
+            )
+            return
+        # No background=True here: asking once must not sign the user up for
+        # 12-hourly polling when startup checks are turned off.
         UpdateChecker.instance(parent=self).check_now(silent=False)
 
     # -------------------------------------------------------- tray/close ----

@@ -2,6 +2,7 @@ from PIL import Image as PILImage, ImageQt
 from PySide6.QtGui import QPixmap, QImage
 from PySide6.QtCore import Qt
 import io
+import os
 
 
 def pil_to_qpixmap(pil_image: PILImage.Image) -> QPixmap:
@@ -48,6 +49,26 @@ def get_image_formats():
     }
 
 
+def get_supported_extensions() -> set[str]:
+    """Every extension the app claims to open, derived from the same table the
+    file dialog filter is built from.
+
+    Single source of truth: ``is_image_file`` used to carry its own hardcoded
+    duplicate of this set, and the MSI's file associations a third copy. Both
+    now derive from ``get_image_formats()``.
+    """
+    extensions = set()
+    for patterns in get_image_formats().values():
+        for pattern in patterns.split():
+            extensions.add(pattern.lstrip('*').lower())
+    return extensions
+
+
+def get_supported_extensions_str() -> str:
+    """Human-readable list for error messages, e.g. ".bmp, .gif, .jpg, ..."."""
+    return ", ".join(sorted(get_supported_extensions()))
+
+
 def get_all_image_filter():
     formats = get_image_formats()
     all_formats = ' '.join(formats.values())
@@ -81,5 +102,4 @@ def get_file_size_str(size_bytes: int) -> str:
 
 
 def is_image_file(filename: str) -> bool:
-    image_extensions = {'.jpg', '.jpeg', '.png', '.bmp', '.gif', '.tiff', '.tif', '.webp'}
-    return any(filename.lower().endswith(ext) for ext in image_extensions)
+    return os.path.splitext(filename)[1].lower() in get_supported_extensions()

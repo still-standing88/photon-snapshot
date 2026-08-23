@@ -1,40 +1,93 @@
-﻿<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
-  <Product Id="*" Name="Photon Snapshot" Language="1033" Version="1.1.0"
-           Manufacturer="still-standing88" UpgradeCode="12345678-1234-1234-1234-123456789012">
 
-    <Package InstallerVersion="200" Compressed="yes" InstallScope="perUser" 
+  <!-- Version is passed in by build-msi.ps1 as -dVersion=X.Y.Z (which derives
+       it from the git tag). The fallback keeps a bare `candle product.wxs`
+       working; before this, the version was hardcoded here and every release
+       shipped an MSI stamped 1.1.0, so Windows Installer saw no version
+       change and MajorUpgrade never removed the previous install. -->
+  <?ifndef Version ?>
+  <?define Version = "1.1.0" ?>
+  <?endif ?>
+
+  <Product Id="*" Name="Photon Snapshot" Language="1033" Version="$(var.Version)"
+           Manufacturer="Joybytes"
+           UpgradeCode="7694b851-ba8f-4c91-b1d5-46eeaa641ce8">
+
+    <!-- Manufacturer is what Add/Remove Programs shows as the publisher, and
+         it read "still-standing88" while the compiled exe's version resource
+         said "Joybytes" (build.py passes the publisher as the exe's
+         company-name). Same imprint as playForm, stated the same way in both
+         places now. -->
+
+    <Package InstallerVersion="200" Compressed="yes" InstallScope="perUser"
              Description="Photon Snapshot - Image Viewer/Editor"
-             Comments="An advanced  image viewing application" />
-    
-    <MajorUpgrade DowngradeErrorMessage="A newer version of Photon Snapshot is already installed." />
+             Comments="A modern, accessible image viewer and editor." />
+
+    <!-- UpgradeCode above was the boilerplate 12345678-1234-...-123456789012
+         placeholder. It is the identity Windows Installer uses to recognise
+         "this is the same product, a different version", so a value shared
+         with every other tutorial-derived MSI on the machine risks an
+         unrelated installer being treated as a Photon Snapshot upgrade.
+         AllowSameVersionUpgrades keeps a rebuild of the same version from
+         installing a second copy alongside the first (Product Id="*" mints a
+         fresh ProductCode on every build). -->
+    <MajorUpgrade DowngradeErrorMessage="A newer version of Photon Snapshot is already installed."
+                  AllowSameVersionUpgrades="yes" />
     <MediaTemplate EmbedCab="yes" />
 
     <UIRef Id="WixUI_InstallDir" />
     <Property Id="WIXUI_INSTALLDIR" Value="INSTALLFOLDER" />
     <WixVariable Id="WixUILicenseRtf" Value="installer\windows\License.rtf" />
-    
+
     <!-- <WixVariable Id="WixUIBannerBmp" Value="installer\windows\banner.bmp" />
     <WixVariable Id="WixUIDialogBmp" Value="installer\windows\dialog.bmp" /> -->
 
     <Property Id="APPLICATIONFOLDER">
-      <RegistrySearch Id="ApplicationFolderRegistry" Root="HKCU" 
-                      Key="Software\still-standing88\Photon Snapshot" Name="InstallDir" Type="raw" />
+      <RegistrySearch Id="ApplicationFolderRegistry" Root="HKCU"
+                      Key="Software\Joybytes\Photon Snapshot" Name="InstallDir" Type="raw" />
     </Property>
 
-    <Feature Id="ProductFeature" Title="Photon Snapshot" Level="1" 
+    <!-- The RegistrySearch above found the previous install directory but
+         nothing ever consumed it: the UI binds to INSTALLFOLDER, not
+         APPLICATIONFOLDER, so an upgrade over a custom install location
+         reinstalled into the default one. Feed it through, but only on a
+         fresh/upgrade transaction - never on maintenance, where the installer
+         already knows where it put things. -->
+    <SetDirectory Id="INSTALLFOLDER" Value="[APPLICATIONFOLDER]" Sequence="both">
+      APPLICATIONFOLDER AND NOT Installed
+    </SetDirectory>
+
+    <Feature Id="ProductFeature" Title="Photon Snapshot" Level="1"
              Description="Main application files">
       <ComponentGroupRef Id="HarvestedFiles" />
       <ComponentRef Id="ApplicationShortcut" />
-      <ComponentRef Id="DesktopShortcut" />
       <ComponentRef Id="ProgramMenuFolder" />
       <ComponentRef Id="FileAssociations" />
     </Feature>
 
-    <Feature Id="DesktopShortcutFeature" Title="Desktop Shortcut" Level="1" 
+    <!-- DesktopShortcut used to be referenced from ProductFeature as well,
+         which made this feature's selection state irrelevant - the component
+         installed either way. -->
+    <Feature Id="DesktopShortcutFeature" Title="Desktop Shortcut" Level="1"
              Description="Create a shortcut on the desktop">
       <ComponentRef Id="DesktopShortcut" />
     </Feature>
+
+    <!-- These six elements were sitting *after* </Product>, as direct children
+         of <Wix>. The Wix element only accepts Product/Module/Patch/Bundle
+         followed by Fragments (see wix.xsd), so candle rejected the whole file
+         with CNDL0104 before it compiled a single row - the MSI step could
+         never have produced an installer. Icon has to be declared inside the
+         Product section anyway so the Shortcut/ARPPRODUCTICON references
+         resolve to a section that is always linked in. -->
+    <Icon Id="PhotonSnapshot.exe" SourceFile="PhotonSnapshot.exe" />
+    <Property Id="ARPPRODUCTICON" Value="PhotonSnapshot.exe" />
+
+    <Property Id="ARPHELPLINK" Value="https://github.com/still-standing88/photon-snapshot" />
+    <Property Id="ARPURLINFOABOUT" Value="https://github.com/still-standing88" />
+    <Property Id="ARPNOREPAIR" Value="1" />
+    <Property Id="ARPNOMODIFY" Value="1" />
   </Product>
 
   <Fragment>
@@ -42,15 +95,15 @@
       <Directory Id="LocalAppDataFolder">
         <Directory Id="INSTALLFOLDER" Name="Photon Snapshot" />
       </Directory>
-      
+
       <!-- <Directory Id="ProgramFilesFolder">
         <Directory Id="INSTALLFOLDER" Name="Photon Snapshot" />
       </Directory> -->
-      
+
       <Directory Id="ProgramMenuFolder">
         <Directory Id="ApplicationProgramsFolder" Name="Photon Snapshot" />
       </Directory>
-      
+
       <Directory Id="DesktopFolder" Name="Desktop" />
     </Directory>
   </Fragment>
@@ -60,16 +113,16 @@
       <Component Id="ApplicationShortcut" Guid="*">
         <Shortcut Id="ApplicationStartMenuShortcut"
                   Name="Photon Snapshot"
-                  Description="Photon Snapshot - Advanced Image Viewer"
+                  Description="Photon Snapshot - Image Viewer/Editor"
                   Target="[INSTALLFOLDER]PhotonSnapshot.exe"
                   WorkingDirectory="INSTALLFOLDER"
                   Icon="PhotonSnapshot.exe" />
         <RemoveFolder Id="ApplicationProgramsFolder" On="uninstall" />
-        <RegistryValue Root="HKCU" 
-                       Key="Software\still-standing88\Photon Snapshot" 
-                       Name="installed" 
-                       Type="integer" 
-                       Value="1" 
+        <RegistryValue Root="HKCU"
+                       Key="Software\Joybytes\Photon Snapshot"
+                       Name="installed"
+                       Type="integer"
+                       Value="1"
                        KeyPath="yes" />
       </Component>
     </DirectoryRef>
@@ -85,7 +138,7 @@
                   WorkingDirectory="INSTALLFOLDER"
                   Icon="PhotonSnapshot.exe" />
         <RegistryValue Root="HKCU"
-                       Key="Software\still-standing88\Photon Snapshot"
+                       Key="Software\Joybytes\Photon Snapshot"
                        Name="DesktopShortcut"
                        Type="integer"
                        Value="1"
@@ -96,25 +149,149 @@
 
   <Fragment>
     <DirectoryRef Id="INSTALLFOLDER">
-      <Component Id="FileAssociations" Guid="*">
-        <RegistryValue Root="HKCU" Key="Software\Classes\.jpg\OpenWithProgids" 
+      <!-- Explicit GUID rather than "*": the auto-generated value is derived
+           from the keypath, so a future edit to the keypath would silently
+           mint a new component identity and orphan the old registry values on
+           upgrade. -->
+      <Component Id="FileAssociations" Guid="1f6a7aac-0052-40c4-b345-ac4b07d62208">
+
+        <!-- This extension list must stay in step with
+             core.utils.get_image_formats() - the same table that builds the
+             file-open filter and backs is_image_file().
+
+             What was wrong before: .tiff/.tif/.webp were not registered at
+             all, and of the five extensions that *were* listed under
+             OpenWithProgids only PhotonSnapshot.jpg had its ProgID defined.
+             The other four named registry keys that did not exist, so "Open
+             with -> Photon Snapshot" for a .png/.gif/.bmp/.jpeg either never
+             appeared or appeared and launched nothing. Every extension below
+             now gets a complete ProgID: description, icon, open command. -->
+
+        <RegistryValue Root="HKCU" Key="Software\Classes\.jpg\OpenWithProgids"
                        Name="PhotonSnapshot.jpg" Value="" Type="string" />
-        <RegistryValue Root="HKCU" Key="Software\Classes\.jpeg\OpenWithProgids" 
+        <RegistryValue Root="HKCU" Key="Software\Classes\.jpeg\OpenWithProgids"
                        Name="PhotonSnapshot.jpeg" Value="" Type="string" />
-        <RegistryValue Root="HKCU" Key="Software\Classes\.png\OpenWithProgids" 
+        <RegistryValue Root="HKCU" Key="Software\Classes\.png\OpenWithProgids"
                        Name="PhotonSnapshot.png" Value="" Type="string" />
-        <RegistryValue Root="HKCU" Key="Software\Classes\.gif\OpenWithProgids" 
-                       Name="PhotonSnapshot.gif" Value="" Type="string" />
-        <RegistryValue Root="HKCU" Key="Software\Classes\.bmp\OpenWithProgids" 
+        <RegistryValue Root="HKCU" Key="Software\Classes\.bmp\OpenWithProgids"
                        Name="PhotonSnapshot.bmp" Value="" Type="string" />
-        
-        <RegistryValue Root="HKCU" Key="Software\Classes\PhotonSnapshot.jpg" 
-                       Value="Photon Snapshot Image" Type="string" />
-        <RegistryValue Root="HKCU" Key="Software\Classes\PhotonSnapshot.jpg\shell\open\command" 
+        <RegistryValue Root="HKCU" Key="Software\Classes\.gif\OpenWithProgids"
+                       Name="PhotonSnapshot.gif" Value="" Type="string" />
+        <RegistryValue Root="HKCU" Key="Software\Classes\.tiff\OpenWithProgids"
+                       Name="PhotonSnapshot.tiff" Value="" Type="string" />
+        <RegistryValue Root="HKCU" Key="Software\Classes\.tif\OpenWithProgids"
+                       Name="PhotonSnapshot.tif" Value="" Type="string" />
+        <RegistryValue Root="HKCU" Key="Software\Classes\.webp\OpenWithProgids"
+                       Name="PhotonSnapshot.webp" Value="" Type="string" />
+
+        <!-- JPEG -->
+        <RegistryValue Root="HKCU" Key="Software\Classes\PhotonSnapshot.jpg"
+                       Value="JPEG Image" Type="string" />
+        <RegistryValue Root="HKCU" Key="Software\Classes\PhotonSnapshot.jpg"
+                       Name="FriendlyTypeName" Value="JPEG Image" Type="string" />
+        <RegistryValue Root="HKCU" Key="Software\Classes\PhotonSnapshot.jpg\DefaultIcon"
+                       Value="[INSTALLFOLDER]PhotonSnapshot.exe,0" Type="string" />
+        <RegistryValue Root="HKCU" Key="Software\Classes\PhotonSnapshot.jpg\shell\open\command"
                        Value="&quot;[INSTALLFOLDER]PhotonSnapshot.exe&quot; &quot;%1&quot;" Type="string" />
-        
+
+        <RegistryValue Root="HKCU" Key="Software\Classes\PhotonSnapshot.jpeg"
+                       Value="JPEG Image" Type="string" />
+        <RegistryValue Root="HKCU" Key="Software\Classes\PhotonSnapshot.jpeg"
+                       Name="FriendlyTypeName" Value="JPEG Image" Type="string" />
+        <RegistryValue Root="HKCU" Key="Software\Classes\PhotonSnapshot.jpeg\DefaultIcon"
+                       Value="[INSTALLFOLDER]PhotonSnapshot.exe,0" Type="string" />
+        <RegistryValue Root="HKCU" Key="Software\Classes\PhotonSnapshot.jpeg\shell\open\command"
+                       Value="&quot;[INSTALLFOLDER]PhotonSnapshot.exe&quot; &quot;%1&quot;" Type="string" />
+
+        <!-- PNG -->
+        <RegistryValue Root="HKCU" Key="Software\Classes\PhotonSnapshot.png"
+                       Value="PNG Image" Type="string" />
+        <RegistryValue Root="HKCU" Key="Software\Classes\PhotonSnapshot.png"
+                       Name="FriendlyTypeName" Value="PNG Image" Type="string" />
+        <RegistryValue Root="HKCU" Key="Software\Classes\PhotonSnapshot.png\DefaultIcon"
+                       Value="[INSTALLFOLDER]PhotonSnapshot.exe,0" Type="string" />
+        <RegistryValue Root="HKCU" Key="Software\Classes\PhotonSnapshot.png\shell\open\command"
+                       Value="&quot;[INSTALLFOLDER]PhotonSnapshot.exe&quot; &quot;%1&quot;" Type="string" />
+
+        <!-- BMP -->
+        <RegistryValue Root="HKCU" Key="Software\Classes\PhotonSnapshot.bmp"
+                       Value="Bitmap Image" Type="string" />
+        <RegistryValue Root="HKCU" Key="Software\Classes\PhotonSnapshot.bmp"
+                       Name="FriendlyTypeName" Value="Bitmap Image" Type="string" />
+        <RegistryValue Root="HKCU" Key="Software\Classes\PhotonSnapshot.bmp\DefaultIcon"
+                       Value="[INSTALLFOLDER]PhotonSnapshot.exe,0" Type="string" />
+        <RegistryValue Root="HKCU" Key="Software\Classes\PhotonSnapshot.bmp\shell\open\command"
+                       Value="&quot;[INSTALLFOLDER]PhotonSnapshot.exe&quot; &quot;%1&quot;" Type="string" />
+
+        <!-- GIF -->
+        <RegistryValue Root="HKCU" Key="Software\Classes\PhotonSnapshot.gif"
+                       Value="GIF Image" Type="string" />
+        <RegistryValue Root="HKCU" Key="Software\Classes\PhotonSnapshot.gif"
+                       Name="FriendlyTypeName" Value="GIF Image" Type="string" />
+        <RegistryValue Root="HKCU" Key="Software\Classes\PhotonSnapshot.gif\DefaultIcon"
+                       Value="[INSTALLFOLDER]PhotonSnapshot.exe,0" Type="string" />
+        <RegistryValue Root="HKCU" Key="Software\Classes\PhotonSnapshot.gif\shell\open\command"
+                       Value="&quot;[INSTALLFOLDER]PhotonSnapshot.exe&quot; &quot;%1&quot;" Type="string" />
+
+        <!-- TIFF -->
+        <RegistryValue Root="HKCU" Key="Software\Classes\PhotonSnapshot.tiff"
+                       Value="TIFF Image" Type="string" />
+        <RegistryValue Root="HKCU" Key="Software\Classes\PhotonSnapshot.tiff"
+                       Name="FriendlyTypeName" Value="TIFF Image" Type="string" />
+        <RegistryValue Root="HKCU" Key="Software\Classes\PhotonSnapshot.tiff\DefaultIcon"
+                       Value="[INSTALLFOLDER]PhotonSnapshot.exe,0" Type="string" />
+        <RegistryValue Root="HKCU" Key="Software\Classes\PhotonSnapshot.tiff\shell\open\command"
+                       Value="&quot;[INSTALLFOLDER]PhotonSnapshot.exe&quot; &quot;%1&quot;" Type="string" />
+
+        <RegistryValue Root="HKCU" Key="Software\Classes\PhotonSnapshot.tif"
+                       Value="TIFF Image" Type="string" />
+        <RegistryValue Root="HKCU" Key="Software\Classes\PhotonSnapshot.tif"
+                       Name="FriendlyTypeName" Value="TIFF Image" Type="string" />
+        <RegistryValue Root="HKCU" Key="Software\Classes\PhotonSnapshot.tif\DefaultIcon"
+                       Value="[INSTALLFOLDER]PhotonSnapshot.exe,0" Type="string" />
+        <RegistryValue Root="HKCU" Key="Software\Classes\PhotonSnapshot.tif\shell\open\command"
+                       Value="&quot;[INSTALLFOLDER]PhotonSnapshot.exe&quot; &quot;%1&quot;" Type="string" />
+
+        <!-- WebP -->
+        <RegistryValue Root="HKCU" Key="Software\Classes\PhotonSnapshot.webp"
+                       Value="WebP Image" Type="string" />
+        <RegistryValue Root="HKCU" Key="Software\Classes\PhotonSnapshot.webp"
+                       Name="FriendlyTypeName" Value="WebP Image" Type="string" />
+        <RegistryValue Root="HKCU" Key="Software\Classes\PhotonSnapshot.webp\DefaultIcon"
+                       Value="[INSTALLFOLDER]PhotonSnapshot.exe,0" Type="string" />
+        <RegistryValue Root="HKCU" Key="Software\Classes\PhotonSnapshot.webp\shell\open\command"
+                       Value="&quot;[INSTALLFOLDER]PhotonSnapshot.exe&quot; &quot;%1&quot;" Type="string" />
+
+        <!-- Registering under Applications\ is what puts the app in Explorer's
+             "Open with -> Choose another app" list, and lets the user pick it
+             as the default from there. SupportedTypes is what keeps it out of
+             that list for file types it cannot open. -->
+        <RegistryValue Root="HKCU" Key="Software\Classes\Applications\PhotonSnapshot.exe"
+                       Name="FriendlyAppName" Value="Photon Snapshot" Type="string" />
+        <RegistryValue Root="HKCU" Key="Software\Classes\Applications\PhotonSnapshot.exe\DefaultIcon"
+                       Value="[INSTALLFOLDER]PhotonSnapshot.exe,0" Type="string" />
+        <RegistryValue Root="HKCU" Key="Software\Classes\Applications\PhotonSnapshot.exe\shell\open\command"
+                       Value="&quot;[INSTALLFOLDER]PhotonSnapshot.exe&quot; &quot;%1&quot;" Type="string" />
+
+        <RegistryValue Root="HKCU" Key="Software\Classes\Applications\PhotonSnapshot.exe\SupportedTypes"
+                       Name=".jpg" Value="" Type="string" />
+        <RegistryValue Root="HKCU" Key="Software\Classes\Applications\PhotonSnapshot.exe\SupportedTypes"
+                       Name=".jpeg" Value="" Type="string" />
+        <RegistryValue Root="HKCU" Key="Software\Classes\Applications\PhotonSnapshot.exe\SupportedTypes"
+                       Name=".png" Value="" Type="string" />
+        <RegistryValue Root="HKCU" Key="Software\Classes\Applications\PhotonSnapshot.exe\SupportedTypes"
+                       Name=".bmp" Value="" Type="string" />
+        <RegistryValue Root="HKCU" Key="Software\Classes\Applications\PhotonSnapshot.exe\SupportedTypes"
+                       Name=".gif" Value="" Type="string" />
+        <RegistryValue Root="HKCU" Key="Software\Classes\Applications\PhotonSnapshot.exe\SupportedTypes"
+                       Name=".tiff" Value="" Type="string" />
+        <RegistryValue Root="HKCU" Key="Software\Classes\Applications\PhotonSnapshot.exe\SupportedTypes"
+                       Name=".tif" Value="" Type="string" />
+        <RegistryValue Root="HKCU" Key="Software\Classes\Applications\PhotonSnapshot.exe\SupportedTypes"
+                       Name=".webp" Value="" Type="string" />
+
         <RegistryValue Root="HKCU"
-                       Key="Software\still-standing88\Photon Snapshot"
+                       Key="Software\Joybytes\Photon Snapshot"
                        Name="FileAssociations"
                        Type="integer"
                        Value="1"
@@ -128,7 +305,7 @@
       <Component Id="ProgramMenuFolder" Guid="*">
         <RemoveFolder Id="ProgramMenuFolder" On="uninstall" />
         <RegistryValue Root="HKCU"
-                       Key="Software\still-standing88\Photon Snapshot"
+                       Key="Software\Joybytes\Photon Snapshot"
                        Name="InstallDir"
                        Type="string"
                        Value="[INSTALLFOLDER]"
@@ -136,12 +313,4 @@
       </Component>
     </DirectoryRef>
   </Fragment>
-
-  <Icon Id="PhotonSnapshot.exe" SourceFile="PhotonSnapshot.exe" />
-  <Property Id="ARPPRODUCTICON" Value="PhotonSnapshot.exe" />
-  
-  <Property Id="ARPHELPLINK" Value="https://github.com/still-standing88/photon-snapshot" />
-  <Property Id="ARPURLINFOABOUT" Value="https://github.com/still-standing88" />
-  <Property Id="ARPNOREPAIR" Value="1" />
-  <Property Id="ARPNOMODIFY" Value="1" />
 </Wix>

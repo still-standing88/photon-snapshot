@@ -59,8 +59,14 @@ jobs:
           echo "version=$VERSION" >> $GITHUB_OUTPUT
           echo "Version: $VERSION"
 
+      - name: Compile translation catalogs
+        run: python scripts/compile_lang.py
+
       - name: Build executable
-        run: python build.py
+        # --version stamps the tag into src/_build_version.py, which app_info
+        # imports. Without it the binary self-reports the literal version in
+        # app_info.py and the update checker offers the same release forever.
+        run: python build.py --version=${{ steps.get_version.outputs.version }}
 
       - name: Debug - List dist directory contents
         shell: bash
@@ -73,7 +79,16 @@ jobs:
         if: matrix.platform == 'windows'
         run: |
           choco install wixtoolset -y
-          echo "C:\Program Files (x86)\WiX Toolset v3.11\bin" | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8 -Append
+          # The bin directory is versioned (v3.11, v3.14, ...), so resolve it
+          # rather than hardcoding one version that choco may stop shipping.
+          $bin = Get-ChildItem "${env:ProgramFiles(x86)}" -Filter "WiX Toolset v*" -Directory |
+                 Sort-Object Name -Descending |
+                 ForEach-Object { Join-Path $_.FullName "bin" } |
+                 Where-Object { Test-Path (Join-Path $_ "candle.exe") } |
+                 Select-Object -First 1
+          if (-not $bin) { Write-Error "WiX Toolset bin directory not found after install"; exit 1 }
+          Write-Host "WiX bin: $bin"
+          $bin | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8 -Append
 
       - name: Build MSI (Windows)
         if: matrix.platform == 'windows'
