@@ -648,6 +648,9 @@ msgstr "رسالة الحالة"
 msgid "Stroke drawn"
 msgstr "تم رسم الخط"
 
+msgid "System"
+msgstr "النظام"
+
 msgid "System Default"
 msgstr "افتراضي النظام"
 

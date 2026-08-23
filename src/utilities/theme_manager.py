@@ -1,37 +1,146 @@
-"""Centralized light/dark palette application, factored out of what used
-to be inline in ``app.py``'s ``setup_application_style()``. Selected from
-:mod:`app_config.prefs` (``theme`` key, "dark" or "light") - see the
-Options menu / preferences dialog for how the user changes it.
+"""Light/dark/system theme application, ported from playForm's
+``utilities.theme_manager``. Uses the same ``qdarkstyle`` package playForm
+uses to render the dark and light stylesheets, plus OS-level detection for
+the "system" option. Selected from :mod:`app_config.prefs` (``theme`` key,
+"system", "dark", or "light") - see the Preferences dialog for how the user
+changes it.
 """
 
-from PySide6.QtGui import QColor, QPalette
+from __future__ import annotations
+
+import sys
+from typing import Optional
+
+import qdarkstyle
+from qdarkstyle.dark.palette import DarkPalette
+from qdarkstyle.light.palette import LightPalette
+from PySide6.QtWidgets import QApplication
+
+_current_theme: Optional[str] = None
 
 
-def _dark_palette() -> QPalette:
-    palette = QPalette()
-    palette.setColor(QPalette.ColorRole.Window, QColor(30, 30, 30))
-    palette.setColor(QPalette.ColorRole.WindowText, QColor(255, 255, 255))
-    palette.setColor(QPalette.ColorRole.Base, QColor(42, 42, 42))
-    palette.setColor(QPalette.ColorRole.AlternateBase, QColor(66, 66, 66))
-    palette.setColor(QPalette.ColorRole.ToolTipBase, QColor(0, 0, 0))
-    palette.setColor(QPalette.ColorRole.ToolTipText, QColor(255, 255, 255))
-    palette.setColor(QPalette.ColorRole.Text, QColor(255, 255, 255))
-    palette.setColor(QPalette.ColorRole.Button, QColor(64, 64, 64))
-    palette.setColor(QPalette.ColorRole.ButtonText, QColor(255, 255, 255))
-    palette.setColor(QPalette.ColorRole.Link, QColor(42, 130, 218))
-    palette.setColor(QPalette.ColorRole.Highlight, QColor(42, 130, 218))
-    palette.setColor(QPalette.ColorRole.HighlightedText, QColor(0, 0, 0))
-    return palette
+def get_system_theme() -> str:
+    """Detect system theme across Windows, macOS, and Linux."""
 
+    if sys.platform == "win32":
+        # Windows 10/11
+        try:
+            import winreg
+            registry = winreg.ConnectRegistry(None, winreg.HKEY_CURRENT_USER)
+            key = winreg.OpenKey(registry, r"Software\Microsoft\Windows\CurrentVersion\Themes\Personalize")
+            value, _ = winreg.QueryValueEx(key, "AppsUseLightTheme")
+            winreg.CloseKey(key)
+            return "light" if value == 1 else "dark"
+        except Exception:
+            return "dark"
 
-def _light_palette() -> QPalette:
-    # Qt's own default QPalette already reads as a normal light theme -
-    # returning a fresh, unmodified instance is enough.
-    return QPalette()
+    elif sys.platform == "darwin":
+        # macOS
+        try:
+            import subprocess
+            result = subprocess.run(
+                ["defaults", "read", "-g", "AppleInterfaceStyle"],
+                capture_output=True,
+                text=True,
+            )
+            return "dark" if result.returncode == 0 else "light"
+        except Exception:
+            return "dark"
 
-
-def apply_theme(app, theme: str = "dark"):
-    if theme == "light":
-        app.setPalette(_light_palette())
     else:
-        app.setPalette(_dark_palette())
+        # Linux - try common desktop environments
+        try:
+            import subprocess
+            result = subprocess.run(
+                ["gsettings", "get", "org.gnome.desktop.interface", "gtk-theme"],
+                capture_output=True,
+                text=True,
+            )
+            theme_output = result.stdout.strip().lower()
+            if "dark" in theme_output:
+                return "dark"
+            return "light"
+        except Exception:
+            pass
+
+        try:
+            import configparser
+            import os
+            kde_config = os.path.expanduser("~/.config/kdeglobals")
+            if os.path.exists(kde_config):
+                config = configparser.ConfigParser()
+                config.read(kde_config)
+                color_scheme = config.get("General", "ColorScheme", fallback="").lower()
+                if "dark" in color_scheme:
+                    return "dark"
+                return "light"
+        except Exception:
+            pass
+
+        return "dark"
+
+
+def apply_theme(theme_name: Optional[str] = None, app: Optional[QApplication] = None) -> None:
+    """Apply theme and force all widgets to repaint."""
+    global _current_theme
+
+    if app is None:
+        app_instance = QApplication.instance()
+        if app_instance is None:
+            return
+        app = app_instance
+
+    if theme_name is None:
+        from app_config.prefs import prefs
+        theme_name = prefs.get("theme", "system")
+
+    if theme_name == "system":
+        theme_name = get_system_theme()
+
+    _current_theme = theme_name
+
+    # Load QDarkStyle stylesheet
+    if theme_name == "dark":
+        stylesheet = qdarkstyle.load_stylesheet(palette=DarkPalette)
+    elif theme_name == "light":
+        stylesheet = qdarkstyle.load_stylesheet(palette=LightPalette)
+    else:
+        stylesheet = ""
+
+    # Apply stylesheet to application
+    app.setStyleSheet(stylesheet)
+
+    # Force all widgets to reapply styles
+    _repolish_all_widgets(app)
+
+
+def _repolish_all_widgets(app: QApplication) -> None:
+    """Force all widgets to reapply their styles (polish/unpolish cycle).
+
+    The polish/unpolish cycle is the official Qt mechanism for forcing widgets
+    to reapply their styles. This is sufficient for dynamic theme changes and
+    does not require calling update() separately. See Qt documentation for
+    QStyle::polish() and QStyle::unpolish().
+    """
+    for widget in app.allWidgets():
+        widget.style().unpolish(widget)
+        widget.style().polish(widget)
+
+
+def get_current_theme() -> str:
+    """Get the currently active theme (resolved - never "system")."""
+    global _current_theme
+    if _current_theme is None:
+        from app_config.prefs import prefs
+        theme = prefs.get("theme", "system")
+        if theme == "system":
+            return get_system_theme()
+        return theme
+    return _current_theme
+
+
+def setup_theme(app: QApplication) -> None:
+    """Initial theme setup on app start."""
+    from app_config.prefs import prefs
+    theme = prefs.get("theme", "system")
+    apply_theme(theme, app)

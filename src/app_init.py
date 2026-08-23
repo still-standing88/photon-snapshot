@@ -37,12 +37,11 @@ def apply_ui_zoom(app, zoom_level=None):
 
 
 def setup_application_style(app):
-    from utilities.theme_manager import apply_theme
-    from app_config.prefs import prefs
+    from utilities.theme_manager import setup_theme
 
     app.setStyle("Fusion")
     apply_ui_zoom(app)
-    apply_theme(app, prefs.get("theme", "dark"))
+    setup_theme(app)
 
 
 def initialize_modules(splash=None):

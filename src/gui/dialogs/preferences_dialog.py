@@ -34,9 +34,10 @@ class PreferencesDialog(QDialog):
 
         self.theme_combo = QComboBox()
         self.theme_combo.setAccessibleName(_("Application theme"))
-        self.theme_combo.addItem(_("Dark"), "dark")
+        self.theme_combo.addItem(_("System"), "system")
         self.theme_combo.addItem(_("Light"), "light")
-        idx = self.theme_combo.findData(prefs.get("theme", "dark"))
+        self.theme_combo.addItem(_("Dark"), "dark")
+        idx = self.theme_combo.findData(prefs.get("theme", "system"))
         self.theme_combo.setCurrentIndex(idx if idx >= 0 else 0)
         form.addRow(_("Theme:"), self.theme_combo)
 
@@ -69,12 +70,18 @@ class PreferencesDialog(QDialog):
     def accept(self):
         previous_language = prefs.get("language", "")
         new_language = self.language_combo.currentData()
+        previous_theme = prefs.get("theme", "system")
+        new_theme = self.theme_combo.currentData()
 
         prefs["language"] = new_language
-        prefs["theme"] = self.theme_combo.currentData()
+        prefs["theme"] = new_theme
         prefs["check_for_updates_on_startup"] = self.check_updates_cb.isChecked()
         prefs["minimize_to_tray_on_close"] = self.minimize_to_tray_cb.isChecked()
         prefs["confirm_on_overwrite"] = self.confirm_overwrite_cb.isChecked()
+
+        if new_theme != previous_theme:
+            from utilities.theme_manager import apply_theme
+            apply_theme(new_theme)
 
         if new_language != previous_language:
             QMessageBox.information(
