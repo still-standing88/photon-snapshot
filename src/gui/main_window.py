@@ -34,9 +34,9 @@ class MainWindow(QMainWindow):
         self.setGeometry(100, 100, 1400, 900)
         self.setWindowIcon(QIcon(":icons/photon-snapshot.png"))
         self.setAccessibleName(_("Photon Snapshot main window"))
-        self.setStyleSheet("""
-            QMainWindow { background-color: #1e1e1e; color: #ffffff; }
-        """)
+        # No hardcoded QMainWindow stylesheet here - colors come from the
+        # app-wide qdarkstyle stylesheet applied by utilities.theme_manager
+        # so the dark/light/system theme setting actually takes effect.
 
         self.dock_manager = DockManager(self)
         self.focus_manager = FocusNavigationManager(self)
@@ -259,13 +259,6 @@ class MainWindow(QMainWindow):
         self.toolbar = self.addToolBar(_("Main"))
         self.toolbar.setObjectName("mainToolbar")
         self.toolbar.setAccessibleName(_("Main toolbar"))
-        self.toolbar.setStyleSheet("""
-            QToolBar { background-color: #2b2b2b; border-bottom: 1px solid #404040; spacing: 3px; }
-            QToolButton { background-color: #404040; border: 1px solid #555555; color: #ffffff; padding: 5px; border-radius: 3px; }
-            QToolButton:hover { background-color: #505050; }
-            QToolButton:pressed { background-color: #303030; }
-            QToolButton:disabled { background-color: #2b2b2b; color: #666666; }
-        """)
 
         self.toolbar.addAction(self.open_action)
         self.toolbar.addAction(self.save_action)
@@ -285,9 +278,6 @@ class MainWindow(QMainWindow):
         self.status_bar = self.statusBar()
         self.status_bar.setObjectName("mainStatusBar")
         self.status_bar.setAccessibleName(_("Status bar"))
-        self.status_bar.setStyleSheet("""
-            QStatusBar { background-color: #2b2b2b; color: #ffffff; border-top: 1px solid #404040; }
-        """)
 
         # TabableLabel, not QLabel: every info-bearing label in the status
         # bar must be reachable by keyboard/screen reader (accessibility

@@ -12,7 +12,7 @@ from typing import Any, Iterator
 
 DEFAULTS: dict[str, Any] = {
     "language": "",  # "" = follow system locale
-    "theme": "dark",
+    "theme": "system",
     "ui_zoom_level": 0,
     "last_explorer_path": "",
     "window_geometry": "",

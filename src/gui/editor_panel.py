@@ -33,7 +33,7 @@ class SliderGroup(QWidget):
         layout.setSpacing(2)
 
         self.title_label = TabableLabel(title, accessible_name=title)
-        self.title_label.setStyleSheet("color: #ffffff; font-weight: bold;")
+        self.title_label.setStyleSheet("font-weight: bold;")
 
         slider_layout = QHBoxLayout()
 
@@ -234,7 +234,6 @@ class CropPanel(QWidget):
         self.crop_mode_checkbox = QCheckBox(_("Crop Mode"))
         self.crop_mode_checkbox.setAccessibleName(_("Toggle crop mode"))
         self.crop_mode_checkbox.setStyleSheet("""
-            QCheckBox { color: #ffffff; }
             QCheckBox::indicator { width: 13px; height: 13px; }
             QCheckBox::indicator:unchecked { background-color: #2b2b2b; border: 1px solid #404040; }
             QCheckBox::indicator:checked { background-color: #0078d4; border: 1px solid #005a9e; }
@@ -279,7 +278,6 @@ class DrawPanel(QWidget):
         self.draw_mode_checkbox = QCheckBox(_("Drawing Mode"))
         self.draw_mode_checkbox.setAccessibleName(_("Toggle canvas drawing mode"))
         self.draw_mode_checkbox.setStyleSheet("""
-            QCheckBox { color: #ffffff; }
             QCheckBox::indicator { width: 13px; height: 13px; }
             QCheckBox::indicator:unchecked { background-color: #2b2b2b; border: 1px solid #404040; }
             QCheckBox::indicator:checked { background-color: #0078d4; border: 1px solid #005a9e; }

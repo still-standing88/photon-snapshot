@@ -5,7 +5,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: src/gui/editor_panel.py:303
+#: src/gui/editor_panel.py:301
 msgid " px"
 msgstr ""
 
@@ -125,7 +125,7 @@ msgstr ""
 msgid "Add to Library"
 msgstr ""
 
-#: src/gui/editor_panel.py:374
+#: src/gui/editor_panel.py:372
 msgid "Adjustments"
 msgstr ""
 
@@ -145,11 +145,11 @@ msgstr ""
 msgid "Apply"
 msgstr ""
 
-#: src/gui/editor_panel.py:243
+#: src/gui/editor_panel.py:242
 msgid "Apply Crop"
 msgstr ""
 
-#: src/gui/editor_panel.py:244
+#: src/gui/editor_panel.py:243
 msgid "Apply crop selection"
 msgstr ""
 
@@ -181,7 +181,7 @@ msgstr ""
 msgid "Brightness"
 msgstr ""
 
-#: src/app_init.py:75
+#: src/app_init.py:74
 msgid "Building interface..."
 msgstr ""
 
@@ -193,7 +193,7 @@ msgstr ""
 msgid "Cancel/Escape Mode"
 msgstr ""
 
-#: src/gui/editor_panel.py:272
+#: src/gui/editor_panel.py:271
 msgid "Canvas drawing tools"
 msgstr ""
 
@@ -205,7 +205,7 @@ msgstr ""
 msgid "Center"
 msgstr ""
 
-#: src/gui/dialogs/preferences_dialog.py:57
+#: src/gui/dialogs/preferences_dialog.py:58
 msgid "Changing the language requires restarting the application."
 msgstr ""
 
@@ -217,7 +217,7 @@ msgstr ""
 msgid "Check for Updates"
 msgstr ""
 
-#: src/gui/dialogs/preferences_dialog.py:45
+#: src/gui/dialogs/preferences_dialog.py:46
 msgid "Check for updates on startup"
 msgstr ""
 
@@ -225,7 +225,7 @@ msgstr ""
 msgid "Choose overlay text color"
 msgstr ""
 
-#: src/gui/editor_panel.py:292
+#: src/gui/editor_panel.py:290
 msgid "Choose pen color"
 msgstr ""
 
@@ -253,7 +253,7 @@ msgstr ""
 msgid "Clear Recent Files"
 msgstr ""
 
-#: src/gui/editor_panel.py:309
+#: src/gui/editor_panel.py:307
 msgid "Click and drag on the image to draw. This permanently edits the pixels."
 msgstr ""
 
@@ -265,7 +265,7 @@ msgstr ""
 msgid "Color:"
 msgstr ""
 
-#: src/gui/dialogs/preferences_dialog.py:53
+#: src/gui/dialogs/preferences_dialog.py:54
 msgid "Confirm before overwriting files"
 msgstr ""
 
@@ -278,7 +278,7 @@ msgstr ""
 msgid "Copy Path"
 msgstr ""
 
-#: src/gui/editor_panel.py:376
+#: src/gui/editor_panel.py:374
 msgid "Crop"
 msgstr ""
 
@@ -294,11 +294,11 @@ msgstr ""
 msgid "Current folder path"
 msgstr ""
 
-#: src/gui/main_window.py:296
+#: src/gui/main_window.py:286
 msgid "Current zoom level"
 msgstr ""
 
-#: src/gui/dialogs/preferences_dialog.py:37
+#: src/gui/dialogs/preferences_dialog.py:39
 msgid "Dark"
 msgstr ""
 
@@ -306,11 +306,11 @@ msgstr ""
 msgid "Displays the currently loaded image. Supports crop, shape, and freehand drawing modes."
 msgstr ""
 
-#: src/gui/editor_panel.py:378
+#: src/gui/editor_panel.py:376
 msgid "Draw"
 msgstr ""
 
-#: src/gui/editor_panel.py:279
+#: src/gui/editor_panel.py:278
 msgid "Drawing Mode"
 msgstr ""
 
@@ -322,11 +322,11 @@ msgstr ""
 msgid "Editing tool categories"
 msgstr ""
 
-#: src/gui/editor_panel.py:364
+#: src/gui/editor_panel.py:362
 msgid "Editing tool panels"
 msgstr ""
 
-#: src/gui/editor_panel.py:350
+#: src/gui/editor_panel.py:348
 msgid "Editing tools"
 msgstr ""
 
@@ -338,19 +338,19 @@ msgstr ""
 msgid "Enter text..."
 msgstr ""
 
-#: src/gui/main_window.py:379
-#: src/gui/main_window.py:381
-#: src/gui/main_window.py:392
-#: src/gui/main_window.py:421
+#: src/gui/main_window.py:369
+#: src/gui/main_window.py:371
+#: src/gui/main_window.py:382
+#: src/gui/main_window.py:411
 msgid "Error"
 msgstr ""
 
-#: src/gui/main_window.py:381
+#: src/gui/main_window.py:371
 msgid "Error loading image: {error}"
 msgstr ""
 
-#: src/gui/main_window.py:392
-#: src/gui/main_window.py:421
+#: src/gui/main_window.py:382
+#: src/gui/main_window.py:411
 msgid "Error saving image: {error}"
 msgstr ""
 
@@ -364,7 +364,7 @@ msgstr ""
 msgid "Explorer"
 msgstr ""
 
-#: src/gui/main_window.py:379
+#: src/gui/main_window.py:369
 msgid "Failed to load image"
 msgstr ""
 
@@ -376,7 +376,7 @@ msgstr ""
 msgid "File name"
 msgstr ""
 
-#: src/gui/main_window.py:528
+#: src/gui/main_window.py:518
 msgid "File Not Found"
 msgstr ""
 
@@ -451,15 +451,15 @@ msgid "Image canvas"
 msgstr ""
 
 #: src/gui/explorer.py:120
-#: src/gui/main_window.py:297
+#: src/gui/main_window.py:287
 msgid "Image dimensions"
 msgstr ""
 
-#: src/gui/main_window.py:390
+#: src/gui/main_window.py:380
 msgid "Image saved"
 msgstr ""
 
-#: src/gui/main_window.py:418
+#: src/gui/main_window.py:408
 msgid "Image saved as {name}"
 msgstr ""
 
@@ -496,11 +496,11 @@ msgstr ""
 msgid "Line"
 msgstr ""
 
-#: src/gui/main_window.py:376
+#: src/gui/main_window.py:366
 msgid "Loaded: {name}"
 msgstr ""
 
-#: src/app_init.py:66
+#: src/app_init.py:65
 msgid "Loading key bindings..."
 msgstr ""
 
@@ -529,7 +529,7 @@ msgstr ""
 msgid "Minimize to Tray"
 msgstr ""
 
-#: src/gui/dialogs/preferences_dialog.py:49
+#: src/gui/dialogs/preferences_dialog.py:50
 msgid "Minimize to tray when window is closed"
 msgstr ""
 
@@ -541,7 +541,7 @@ msgstr ""
 msgid "No preview"
 msgstr ""
 
-#: src/gui/main_window.py:504
+#: src/gui/main_window.py:494
 msgid "No recent files"
 msgstr ""
 
@@ -598,7 +598,7 @@ msgid "Open file"
 msgstr ""
 
 #: src/gui/explorer.py:74
-#: src/gui/main_window.py:359
+#: src/gui/main_window.py:349
 msgid "Open Folder"
 msgstr ""
 
@@ -607,7 +607,7 @@ msgid "Open folder"
 msgstr ""
 
 #: src/gui/explorer.py:66
-#: src/gui/main_window.py:354
+#: src/gui/main_window.py:344
 msgid "Open Image"
 msgstr ""
 
@@ -627,11 +627,11 @@ msgstr ""
 msgid "Overlay tools"
 msgstr ""
 
-#: src/gui/editor_panel.py:377
+#: src/gui/editor_panel.py:375
 msgid "Overlays"
 msgstr ""
 
-#: src/gui/main_window.py:406
+#: src/gui/main_window.py:396
 msgid "Overwrite File?"
 msgstr ""
 
@@ -639,19 +639,19 @@ msgstr ""
 msgid "Parent"
 msgstr ""
 
-#: src/gui/editor_panel.py:291
+#: src/gui/editor_panel.py:289
 msgid "Pen Color"
 msgstr ""
 
-#: src/gui/editor_panel.py:304
+#: src/gui/editor_panel.py:302
 msgid "Pen width in pixels"
 msgstr ""
 
-#: src/gui/editor_panel.py:299
+#: src/gui/editor_panel.py:297
 msgid "Pen Width:"
 msgstr ""
 
-#: src/gui/dialogs/preferences_dialog.py:83
+#: src/gui/dialogs/preferences_dialog.py:90
 msgid "Photon Snapshot"
 msgstr ""
 
@@ -667,7 +667,7 @@ msgstr ""
 msgid "Pixel Info"
 msgstr ""
 
-#: src/gui/dialogs/preferences_dialog.py:82
+#: src/gui/dialogs/preferences_dialog.py:89
 msgid "Please restart {app} for the language change to take effect."
 msgstr ""
 
@@ -704,7 +704,7 @@ msgstr ""
 msgid "Quit"
 msgstr ""
 
-#: src/gui/main_window.py:295
+#: src/gui/main_window.py:285
 msgid "Ready"
 msgstr ""
 
@@ -720,7 +720,7 @@ msgstr ""
 msgid "Redo"
 msgstr ""
 
-#: src/gui/main_window.py:431
+#: src/gui/main_window.py:421
 msgid "Redone"
 msgstr ""
 
@@ -747,7 +747,7 @@ msgstr ""
 msgid "Reset to Default"
 msgstr ""
 
-#: src/gui/main_window.py:438
+#: src/gui/main_window.py:428
 msgid "Reset to original"
 msgstr ""
 
@@ -755,7 +755,7 @@ msgstr ""
 msgid "Reset to Original"
 msgstr ""
 
-#: src/gui/dialogs/preferences_dialog.py:81
+#: src/gui/dialogs/preferences_dialog.py:88
 msgid "Restart Required"
 msgstr ""
 
@@ -787,7 +787,7 @@ msgstr ""
 msgid "Save As"
 msgstr ""
 
-#: src/gui/main_window.py:400
+#: src/gui/main_window.py:390
 msgid "Save Image As"
 msgstr ""
 
@@ -816,7 +816,7 @@ msgstr ""
 msgid "Section expanded - activate to collapse"
 msgstr ""
 
-#: src/gui/editor_panel.py:317
+#: src/gui/editor_panel.py:315
 msgid "Select Pen Color"
 msgstr ""
 
@@ -868,16 +868,20 @@ msgstr ""
 msgid "Status &Bar"
 msgstr ""
 
-#: src/gui/main_window.py:287
+#: src/gui/main_window.py:280
 msgid "Status bar"
 msgstr ""
 
-#: src/gui/main_window.py:295
+#: src/gui/main_window.py:285
 msgid "Status message"
 msgstr ""
 
-#: src/gui/main_window.py:456
+#: src/gui/main_window.py:446
 msgid "Stroke drawn"
+msgstr ""
+
+#: src/gui/dialogs/preferences_dialog.py:37
+msgid "System"
 msgstr ""
 
 #: src/gui/dialogs/preferences_dialog.py:27
@@ -896,11 +900,11 @@ msgstr ""
 msgid "Text:"
 msgstr ""
 
-#: src/gui/main_window.py:529
+#: src/gui/main_window.py:519
 msgid "The file '{path}' no longer exists and will be removed from recent files."
 msgstr ""
 
-#: src/gui/dialogs/preferences_dialog.py:41
+#: src/gui/dialogs/preferences_dialog.py:42
 msgid "Theme:"
 msgstr ""
 
@@ -916,7 +920,7 @@ msgstr ""
 msgid "Toggle &Ruler"
 msgstr ""
 
-#: src/gui/editor_panel.py:280
+#: src/gui/editor_panel.py:279
 msgid "Toggle canvas drawing mode"
 msgstr ""
 
@@ -976,7 +980,7 @@ msgstr ""
 msgid "Top Right"
 msgstr ""
 
-#: src/gui/editor_panel.py:375
+#: src/gui/editor_panel.py:373
 msgid "Transform"
 msgstr ""
 
@@ -988,7 +992,7 @@ msgstr ""
 msgid "Undo"
 msgstr ""
 
-#: src/gui/main_window.py:426
+#: src/gui/main_window.py:416
 msgid "Undone"
 msgstr ""
 
@@ -1024,11 +1028,11 @@ msgstr ""
 msgid "Zoom Out"
 msgstr ""
 
-#: src/gui/main_window.py:296
+#: src/gui/main_window.py:286
 msgid "Zoom: 100%"
 msgstr ""
 
-#: src/gui/main_window.py:459
+#: src/gui/main_window.py:449
 msgid "Zoom: {percent:.0f}%"
 msgstr ""
 
@@ -1048,7 +1052,7 @@ msgstr ""
 msgid "{name} - expanded"
 msgstr ""
 
-#: src/gui/main_window.py:407
+#: src/gui/main_window.py:397
 msgid "{name} already exists. Overwrite it?"
 msgstr ""
 

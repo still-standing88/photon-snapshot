@@ -648,6 +648,9 @@ msgstr "Mensaje de estado"
 msgid "Stroke drawn"
 msgstr "Trazo dibujado"
 
+msgid "System"
+msgstr "Sistema"
+
 msgid "System Default"
 msgstr "Predeterminado del sistema"
 
