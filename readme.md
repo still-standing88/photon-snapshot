@@ -44,39 +44,7 @@ python -m unittest discover -s tests -v
 python build.py
 ```
 
-Nuitka creates the standalone build under `dist/`. Keep the entire distribution folder together when running or packaging the executable.
 
-| Platform | Build output |
-| --- | --- |
-| Windows | `dist/app.dist/PhotonSnapshot.exe` |
-| macOS | `dist/app.app` |
-| Linux | `dist/app.dist/PhotonSnapshot` |
-
-On Windows, create the MSI from the standalone distribution. Run the verification script from a Windows account without an existing Photon Snapshot installation.
-
-```powershell
-.\installer\windows\build-msi.ps1 -SourceDir dist\app.dist -OutputDir dist\installer
-.\scripts\verify_windows_package.ps1
-```
-
-Run the packaged smoke test with the executable from the table. On macOS use `dist/app.app/Contents/MacOS/PhotonSnapshot`. Set `QT_QPA_PLATFORM` to `offscreen` for headless testing and pass `--self-test dist/codec-smoke` to check image codecs, project saves, and batch conversion. The result is written to `dist/codec-smoke/release-smoke.json`.
-
-The GitHub Actions workflow can build and upload test artifacts on demand. Pushing a version tag that matches the app version, such as `v1.0.0`, publishes the tested packages to GitHub Releases. It produces an MSI and portable ZIP for Windows, a DMG for each macOS architecture, and a compressed standalone build for Ubuntu.
-
-## Verifying a release
-
-The build workflow uses PlayForm’s signing format. It signs each executable with RSA-4096 PSS using SHA-256 and publishes a platform manifest with CRC32, SHA-256, and SHA-512 checksums.
-
-The Windows and Linux packages put the `.sig` file beside the executable. Both macOS DMGs put `PhotonSnapshot.sig` beside `PhotonSnapshot.app`. The executable is inside the bundle at `PhotonSnapshot.app/Contents/MacOS/PhotonSnapshot`.
-
-From the repository, point the verifier at the extracted executable and its signature. The example uses the contents of the Windows ZIP. The verifier uses the public key in [signing/release-public.pem](./signing/release-public.pem).
-
-```sh
-python -m pip install cryptography
-python scripts/sign_release.py verify app.dist/PhotonSnapshot.exe app.dist/PhotonSnapshot.exe.sig
-```
-
-GitHub Actions reads the matching PEM private key from the repository secret `PHOTON_SIGNING_PRIVATE_KEY`.
 
 ## License
 
