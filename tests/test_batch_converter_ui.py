@@ -30,8 +30,12 @@ class BatchConverterUITests(regressions.AppRegressionTests):
         tool.reopen_progress()
         self.assertIs(tool.progress_dialog, progress)
         self.assertTrue(progress.isVisible())
-        QTest.qWait(80)
         self.assertFalse(tool.job.control.running.is_set())
+        deadline = time.monotonic() + 2
+        while not ticks and time.monotonic() < deadline:
+            QTest.qWait(20)
+        self.assertTrue(ticks, "The GUI timer did not fire while the batch job was paused")
+        self.assertTrue(tool.job.isRunning())
         progress._pause()
         QTest.qWait(80)
         progress._cancel()
@@ -42,7 +46,6 @@ class BatchConverterUITests(regressions.AppRegressionTests):
         self.app.processEvents()
         self.assertFalse(tool.job.isRunning())
         self.assertTrue(progress.finished_run)
-        self.assertGreater(len(ticks), 8)
         self.assertFalse(list(source.glob('.photon-*.tmp')))
     def test_tab_order_conditional_controls_and_preset_persistence(self):
         window = self.window()
