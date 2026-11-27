@@ -1,123 +1,125 @@
-from PIL import Image as PILImage, ImageEnhance, ImageOps, ImageFilter, ImageDraw, ImageFont
-from typing import Optional, Tuple, List, Any
+from PIL import Image, ImageOps
 import io
-import copy
+from .frame_store import FrameStore
+from .processing import apply_effect, resize, draw_stroke
 
 
 class PhotonImage:
-    def __init__(self, pil_image: PILImage.Image):
-        self.original = pil_image.copy()
-        self.current = pil_image.copy()
-        self.format = pil_image.format or 'PNG'
+    def __init__(self, pil_image, store=None, source_format=None):
+        self.store = store or FrameStore()
+        self._current = self.store.put(pil_image)
+        self._original = self._current
+        self.source_format = source_format or pil_image.format or 'PNG'
+        self.format = self.source_format
         self.applied_filters = []
-        self.metadata = {}
-        
-    @classmethod
-    def from_file(cls, filepath: str) -> 'PhotonImage':
-        pil_img = PILImage.open(filepath)
-        return cls(pil_img)
-    
-    @classmethod
-    def from_bytes(cls, data: bytes) -> 'PhotonImage':
-        pil_img = PILImage.open(io.BytesIO(data))
-        return cls(pil_img)
-    
-    def copy(self) -> 'PhotonImage':
-        new_img = PhotonImage(self.current)
-        new_img.original = self.original.copy()
-        new_img.format = self.format
-        new_img.applied_filters = self.applied_filters.copy()
-        new_img.metadata = self.metadata.copy()
-        return new_img
-    
-    def reset_to_original(self):
-        self.current = self.original.copy()
-        self.applied_filters.clear()
-    
-    def apply_brightness(self, factor: float):
-        enhancer = ImageEnhance.Brightness(self.current)
-        self.current = enhancer.enhance(factor)
-        self.applied_filters.append(('brightness', factor))
-    
-    def apply_contrast(self, factor: float):
-        enhancer = ImageEnhance.Contrast(self.current)
-        self.current = enhancer.enhance(factor)
-        self.applied_filters.append(('contrast', factor))
-    
-    def apply_grayscale(self):
-        self.current = ImageOps.grayscale(self.current).convert('RGB')
-        self.applied_filters.append(('grayscale', None))
-    
-    def apply_invert(self):
-        self.current = ImageOps.invert(self.current)
-        self.applied_filters.append(('invert', None))
-    
-    def apply_sepia(self):
-        pixels = self.current.load()
-        width, height = self.current.size
-        
-        for y in range(height):
-            for x in range(width):
-                r, g, b = pixels[x, y][:3]
-                tr = int(0.393 * r + 0.769 * g + 0.189 * b)
-                tg = int(0.349 * r + 0.686 * g + 0.168 * b)
-                tb = int(0.272 * r + 0.534 * g + 0.131 * b)
-                pixels[x, y] = (min(255, tr), min(255, tg), min(255, tb))
-        
-        self.applied_filters.append(('sepia', None))
-    
-    def rotate(self, degrees: float):
-        self.current = self.current.rotate(degrees, expand=True)
-        self.applied_filters.append(('rotate', degrees))
-    
-    def flip_horizontal(self):
-        self.current = self.current.transpose(PILImage.FLIP_LEFT_RIGHT)
-        self.applied_filters.append(('flip_horizontal', None))
-    
-    def flip_vertical(self):
-        self.current = self.current.transpose(PILImage.FLIP_TOP_BOTTOM)
-        self.applied_filters.append(('flip_vertical', None))
-    
-    def resize(self, size: Tuple[int, int], keep_aspect: bool = True):
-        if keep_aspect:
-            self.current.thumbnail(size, PILImage.Resampling.LANCZOS)
-        else:
-            self.current = self.current.resize(size, PILImage.Resampling.LANCZOS)
-        self.applied_filters.append(('resize', size))
-    
-    def crop(self, box: Tuple[int, int, int, int]):
-        self.current = self.current.crop(box)
-        self.applied_filters.append(('crop', box))
+        self.metadata = {k: pil_image.info[k] for k in ('icc_profile', 'exif') if k in pil_image.info}
 
-    def apply_freehand_stroke(self, points: List[Tuple[int, int]], color: Tuple[int, int, int, int], width: int):
-        """Permanently paints a freehand stroke onto the image (canvas
-        drawing mode), as opposed to the non-destructive ShapeOverlay/
-        TextOverlay drawn on top of the display in the viewer."""
-        if len(points) < 2:
-            return
-        if self.current.mode != 'RGBA':
-            self.current = self.current.convert('RGBA')
-        draw = ImageDraw.Draw(self.current)
-        draw.line(points, fill=color, width=max(1, width), joint='curve')
-        radius = max(1, width) / 2
-        for x, y in (points[0], points[-1]):
-            draw.ellipse((x - radius, y - radius, x + radius, y + radius), fill=color)
+    @property
+    def current(self):
+        return self._current.read()
+
+    @current.setter
+    def current(self, image):
+        self._current = self.store.put(image)
+
+    @property
+    def original(self):
+        return self._original.read()
+
+    @original.setter
+    def original(self, image):
+        self._original = self.store.put(image)
+
+    @classmethod
+    def from_file(cls, filepath):
+        with Image.open(filepath) as image:
+            source_format = image.format
+            if getattr(image, 'n_frames', 1) > 1:
+                raise ValueError('Use document loading to preserve all animation frames')
+            normalized = ImageOps.exif_transpose(image)
+            normalized.load()
+            return cls(normalized, source_format=source_format)
+
+    @classmethod
+    def from_bytes(cls, data):
+        with Image.open(io.BytesIO(data)) as image:
+            return cls(ImageOps.exif_transpose(image), source_format=image.format)
+
+    def copy(self):
+        return self.copy_current()
+
+    def copy_current(self):
+        result = PhotonImage.__new__(PhotonImage)
+        result.store = self.store
+        result._current, result._original = self._current, self._original
+        result.source_format, result.format = self.source_format, self.format
+        result.applied_filters = list(self.applied_filters)
+        result.metadata = dict(self.metadata)
+        return result
+
+    def restore_current(self, snapshot):
+        self._current = snapshot._current
+        self.applied_filters = list(snapshot.applied_filters)
+
+    def reset_to_original(self):
+        self._current = self._original
+        self.applied_filters.clear()
+
+    def apply_effect(self, name, values=None, *, region=None):
+        self.current = apply_effect(self.current, name, values, region=region)
+        self.applied_filters.append((name, values))
+
+    def apply_brightness(self, factor):
+        self.apply_effect('brightness', {'factor': factor})
+
+    def apply_contrast(self, factor):
+        self.apply_effect('contrast', {'factor': factor})
+
+    def apply_grayscale(self):
+        self.apply_effect('grayscale')
+
+    def apply_invert(self):
+        self.apply_effect('invert')
+
+    def apply_sepia(self):
+        self.apply_effect('sepia')
+
+    def rotate(self, degrees):
+        self.apply_effect('rotate', {'degrees': degrees})
+
+    def flip_horizontal(self):
+        self.apply_effect('flip_horizontal')
+
+    def flip_vertical(self):
+        self.apply_effect('flip_vertical')
+
+    def resize(self, size, keep_aspect=True):
+        self.current = resize(self.current, size, 'fit' if keep_aspect else 'exact')
+        self.applied_filters.append(('resize', size))
+
+    def crop(self, box):
+        self.apply_effect('crop', dict(left=box[0], top=box[1], width=box[2]-box[0], height=box[3]-box[1]))
+
+    def apply_freehand_stroke(self, points, color, width):
+        self.current = draw_stroke(self.current, points, color, width)
         self.applied_filters.append(('freehand_stroke', (len(points), width)))
-    
-    def to_bytes(self, format: str = None) -> bytes:
-        format = format or self.format
-        buffer = io.BytesIO()
-        self.current.save(buffer, format=format)
-        return buffer.getvalue()
-    
-    def save(self, filepath: str, format: str = None, quality: int = 95):
-        format = format or self.format
-        self.current.save(filepath, format=format, quality=quality)
-    
+
+    def to_bytes(self, format=None):
+        from .export import encode_images, ExportOptions
+        return encode_images([self.current], [100], 1, ExportOptions(format_id=format or self.format), self.metadata)
+
+    def save(self, filepath, format=None, quality=95):
+        from .export import export_images, ExportOptions
+        from .formats import format_for_path
+        fmt = format or format_for_path(filepath).id
+        options = ExportOptions(format_id=fmt, quality=min(quality, 95 if fmt == 'JPEG' else 100))
+        export_images(filepath, [self.current], [100], 1, options, self.metadata)
+        self.format = fmt
+
     @property
-    def size(self) -> Tuple[int, int]:
-        return self.current.size
-    
+    def size(self):
+        return self._current.size
+
     @property
-    def mode(self) -> str:
-        return self.current.mode
+    def mode(self):
+        return self._current.mode

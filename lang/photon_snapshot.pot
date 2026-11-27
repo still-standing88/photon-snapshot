@@ -5,104 +5,172 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: src/gui/editor_panel.py:301
+#: src/gui/animation_panel.py:109
+#: src/gui/dialogs/new_animation_dialog.py:14
+msgid " ms"
+msgstr ""
+
+#: src/gui/dialogs/new_image_dialog.py:35
+#: src/gui/dialogs/new_image_dialog.py:42
+#: src/gui/editor_panel.py:261
 msgid " px"
 msgstr ""
 
-#: src/gui/main_window.py:253
+#: src/gui/main_window.py:299
 msgid "&About Photon Snapshot"
 msgstr ""
 
-#: src/gui/main_window.py:190
+#: src/gui/main_window.py:216
 msgid "&Actual Size"
 msgstr ""
 
-#: src/gui/main_window.py:148
+#: src/gui/main_window.py:167
 msgid "&Edit"
 msgstr ""
 
-#: src/gui/main_window.py:197
+#: src/gui/main_window.py:223
 msgid "&Explorer"
 msgstr ""
 
-#: src/gui/main_window.py:94
+#: src/gui/main_window.py:101
 msgid "&File"
 msgstr ""
 
-#: src/gui/main_window.py:185
+#: src/gui/main_window.py:211
 msgid "&Fit to Window"
 msgstr ""
 
-#: src/gui/main_window.py:241
+#: src/gui/main_window.py:246
+msgid "&Grid"
+msgstr ""
+
+#: src/gui/main_window.py:287
 msgid "&Hotkeys..."
 msgstr ""
 
-#: src/gui/main_window.py:96
+#: src/gui/main_window.py:110
+msgid "&New"
+msgstr ""
+
+#: src/gui/main_window.py:104
+msgid "&New..."
+msgstr ""
+
+#: src/gui/main_window.py:113
 msgid "&Open..."
 msgstr ""
 
-#: src/gui/main_window.py:234
+#: src/gui/main_window.py:279
 msgid "&Options"
 msgstr ""
 
-#: src/gui/main_window.py:236
+#: src/gui/main_window.py:262
+msgid "&Pixel Info"
+msgstr ""
+
+#: src/gui/main_window.py:282
 msgid "&Preferences..."
 msgstr ""
 
-#: src/gui/main_window.py:157
+#: src/gui/main_window.py:177
 msgid "&Redo"
 msgstr ""
 
-#: src/gui/main_window.py:166
+#: src/gui/main_window.py:186
 msgid "&Reset to Original"
 msgstr ""
 
-#: src/gui/main_window.py:111
+#: src/gui/main_window.py:254
+msgid "&Ruler"
+msgstr ""
+
+#: src/gui/main_window.py:128
 msgid "&Save"
 msgstr ""
 
-#: src/gui/main_window.py:204
+#: src/gui/main_window.py:230
 msgid "&Toolbar"
 msgstr ""
 
-#: src/gui/main_window.py:150
+#: src/gui/main_window.py:170
 msgid "&Undo"
 msgstr ""
 
-#: src/gui/main_window.py:173
+#: src/gui/main_window.py:198
 msgid "&View"
 msgstr ""
 
-#: src/update_checker.py:53
+#: src/update_checker.py:69
 msgid "<b>A new version of {app} is available!</b><br>Your version: <b>{current}</b> -> New version: <b>{new}</b>"
 msgstr ""
 
-#: src/gui/dialogs/about_dialog.py:17
-msgid "About dialog"
+#: src/app_constance/default_keys.py:key_dict
+msgid "About"
 msgstr ""
 
 #: src/gui/dialogs/about_dialog.py:16
+msgid "About dialog"
+msgstr ""
+
+#: src/gui/dialogs/about_dialog.py:15
 msgid "About {app}"
 msgstr ""
 
-#: src/gui/dialogs/hotkeys_dialog.py:34
+#: src/gui/dialogs/hotkeys_dialog.py:112
 msgid "Action"
 msgstr ""
 
-#: src/gui/dialogs/hotkeys_dialog.py:35
-msgid "Action shortcuts"
+#: src/gui/main_window.py:689
+msgid "Active Jobs"
 msgstr ""
 
 #: src/app_constance/default_keys.py:key_dict
 msgid "Actual Size"
 msgstr ""
 
-#: src/gui/explorer.py:208
+#: src/gui/animation_panel.py:142
+msgid "Add Blank"
+msgstr ""
+
+#: src/gui/explorer.py:415
+#: src/app_constance/default_keys.py:key_dict
 msgid "Add Current Folder to Library"
+msgstr ""
+
+#: src/tools/image_batch_converter/ui.py:228
+msgid "Add Edit..."
+msgstr ""
+
+#: src/tools/image_batch_converter/ui.py:133
+msgid "Add Files..."
+msgstr ""
+
+#: src/tools/image_batch_converter/ui.py:229
+msgid "Add Filter..."
 msgstr ""
 
 #: src/app_constance/default_keys.py:key_dict
 msgid "Add Folder to Library"
+msgstr ""
+
+#: src/tools/image_batch_converter/ui.py:133
+msgid "Add Folder..."
+msgstr ""
+
+#: src/tools/image_batch_converter/ui.py:99
+msgid "Add Image Files"
+msgstr ""
+
+#: src/tools/image_batch_converter/ui.py:104
+msgid "Add Image Folder"
+msgstr ""
+
+#: src/gui/explorer.py:341
+msgid "Add new"
+msgstr ""
+
+#: src/gui/explorer.py:247
+msgid "Add new path to library"
 msgstr ""
 
 #: src/gui/dialogs/text_overlay_dialog.py:20
@@ -113,23 +181,69 @@ msgstr ""
 msgid "Add text overlay dialog"
 msgstr ""
 
-#: src/gui/overlay_panel.py:81
+#: src/gui/overlay_panel.py:80
 msgid "Add Text Overlay..."
 msgstr ""
 
+#: src/gui/explorer.py:192
 #: src/app_constance/default_keys.py:key_dict
 msgid "Add to Favorites"
 msgstr ""
 
-#: src/gui/explorer.py:78
+#: src/gui/explorer.py:189
 msgid "Add to Library"
 msgstr ""
 
-#: src/gui/editor_panel.py:372
+#: src/gui/editor_panel.py:341
+#: src/gui/effect_labels.py:13
 msgid "Adjustments"
 msgstr ""
 
-#: src/gui/dialogs/about_dialog.py:37
+#: src/gui/explorer.py:705
+msgid "All Files"
+msgstr ""
+
+#: src/gui/animation_workspace.py:48
+msgid "All frames"
+msgstr ""
+
+#: src/tools/image_batch_converter/ui.py:113
+msgid "All supported image formats"
+msgstr ""
+
+#: src/tools/image_batch_converter/ui.py:90
+msgid "All supported images"
+msgstr ""
+
+#: src/gui/dialogs/about_dialog.py:45
+msgid "An accessible, cross-platform image viewer and editor with customizable hotkeys."
+msgstr ""
+
+#: src/app_constance/default_keys.py:key_dict
+msgid "Animation"
+msgstr ""
+
+#: src/gui/animation_panel.py:126
+msgid "Animation frame strip"
+msgstr ""
+
+#: src/gui/animation_panel.py:91
+msgid "Animation frames"
+msgstr ""
+
+#: src/tools/image_batch_converter/ui.py:155
+msgid "Animation handling:"
+msgstr ""
+
+#: src/gui/animation_workspace.py:102
+msgid "Animation Panel"
+msgstr ""
+
+#: src/gui/dialogs/export_dialog.py:124
+msgid "Animation Preview"
+msgstr ""
+
+#: src/gui/dialogs/about_dialog.py:50
 msgid "Application information"
 msgstr ""
 
@@ -141,28 +255,96 @@ msgstr ""
 msgid "Application theme"
 msgstr ""
 
-#: src/gui/dialogs/hotkeys_dialog.py:51
+#: src/tools/image_batch_converter/ui.py:164
+msgid "Applied image effects in order"
+msgstr ""
+
+#: src/gui/dialogs/effect_dialog.py:53
+#: src/gui/dialogs/effect_dialog.py:96
+#: src/gui/dialogs/hotkeys_dialog.py:156
 msgid "Apply"
 msgstr ""
 
-#: src/gui/editor_panel.py:242
+#: src/gui/editor_panel.py:206
 msgid "Apply Crop"
 msgstr ""
 
-#: src/gui/editor_panel.py:243
+#: src/gui/editor_panel.py:207
 msgid "Apply crop selection"
 msgstr ""
 
-#: src/gui/editor_panel.py:128
+#: src/gui/editor_panel.py:122
 msgid "Apply grayscale effect"
 msgstr ""
 
-#: src/gui/editor_panel.py:130
+#: src/gui/editor_panel.py:124
 msgid "Apply sepia effect"
 msgstr ""
 
-#: src/gui/dialogs/hotkeys_dialog.py:155
+#: src/gui/animation_workspace.py:44
+msgid "Apply to:"
+msgstr ""
+
+#: src/gui/animation_workspace.py:156
+msgid "Applying Frame Edits"
+msgstr ""
+
+#: src/gui/dialogs/hotkeys_dialog.py:342
 msgid "Are you sure you want to reset all hotkeys to default?"
+msgstr ""
+
+#: src/gui/animation_workspace.py:486
+msgid "Artwork Colour"
+msgstr ""
+
+#: src/gui/effect_labels.py:7
+msgid "Auto Contrast"
+msgstr ""
+
+#: src/gui/dialogs/new_image_dialog.py:48
+msgid "Background Color"
+msgstr ""
+
+#: src/gui/dialogs/new_image_dialog.py:52
+msgid "Background:"
+msgstr ""
+
+#: src/gui_controls/job_progress_dialog.py:92
+msgid "Batch conversion finished"
+msgstr ""
+
+#: src/tools/image_batch_converter/ui.py:24
+#: src/app_constance/default_keys.py:key_dict
+msgid "Batch Image Converter"
+msgstr ""
+
+#: src/gui/animation_workspace.py:86
+msgid "Batch Image Converter..."
+msgstr ""
+
+#: src/tools/image_batch_converter/ui.py:31
+msgid "Batch preset name"
+msgstr ""
+
+#: src/tools/image_batch_converter/ui.py:78
+msgid "Batch source files and folders"
+msgstr ""
+
+#: src/tools/image_batch_converter/ui.py:49
+msgid "Begin"
+msgstr ""
+
+#: src/gui/effect_labels.py:21
+msgid "Black point"
+msgstr ""
+
+#: src/gui/dialogs/effect_dialog.py:133
+msgid "Black point must be below white point."
+msgstr ""
+
+#: src/gui/dialogs/effect_dialog.py:85
+#: src/gui/dialogs/effect_dialog.py:86
+msgid "Blur area"
 msgstr ""
 
 #: src/gui/dialogs/text_overlay_dialog.py:50
@@ -177,15 +359,27 @@ msgstr ""
 msgid "Bottom Right"
 msgstr ""
 
-#: src/gui/editor_panel.py:119
+#: src/gui/effect_labels.py:26
+msgid "Bounded fit without enlargement"
+msgstr ""
+
+#: src/gui/editor_panel.py:112
+#: src/gui/effect_labels.py:5
 msgid "Brightness"
+msgstr ""
+
+#: src/gui/explorer.py:261
+#: src/tools/image_batch_converter/ui.py:281
+msgid "Browse..."
 msgstr ""
 
 #: src/app_init.py:74
 msgid "Building interface..."
 msgstr ""
 
-#: src/gui/dialogs/hotkeys_dialog.py:53
+#: src/gui/animation_workspace.py:210
+#: src/gui/dialogs/hotkeys_dialog.py:160
+#: src/gui_controls/job_progress_dialog.py:35
 msgid "Cancel"
 msgstr ""
 
@@ -193,12 +387,36 @@ msgstr ""
 msgid "Cancel/Escape Mode"
 msgstr ""
 
-#: src/gui/editor_panel.py:271
+#: src/gui_controls/job_progress_dialog.py:58
+msgid "Cancelling... Waiting for the current encoder to finish."
+msgstr ""
+
+#: src/gui/animation_workspace.py:220
+msgid "Cancelling... Waiting for the current operation to finish."
+msgstr ""
+
+#: src/tools/image_batch_converter/ui.py:388
+msgid "Cannot Begin"
+msgstr ""
+
+#: src/gui/animation_workspace.py:327
+msgid "Cannot Open Image"
+msgstr ""
+
+#: src/gui/editor_panel.py:236
 msgid "Canvas drawing tools"
 msgstr ""
 
-#: src/gui/dialogs/hotkeys_dialog.py:83
-msgid "Category: {name}"
+#: src/gui/dialogs/new_image_dialog.py:43
+msgid "Canvas height in pixels"
+msgstr ""
+
+#: src/gui/dialogs/new_image_dialog.py:36
+msgid "Canvas width in pixels"
+msgstr ""
+
+#: src/gui/dialogs/hotkeys_dialog.py:142
+msgid "Capture key"
 msgstr ""
 
 #: src/gui/dialogs/text_overlay_dialog.py:47
@@ -209,7 +427,7 @@ msgstr ""
 msgid "Changing the language requires restarting the application."
 msgstr ""
 
-#: src/gui/main_window.py:248
+#: src/gui/main_window.py:294
 msgid "Check for &Updates..."
 msgstr ""
 
@@ -221,27 +439,59 @@ msgstr ""
 msgid "Check for updates on startup"
 msgstr ""
 
+#: src/gui/animation_workspace.py:346
+msgid "Choose an Animation Format"
+msgstr ""
+
+#: src/gui/dialogs/new_image_dialog.py:49
+msgid "Choose background color"
+msgstr ""
+
+#: src/gui/dialogs/export_dialog.py:44
+msgid "Choose background..."
+msgstr ""
+
+#: src/gui/dialogs/export_dialog.py:124
+msgid "Choose GIF or WebP to preview an animation."
+msgstr ""
+
+#: src/tools/image_batch_converter/ui.py:172
+msgid "Choose Image Edit"
+msgstr ""
+
+#: src/tools/image_batch_converter/ui.py:172
+msgid "Choose Image Filter"
+msgstr ""
+
 #: src/gui/dialogs/text_overlay_dialog.py:63
 msgid "Choose overlay text color"
 msgstr ""
 
-#: src/gui/editor_panel.py:290
+#: src/gui/editor_panel.py:250
 msgid "Choose pen color"
 msgstr ""
 
-#: src/gui/overlay_panel.py:76
+#: src/gui/overlay_panel.py:75
 msgid "Circle"
 msgstr ""
 
-#: src/gui/overlay_panel.py:86
+#: src/tools/image_batch_converter/ui.py:134
+msgid "Clear"
+msgstr ""
+
+#: src/tools/image_batch_converter/ui.py:237
+msgid "Clear All"
+msgstr ""
+
+#: src/gui/overlay_panel.py:84
 msgid "Clear All Overlays"
 msgstr ""
 
-#: src/gui/overlay_panel.py:87
+#: src/gui/overlay_panel.py:85
 msgid "Clear all overlays"
 msgstr ""
 
-#: src/gui/explorer.py:218
+#: src/gui/explorer.py:344
 msgid "Clear Library"
 msgstr ""
 
@@ -249,155 +499,398 @@ msgstr ""
 msgid "Clear Overlays"
 msgstr ""
 
-#: src/gui/main_window.py:130
+#: src/gui/main_window.py:147
+#: src/app_constance/default_keys.py:key_dict
 msgid "Clear Recent Files"
 msgstr ""
 
-#: src/gui/editor_panel.py:307
+#: src/gui/editor_panel.py:267
 msgid "Click and drag on the image to draw. This permanently edits the pixels."
+msgstr ""
+
+#: src/gui/animation_workspace.py:437
+msgid "Click the canvas to place text"
 msgstr ""
 
 #: src/gui/dialogs/text_overlay_dialog.py:52
 msgid "Click to Place"
 msgstr ""
 
+#: src/gui/dialogs/about_dialog.py:79
+#: src/gui_controls/job_progress_dialog.py:86
+#: src/gui_controls/job_progress_dialog.py:101
+msgid "Close"
+msgstr ""
+
 #: src/gui/dialogs/text_overlay_dialog.py:66
 msgid "Color:"
+msgstr ""
+
+#: src/gui/effect_labels.py:14
+msgid "Colour"
+msgstr ""
+
+#: src/gui/animation_workspace.py:482
+msgid "Colour..."
+msgstr ""
+
+#: src/gui/explorer.py:266
+msgid "Confirm"
 msgstr ""
 
 #: src/gui/dialogs/preferences_dialog.py:54
 msgid "Confirm before overwriting files"
 msgstr ""
 
-#: src/gui/editor_panel.py:120
+#: src/gui/effect_labels.py:26
+msgid "Contain with padding"
+msgstr ""
+
+#: src/tools/image_batch_converter/ui.py:401
+msgid "Continue conversion in the background? Choose No to cancel the job."
+msgstr ""
+
+#: src/gui/editor_panel.py:113
+#: src/gui/effect_labels.py:5
 msgid "Contrast"
 msgstr ""
 
-#: src/gui/explorer.py:70
-#: src/gui/explorer.py:82
+#: src/tools/image_batch_converter/ui.py:296
+msgid "Conversion Log"
+msgstr ""
+
+#: src/tools/image_batch_converter/ui.py:401
+msgid "Conversion Still Running"
+msgstr ""
+
+#: src/tools/image_batch_converter/ui.py:148
+msgid "Convert"
+msgstr ""
+
+#: src/gui/explorer.py:193
 msgid "Copy Path"
 msgstr ""
 
-#: src/gui/editor_panel.py:374
+#: src/gui/dialogs/about_dialog.py:66
+msgid "Copyright"
+msgstr ""
+
+#: src/gui/dialogs/hotkeys_dialog.py:363
+msgid "Could not save shortcuts: {error}"
+msgstr ""
+
+#: src/gui/main_window.py:107
+msgid "Create a new blank image"
+msgstr ""
+
+#: src/tools/image_batch_converter/ui.py:289
+msgid "Create log file"
+msgstr ""
+
+#: src/gui/editor_panel.py:343
+#: src/gui/effect_labels.py:3
 msgid "Crop"
 msgstr ""
 
-#: src/gui/editor_panel.py:234
+#: src/gui/dialogs/effect_dialog.py:48
+msgid "Crop by Coordinates"
+msgstr ""
+
+#: src/gui/editor_panel.py:215
+#: src/gui/main_window.py:193
+msgid "Crop by Coordinates..."
+msgstr ""
+
+#: src/gui/editor_panel.py:203
 msgid "Crop Mode"
 msgstr ""
 
-#: src/gui/editor_panel.py:228
+#: src/gui/editor_panel.py:197
 msgid "Crop tools"
 msgstr ""
 
-#: src/gui/explorer.py:292
-msgid "Current folder path"
+#: src/gui/animation_workspace.py:51
+msgid "Crop, resize and rotation apply to every frame."
 msgstr ""
 
-#: src/gui/main_window.py:286
+#: src/gui/animation_workspace.py:46
+msgid "Current frame"
+msgstr ""
+
+#: src/gui/explorer.py:436
+msgid "Current path"
+msgstr ""
+
+#: src/gui/main_window.py:333
 msgid "Current zoom level"
+msgstr ""
+
+#: src/gui/explorer.py:711
+msgid "Custom Format..."
+msgstr ""
+
+#: src/gui/effect_labels.py:19
+msgid "Cutoff (%)"
 msgstr ""
 
 #: src/gui/dialogs/preferences_dialog.py:39
 msgid "Dark"
 msgstr ""
 
-#: src/gui/viewer.py:22
-msgid "Displays the currently loaded image. Supports crop, shape, and freehand drawing modes."
+#: src/gui/effect_labels.py:18
+msgid "Degrees"
 msgstr ""
 
-#: src/gui/editor_panel.py:376
+#: src/gui/animation_panel.py:143
+msgid "Delete"
+msgstr ""
+
+#: src/app_constance/default_keys.py:key_dict
+msgid "Delete Frames"
+msgstr ""
+
+#: src/tools/image_batch_converter/ui.py:288
+msgid "Delete original files after verified conversion"
+msgstr ""
+
+#: src/tools/image_batch_converter/ui.py:253
+msgid "Delete Preset"
+msgstr ""
+
+#: src/tools/image_batch_converter/ui.py:269
+msgid "Destination"
+msgstr ""
+
+#: src/tools/image_batch_converter/ui.py:280
+msgid "Destination folder"
+msgstr ""
+
+#: src/tools/image_batch_converter/ui.py:282
+msgid "Destination Folder"
+msgstr ""
+
+#: src/gui/dialogs/hotkeys_dialog.py:324
+msgid "Disable"
+msgstr ""
+
+#: src/gui/editor_panel.py:345
 msgid "Draw"
 msgstr ""
 
-#: src/gui/editor_panel.py:278
+#: src/gui/editor_panel.py:243
 msgid "Drawing Mode"
 msgstr ""
 
-#: src/gui/main_window.py:142
+#: src/gui/effect_labels.py:10
+msgid "Duotone"
+msgstr ""
+
+#: src/gui/animation_panel.py:143
+msgid "Duplicate"
+msgstr ""
+
+#: src/app_constance/default_keys.py:key_dict
+msgid "Duplicate Frames"
+msgstr ""
+
+#: src/gui/animation_panel.py:111
+msgid "Duration:"
+msgstr ""
+
+#: src/gui/main_window.py:161
 msgid "E&xit"
+msgstr ""
+
+#: src/tools/image_batch_converter/ui.py:234
+msgid "Edit"
+msgstr ""
+
+#: src/app_constance/default_keys.py:key_dict
+msgid "Edit Artwork"
+msgstr ""
+
+#: src/gui/animation_workspace.py:465
+msgid "Edit Text and Shapes"
+msgstr ""
+
+#: src/gui/animation_workspace.py:85
+msgid "Edit Text and Shapes..."
 msgstr ""
 
 #: src/gui_controls/accordion.py:71
 msgid "Editing tool categories"
 msgstr ""
 
-#: src/gui/editor_panel.py:362
+#: src/gui/editor_panel.py:325
 msgid "Editing tool panels"
 msgstr ""
 
-#: src/gui/editor_panel.py:348
+#: src/gui/editor_panel.py:310
 msgid "Editing tools"
 msgstr ""
 
-#: src/gui/editor_panel.py:113
+#: src/gui/dialogs/hotkeys_dialog.py:246
+msgid "Editing: {action} in {section}"
+msgstr ""
+
+#: src/tools/image_batch_converter/ui.py:175
+msgid "Effect"
+msgstr ""
+
+#: src/gui/editor_panel.py:106
 msgid "Effects and adjustments"
+msgstr ""
+
+#: src/gui/dialogs/hotkeys_dialog.py:324
+msgid "Enable"
+msgstr ""
+
+#: src/gui/dialogs/export_dialog.py:144
+msgid "Encoded Output Preview"
+msgstr ""
+
+#: src/gui/dialogs/effect_dialog.py:106
+#: src/gui/dialogs/effect_dialog.py:134
+msgid "Enter a colour in #RRGGBB format, such as #204060."
+msgstr ""
+
+#: src/gui/dialogs/hotkeys_dialog.py:264
+msgid "Enter one key combination, such as Ctrl+Shift+P."
 msgstr ""
 
 #: src/gui/dialogs/text_overlay_dialog.py:31
 msgid "Enter text..."
 msgstr ""
 
-#: src/gui/main_window.py:369
-#: src/gui/main_window.py:371
-#: src/gui/main_window.py:382
-#: src/gui/main_window.py:411
+#: src/gui/dialogs/effect_dialog.py:83
+msgid "Entire image"
+msgstr ""
+
+#: src/gui/dialogs/hotkeys_dialog.py:363
+#: src/gui/explorer.py:600
 msgid "Error"
 msgstr ""
 
-#: src/gui/main_window.py:371
-msgid "Error loading image: {error}"
-msgstr ""
-
-#: src/gui/main_window.py:382
-#: src/gui/main_window.py:411
-msgid "Error saving image: {error}"
+#: src/gui/effect_labels.py:26
+msgid "Exact dimensions"
 msgstr ""
 
 #: src/app_constance/default_keys.py:key_dict
 msgid "Exit"
 msgstr ""
 
-#: src/gui/explorer.py:255
+#: src/gui/explorer.py:372
 #: src/gui/managers/dock_manager.py:42
 #: src/app_constance/default_keys.py:key_dict
 msgid "Explorer"
 msgstr ""
 
-#: src/gui/main_window.py:369
-msgid "Failed to load image"
+#: src/gui/explorer.py:391
+msgid "Explorer Toolbar"
 msgstr ""
 
-#: src/gui/explorer.py:29
-msgid "File list"
+#: src/gui/animation_workspace.py:406
+#: src/gui/dialogs/export_dialog.py:95
+#: src/app_constance/default_keys.py:key_dict
+msgid "Export Animation"
 msgstr ""
 
-#: src/gui/explorer.py:116
-msgid "File name"
+#: src/gui/animation_workspace.py:81
+msgid "Export Animation..."
 msgstr ""
 
-#: src/gui/main_window.py:518
+#: src/gui/animation_workspace.py:417
+msgid "Export complete"
+msgstr ""
+
+#: src/gui/animation_workspace.py:406
+#: src/app_constance/default_keys.py:key_dict
+msgid "Export Current Frame"
+msgstr ""
+
+#: src/gui/animation_workspace.py:82
+msgid "Export Current Frame..."
+msgstr ""
+
+#: src/app_constance/default_keys.py:key_dict
+msgid "Export Frames"
+msgstr ""
+
+#: src/gui/animation_workspace.py:395
+msgid "Export Frames Folder"
+msgstr ""
+
+#: src/gui/animation_workspace.py:83
+msgid "Export Frames..."
+msgstr ""
+
+#: src/gui/animation_workspace.py:416
+msgid "Exporting Images"
+msgstr ""
+
+#: src/gui/effect_labels.py:19
+msgid "Factor"
+msgstr ""
+
+#: src/gui/explorer.py:631
+msgid "File"
+msgstr ""
+
+#: src/gui/main_window.py:611
 msgid "File Not Found"
 msgstr ""
 
-#: src/gui/explorer.py:119
-msgid "File size"
+#: src/gui/explorer.py:133
+#: src/gui/explorer.py:455
+msgid "Files"
 msgstr ""
 
-#: src/gui/explorer.py:30
-msgid "Files and folders in the current directory. Enter opens a folder or image, double-click opens images."
+#: src/gui/animation_workspace.py:270
+msgid "Fill with cropping"
+msgstr ""
+
+#: src/gui/explorer.py:702
+msgid "Filter"
+msgstr ""
+
+#: src/gui/explorer.py:672
+msgid "Filter by Format"
+msgstr ""
+
+#: src/gui/effect_labels.py:14
+msgid "Filters"
+msgstr ""
+
+#: src/tools/image_batch_converter/ui.py:152
+msgid "First frame"
+msgstr ""
+
+#: src/app_constance/default_keys.py:key_dict
+msgid "First Frame"
 msgstr ""
 
 #: src/app_constance/default_keys.py:key_dict
 msgid "Fit to Window"
 msgstr ""
 
-#: src/gui/editor_panel.py:199
+#: src/gui/animation_workspace.py:269
+msgid "Fit with transparent padding"
+msgstr ""
+
+#: src/gui/effect_labels.py:4
+msgid "Flip horizontal"
+msgstr ""
+
+#: src/gui/editor_panel.py:171
 msgid "Flip image horizontally"
 msgstr ""
 
-#: src/gui/editor_panel.py:201
+#: src/gui/editor_panel.py:173
 msgid "Flip image vertically"
+msgstr ""
+
+#: src/gui/effect_labels.py:4
+msgid "Flip vertical"
 msgstr ""
 
 #: src/app_constance/default_keys.py:key_dict
@@ -405,19 +898,101 @@ msgid "Focus Explorer"
 msgstr ""
 
 #: src/app_constance/default_keys.py:key_dict
+msgid "Focus Path"
+msgstr ""
+
+#: src/app_constance/default_keys.py:key_dict
 msgid "Focus Viewer"
 msgstr ""
 
-#: src/gui/explorer.py:275
-#: src/gui/explorer.py:276
-msgid "Go to parent folder"
+#: src/gui/explorer.py:295
+#: src/gui/explorer.py:631
+msgid "Folder"
+msgstr ""
+
+#: src/tools/image_batch_converter/ui.py:108
+msgid "Folder Options"
+msgstr ""
+
+#: src/gui/explorer.py:255
+msgid "Folder path"
+msgstr ""
+
+#: src/gui/animation_workspace.py:474
+msgid "Font size:"
+msgstr ""
+
+#: src/gui/explorer.py:678
+#: src/gui/explorer.py:679
+msgid "Format (extension):"
+msgstr ""
+
+#: src/gui/dialogs/export_dialog.py:18
+msgid "Format:"
+msgstr ""
+
+#: src/tools/image_batch_converter/ui.py:76
+msgid "Formats"
+msgstr ""
+
+#: src/gui/animation_panel.py:110
+msgid "Frame duration in milliseconds"
+msgstr ""
+
+#: src/gui/animation_workspace.py:49
+msgid "Frame edit scope"
+msgstr ""
+
+#: src/gui/animation_panel.py:101
+msgid "Frame position"
+msgstr ""
+
+#: src/gui/animation_panel.py:24
+msgid "Frame {number} of {count}, {duration} milliseconds"
+msgstr ""
+
+#: src/gui/animation_panel.py:26
+msgid "Frame {number} · {duration} ms"
+msgstr ""
+
+#: src/gui/animation_panel.py:102
+msgid "Frame:"
+msgstr ""
+
+#: src/gui/animation_workspace.py:107
+msgid "Frames"
+msgstr ""
+
+#: src/gui/effect_labels.py:22
+msgid "Gamma"
+msgstr ""
+
+#: src/gui/effect_labels.py:9
+msgid "Gamma and Levels"
+msgstr ""
+
+#: src/gui/effect_labels.py:8
+msgid "Gaussian Blur"
+msgstr ""
+
+#: src/gui/dialogs/export_dialog.py:31
+msgid "GIF binary transparency"
+msgstr ""
+
+#: src/gui/dialogs/export_dialog.py:31
+msgid "GIF dithering"
+msgstr ""
+
+#: src/gui/dialogs/export_dialog.py:21
+msgid "GIF palette colours:"
 msgstr ""
 
 #: src/app_constance/default_keys.py:key_dict
 msgid "Go Up"
 msgstr ""
 
-#: src/gui/editor_panel.py:127
+#: src/gui/editor_panel.py:121
+#: src/gui/effect_labels.py:5
 msgid "Grayscale"
 msgstr ""
 
@@ -425,16 +1000,31 @@ msgstr ""
 msgid "Grid"
 msgstr ""
 
-#: src/taskbar_icon.py:31
-#: src/taskbar_icon.py:54
+#: src/gui/effect_labels.py:17
+msgid "Height (pixels)"
+msgstr ""
+
+#: src/gui/animation_workspace.py:473
+#: src/gui/dialogs/new_image_dialog.py:44
+msgid "Height:"
+msgstr ""
+
+#: src/gui_controls/job_progress_dialog.py:36
+#: src/taskbar_icon.py:39
+#: src/taskbar_icon.py:71
+#: src/tools/image_batch_converter/ui.py:264
 msgid "Hide"
 msgstr ""
 
-#: src/gui/dialogs/hotkeys_dialog.py:21
+#: src/gui/effect_labels.py:23
+msgid "Highlight colour"
+msgstr ""
+
+#: src/gui/dialogs/hotkeys_dialog.py:93
 msgid "Hotkeys Configuration"
 msgstr ""
 
-#: src/gui/dialogs/hotkeys_dialog.py:22
+#: src/gui/dialogs/hotkeys_dialog.py:94
 msgid "Hotkeys Configuration Dialog"
 msgstr ""
 
@@ -442,32 +1032,94 @@ msgstr ""
 msgid "Hotkeys Dialog"
 msgstr ""
 
-#: src/update_checker.py:148
+#: src/update_checker.py:164
 msgid "HTTP {status}"
 msgstr ""
 
-#: src/gui/viewer.py:21
+#: src/gui/explorer.py:398
+#: src/app_constance/default_keys.py:key_dict
+msgid "Icon View"
+msgstr ""
+
+#: src/gui/viewer.py:31
 msgid "Image canvas"
 msgstr ""
 
-#: src/gui/explorer.py:120
-#: src/gui/main_window.py:287
+#: src/gui_controls/job_progress_dialog.py:9
+msgid "Image Conversion Progress"
+msgstr ""
+
+#: src/gui/main_window.py:334
 msgid "Image dimensions"
 msgstr ""
 
-#: src/gui/main_window.py:380
-msgid "Image saved"
+#: src/gui/editor_panel.py:139
+#: src/gui/editor_panel.py:330
+msgid "Image Effects"
 msgstr ""
 
-#: src/gui/main_window.py:408
-msgid "Image saved as {name}"
+#: src/gui/dialogs/export_dialog.py:95
+msgid "Image Encoding Settings"
 msgstr ""
 
-#: src/gui/editor_panel.py:131
+#: src/gui/explorer.py:705
+msgid "Images"
+msgstr ""
+
+#: src/gui/animation_workspace.py:265
+msgid "Import Frame Sizing"
+msgstr ""
+
+#: src/gui/animation_workspace.py:261
+#: src/app_constance/default_keys.py:key_dict
+msgid "Import Frames"
+msgstr ""
+
+#: src/gui/animation_panel.py:142
+#: src/gui/animation_workspace.py:80
+msgid "Import Frames..."
+msgstr ""
+
+#: src/gui/animation_workspace.py:267
+msgid "Import order follows file selection. Choose sizing for the existing canvas."
+msgstr ""
+
+#: src/gui/animation_workspace.py:296
+msgid "Importing Frames"
+msgstr ""
+
+#: src/tools/image_batch_converter/ui.py:110
+msgid "Include all subfolders"
+msgstr ""
+
+#: src/gui/animation_panel.py:115
+#: src/gui/dialogs/new_animation_dialog.py:18
+msgid "Infinite"
+msgstr ""
+
+#: src/gui/dialogs/new_animation_dialog.py:20
+msgid "Initial duration and total plays (0 = infinite):"
+msgstr ""
+
+#: src/gui/dialogs/new_animation_dialog.py:15
+msgid "Initial frame duration"
+msgstr ""
+
+#: src/gui/explorer.py:282
+#: src/gui/explorer.py:507
+msgid "Invalid Folder"
+msgstr ""
+
+#: src/gui/dialogs/hotkeys_dialog.py:263
+msgid "Invalid shortcut"
+msgstr ""
+
+#: src/gui/editor_panel.py:125
+#: src/gui/effect_labels.py:6
 msgid "Invert"
 msgstr ""
 
-#: src/gui/editor_panel.py:132
+#: src/gui/editor_panel.py:126
 msgid "Invert colors"
 msgstr ""
 
@@ -475,29 +1127,55 @@ msgstr ""
 msgid "Language:"
 msgstr ""
 
-#: src/update_checker.py:71
+#: src/app_constance/default_keys.py:key_dict
+msgid "Last Frame"
+msgstr ""
+
+#: src/update_checker.py:87
 msgid "Later"
+msgstr ""
+
+#: src/gui/effect_labels.py:18
+msgid "Left"
 msgstr ""
 
 #: src/gui/dialogs/text_overlay_dialog.py:46
 msgid "Left Center"
 msgstr ""
 
-#: src/gui/explorer.py:171
-#: src/gui/explorer.py:179
+#: src/gui/explorer.py:293
+#: src/gui/explorer.py:301
+#: src/gui/explorer.py:422
 msgid "Library"
+msgstr ""
+
+#: src/gui/dialogs/about_dialog.py:65
+msgid "License"
 msgstr ""
 
 #: src/gui/dialogs/preferences_dialog.py:38
 msgid "Light"
 msgstr ""
 
-#: src/gui/overlay_panel.py:77
+#: src/gui/overlay_panel.py:76
 msgid "Line"
 msgstr ""
 
-#: src/gui/main_window.py:366
-msgid "Loaded: {name}"
+#: src/gui/explorer.py:397
+#: src/app_constance/default_keys.py:key_dict
+msgid "List View"
+msgstr ""
+
+#: src/gui_controls/job_progress_dialog.py:25
+msgid "Live Log"
+msgstr ""
+
+#: src/tools/image_batch_converter/ui.py:252
+msgid "Load Preset"
+msgstr ""
+
+#: src/gui/animation_workspace.py:324
+msgid "Loaded: "
 msgstr ""
 
 #: src/app_init.py:65
@@ -508,15 +1186,23 @@ msgstr ""
 msgid "Loading..."
 msgstr ""
 
-#: src/gui/main_window.py:259
+#: src/tools/image_batch_converter/ui.py:294
+msgid "Log file path"
+msgstr ""
+
+#: src/gui/dialogs/export_dialog.py:30
+msgid "Lossless WebP"
+msgstr ""
+
+#: src/gui/main_window.py:306
 msgid "Main"
 msgstr ""
 
-#: src/gui/main_window.py:91
+#: src/gui/main_window.py:98
 msgid "Main menu"
 msgstr ""
 
-#: src/gui/main_window.py:261
+#: src/gui/main_window.py:308
 msgid "Main toolbar"
 msgstr ""
 
@@ -524,7 +1210,11 @@ msgstr ""
 msgid "Main Window"
 msgstr ""
 
-#: src/gui/main_window.py:137
+#: src/gui/dialogs/export_dialog.py:47
+msgid "Metadata is removed by default. GIF supports transparent or opaque pixels; partial alpha is thresholded."
+msgstr ""
+
+#: src/gui/main_window.py:156
 #: src/app_constance/default_keys.py:key_dict
 msgid "Minimize to Tray"
 msgstr ""
@@ -533,63 +1223,147 @@ msgstr ""
 msgid "Minimize to tray when window is closed"
 msgstr ""
 
+#: src/gui/effect_labels.py:17
+msgid "Mode"
+msgstr ""
+
+#: src/tools/image_batch_converter/ui.py:236
+msgid "Move Down"
+msgstr ""
+
+#: src/gui/animation_panel.py:144
+#: src/app_constance/default_keys.py:key_dict
+msgid "Move Earlier"
+msgstr ""
+
+#: src/gui/animation_panel.py:144
+#: src/app_constance/default_keys.py:key_dict
+msgid "Move Later"
+msgstr ""
+
+#: src/tools/image_batch_converter/ui.py:235
+msgid "Move Up"
+msgstr ""
+
+#: src/gui/explorer.py:696
+msgid "Name (A–Z)"
+msgstr ""
+
+#: src/gui/explorer.py:696
+msgid "Name (Z–A)"
+msgstr ""
+
+#: src/gui/effect_labels.py:21
+msgid "Neighborhood radius (pixels)"
+msgstr ""
+
+#: src/app_constance/default_keys.py:key_dict
+msgid "New"
+msgstr ""
+
+#: src/gui/dialogs/new_animation_dialog.py:7
+#: src/app_constance/default_keys.py:key_dict
+msgid "New Animation"
+msgstr ""
+
+#: src/gui/animation_workspace.py:79
+msgid "New Animation..."
+msgstr ""
+
+#: src/gui/dialogs/new_image_dialog.py:22
+msgid "New Image"
+msgstr ""
+
+#: src/gui/dialogs/new_image_dialog.py:23
+msgid "New image dialog"
+msgstr ""
+
+#: src/gui/main_window.py:105
+msgid "New Image..."
+msgstr ""
+
+#: src/gui/main_window.py:441
+msgid "New {width} × {height} image"
+msgstr ""
+
+#: src/gui/explorer.py:697
+msgid "Newest first"
+msgstr ""
+
+#: src/gui/animation_panel.py:96
+msgid "Next"
+msgstr ""
+
+#: src/app_constance/default_keys.py:key_dict
+msgid "Next Frame"
+msgstr ""
+
 #: src/app_constance/default_keys.py:key_dict
 msgid "Next Pane"
 msgstr ""
 
-#: src/gui/explorer.py:152
-msgid "No preview"
+#: src/gui_controls/job_progress_dialog.py:30
+msgid "No notification"
 msgstr ""
 
-#: src/gui/main_window.py:494
+#: src/gui/main_window.py:587
 msgid "No recent files"
 msgstr ""
 
-#: src/update_checker.py:66
+#: src/update_checker.py:82
 msgid "No release notes provided."
 msgstr ""
 
-#: src/update_checker.py:152
+#: src/update_checker.py:168
 msgid "No Releases Found"
 msgstr ""
 
-#: src/update_checker.py:153
+#: src/update_checker.py:169
 msgid "No releases have been published for this application yet."
 msgstr ""
 
-#: src/update_checker.py:165
+#: src/update_checker.py:181
 msgid "No Update Available"
 msgstr ""
 
-#: src/gui/dialogs/hotkeys_dialog.py:90
-msgid "none"
-msgstr ""
-
-#: src/gui/overlay_panel.py:74
+#: src/gui/dialogs/export_dialog.py:39
+#: src/gui/overlay_panel.py:73
 msgid "None"
 msgstr ""
 
-#: src/gui/dialogs/hotkeys_dialog.py:55
+#: src/gui/dialogs/hotkeys_dialog.py:158
 msgid "OK"
 msgstr ""
 
-#: src/gui/main_window.py:103
+#: src/gui/explorer.py:697
+msgid "Oldest first"
+msgstr ""
+
+#: src/gui/animation_panel.py:119
+msgid "Onion skin"
+msgstr ""
+
+#: src/gui/animation_workspace.py:474
+msgid "Opacity:"
+msgstr ""
+
+#: src/gui/main_window.py:120
 msgid "Open &Folder..."
 msgstr ""
 
-#: src/gui/main_window.py:104
+#: src/gui/main_window.py:121
 msgid "Open a folder in the explorer"
 msgstr ""
 
-#: src/gui/overlay_panel.py:82
+#: src/gui/overlay_panel.py:81
 msgid "Open add text overlay dialog"
 msgstr ""
 
-#: src/gui/main_window.py:98
+#: src/gui/main_window.py:115
 msgid "Open an image file"
 msgstr ""
 
-#: src/update_checker.py:74
+#: src/update_checker.py:90
 msgid "Open Download Page"
 msgstr ""
 
@@ -597,8 +1371,8 @@ msgstr ""
 msgid "Open file"
 msgstr ""
 
-#: src/gui/explorer.py:74
-#: src/gui/main_window.py:349
+#: src/gui/explorer.py:188
+#: src/gui/main_window.py:449
 msgid "Open Folder"
 msgstr ""
 
@@ -606,13 +1380,33 @@ msgstr ""
 msgid "Open folder"
 msgstr ""
 
-#: src/gui/explorer.py:66
-#: src/gui/main_window.py:344
+#: src/gui/explorer.py:191
+#: src/gui/main_window.py:444
 msgid "Open Image"
 msgstr ""
 
 #: src/app_constance/default_keys.py:key_dict
 msgid "Open Selected"
+msgstr ""
+
+#: src/gui/animation_workspace.py:315
+msgid "Opening Image"
+msgstr ""
+
+#: src/gui/animation_workspace.py:240
+msgid "Operation Failed"
+msgstr ""
+
+#: src/gui/dialogs/export_dialog.py:30
+msgid "Optimize JPEG"
+msgstr ""
+
+#: src/tools/image_batch_converter/ui.py:270
+msgid "Original folders"
+msgstr ""
+
+#: src/gui/dialogs/export_dialog.py:14
+msgid "Output image format"
 msgstr ""
 
 #: src/gui/dialogs/text_overlay_dialog.py:32
@@ -627,52 +1421,92 @@ msgstr ""
 msgid "Overlay tools"
 msgstr ""
 
-#: src/gui/editor_panel.py:375
+#: src/gui/editor_panel.py:344
 msgid "Overlays"
 msgstr ""
 
-#: src/gui/main_window.py:396
-msgid "Overwrite File?"
+#: src/tools/image_batch_converter/ui.py:287
+msgid "Overwrite existing files"
 msgstr ""
 
-#: src/gui/explorer.py:273
-msgid "Parent"
+#: src/gui/explorer.py:433
+msgid "Parent Directory"
 msgstr ""
 
-#: src/gui/editor_panel.py:289
+#: src/tools/image_batch_converter/ui.py:76
+msgid "Path"
+msgstr ""
+
+#: src/gui/explorer.py:430
+msgid "Path && Search"
+msgstr ""
+
+#: src/gui/explorer.py:252
+msgid "Path:"
+msgstr ""
+
+#: src/gui/animation_panel.py:160
+#: src/gui_controls/job_progress_dialog.py:34
+#: src/gui_controls/job_progress_dialog.py:51
+msgid "Pause"
+msgstr ""
+
+#: src/gui/editor_panel.py:249
 msgid "Pen Color"
 msgstr ""
 
-#: src/gui/editor_panel.py:302
+#: src/gui/editor_panel.py:262
 msgid "Pen width in pixels"
 msgstr ""
 
-#: src/gui/editor_panel.py:297
+#: src/gui/editor_panel.py:257
 msgid "Pen Width:"
 msgstr ""
 
-#: src/gui/dialogs/preferences_dialog.py:90
+#: src/gui/dialogs/preferences_dialog.py:89
 msgid "Photon Snapshot"
-msgstr ""
-
-#: src/gui/main_window.py:36
-msgid "Photon Snapshot main window"
-msgstr ""
-
-#: src/gui/explorer.py:172
-msgid "Pinned folders for quick access. Double-click or press Enter to open. Right-click for more actions."
 msgstr ""
 
 #: src/gui/overlay_panel.py:52
 msgid "Pixel Info"
 msgstr ""
 
-#: src/gui/dialogs/preferences_dialog.py:89
+#: src/gui/animation_panel.py:97
+#: src/gui/animation_panel.py:160
+msgid "Play"
+msgstr ""
+
+#: src/app_constance/default_keys.py:key_dict
+msgid "Play/Pause"
+msgstr ""
+
+#: src/gui/animation_workspace.py:164
+msgid "Playback started"
+msgstr ""
+
+#: src/gui/animation_workspace.py:164
+msgid "Playback stopped"
+msgstr ""
+
+#: src/gui/dialogs/preferences_dialog.py:88
 msgid "Please restart {app} for the language change to take effect."
+msgstr ""
+
+#: src/gui/explorer.py:282
+#: src/gui/explorer.py:507
+msgid "Please select a valid, existing folder."
+msgstr ""
+
+#: src/gui/dialogs/export_dialog.py:20
+msgid "PNG compression:"
 msgstr ""
 
 #: src/gui/dialogs/text_overlay_dialog.py:54
 msgid "Position:"
+msgstr ""
+
+#: src/gui/dialogs/effect_dialog.py:18
+msgid "Positions are measured in image pixels from the top-left corner."
 msgstr ""
 
 #: src/gui/dialogs/preferences_dialog.py:16
@@ -684,70 +1518,145 @@ msgstr ""
 msgid "Preferences dialog"
 msgstr ""
 
-#: src/gui/dialogs/hotkeys_dialog.py:116
-msgid "Press the desired key combination; press Enter or change focus to accept."
+#: src/gui/dialogs/export_dialog.py:132
+msgid "Preparing Export Preview"
 msgstr ""
 
-#: src/gui/explorer.py:114
+#: src/gui_controls/job_progress_dialog.py:12
+msgid "Preparing..."
+msgstr ""
+
+#: src/tools/image_batch_converter/ui.py:152
+msgid "Preserve animation"
+msgstr ""
+
+#: src/tools/image_batch_converter/ui.py:286
+msgid "Preserve subfolders"
+msgstr ""
+
+#: src/gui/dialogs/export_dialog.py:32
+msgid "Preserve supported metadata"
+msgstr ""
+
+#: src/tools/image_batch_converter/ui.py:355
+msgid "Preset needs correction: "
+msgstr ""
+
+#: src/tools/image_batch_converter/ui.py:28
+msgid "Preset:"
+msgstr ""
+
+#: src/gui/dialogs/hotkeys_dialog.py:34
+msgid "Press a key combination and release it to accept. Escape cancels recording."
+msgstr ""
+
+#: src/gui/dialogs/export_dialog.py:105
+msgid "Preview Encoded Output..."
+msgstr ""
+
+#: src/gui/explorer.py:212
 msgid "Preview thumbnail"
+msgstr ""
+
+#: src/gui/animation_panel.py:95
+msgid "Previous"
+msgstr ""
+
+#: src/app_constance/default_keys.py:key_dict
+msgid "Previous Frame"
 msgstr ""
 
 #: src/app_constance/default_keys.py:key_dict
 msgid "Previous Pane"
 msgstr ""
 
-#: src/gui/dialogs/about_dialog.py:42
+#: src/tools/image_batch_converter/ui.py:160
+msgid "Processing"
+msgstr ""
+
+#: src/gui_controls/job_progress_dialog.py:24
+msgid "Progress"
+msgstr ""
+
+#: src/gui/dialogs/about_dialog.py:58
 msgid "Project website link"
 msgstr ""
 
-#: src/taskbar_icon.py:37
+#: src/gui/dialogs/about_dialog.py:64
+msgid "Publisher"
+msgstr ""
+
+#: src/gui/dialogs/export_dialog.py:20
+msgid "Quality:"
+msgstr ""
+
+#: src/taskbar_icon.py:45
 msgid "Quit"
 msgstr ""
 
-#: src/gui/main_window.py:285
+#: src/gui/effect_labels.py:19
+msgid "Radius (pixels)"
+msgstr ""
+
+#: src/gui/main_window.py:332
 msgid "Ready"
 msgstr ""
 
-#: src/gui/main_window.py:127
+#: src/gui/main_window.py:144
 msgid "Recent Files"
 msgstr ""
 
-#: src/gui/overlay_panel.py:75
+#: src/gui/overlay_panel.py:74
 msgid "Rectangle"
+msgstr ""
+
+#: src/gui/dialogs/effect_dialog.py:84
+msgid "Rectangle by coordinates"
 msgstr ""
 
 #: src/app_constance/default_keys.py:key_dict
 msgid "Redo"
 msgstr ""
 
-#: src/gui/main_window.py:421
+#: src/gui/main_window.py:480
 msgid "Redone"
 msgstr ""
 
-#: src/gui/explorer.py:87
-#: src/gui/explorer.py:323
+#: src/gui/explorer.py:197
+#: src/gui/explorer.py:408
 #: src/app_constance/default_keys.py:key_dict
 msgid "Refresh"
 msgstr ""
 
-#: src/update_checker.py:65
+#: src/update_checker.py:81
 msgid "Release notes"
 msgstr ""
 
-#: src/gui/explorer.py:213
-msgid "Remove from Library"
+#: src/gui/explorer.py:343
+#: src/tools/image_batch_converter/ui.py:134
+#: src/tools/image_batch_converter/ui.py:234
+msgid "Remove"
 msgstr ""
 
-#: src/gui/dialogs/hotkeys_dialog.py:49
+#: src/gui/dialogs/hotkeys_dialog.py:152
 msgid "Reset all shortcuts to default"
 msgstr ""
 
-#: src/gui/dialogs/hotkeys_dialog.py:48
-#: src/gui/dialogs/hotkeys_dialog.py:154
+#: src/gui/animation_workspace.py:84
+#: src/app_constance/default_keys.py:key_dict
+msgid "Reset Current Frame"
+msgstr ""
+
+#: src/gui/dialogs/hotkeys_dialog.py:326
+msgid "Reset hotkey"
+msgstr ""
+
+#: src/gui/dialogs/hotkeys_dialog.py:151
+#: src/gui/dialogs/hotkeys_dialog.py:342
 msgid "Reset to Default"
 msgstr ""
 
-#: src/gui/main_window.py:428
+#: src/gui/main_window.py:487
 msgid "Reset to original"
 msgstr ""
 
@@ -755,19 +1664,39 @@ msgstr ""
 msgid "Reset to Original"
 msgstr ""
 
-#: src/gui/dialogs/preferences_dialog.py:88
+#: src/gui/effect_labels.py:3
+msgid "Resize"
+msgstr ""
+
+#: src/gui/dialogs/preferences_dialog.py:87
 msgid "Restart Required"
+msgstr ""
+
+#: src/gui_controls/job_progress_dialog.py:51
+msgid "Resume"
 msgstr ""
 
 #: src/gui/dialogs/text_overlay_dialog.py:48
 msgid "Right Center"
 msgstr ""
 
-#: src/gui/editor_panel.py:193
+#: src/tools/image_batch_converter/ui.py:74
+msgid "Right-click to add files or folders. Shift+F10 opens the context menu."
+msgstr ""
+
+#: src/tools/image_batch_converter/ui.py:161
+msgid "Right-click to add, edit or reorder effects."
+msgstr ""
+
+#: src/gui/effect_labels.py:3
+msgid "Rotate"
+msgstr ""
+
+#: src/gui/editor_panel.py:165
 msgid "Rotate 90 degrees clockwise"
 msgstr ""
 
-#: src/gui/editor_panel.py:195
+#: src/gui/editor_panel.py:167
 msgid "Rotate 90 degrees counterclockwise"
 msgstr ""
 
@@ -775,37 +1704,65 @@ msgstr ""
 msgid "Ruler"
 msgstr ""
 
+#: src/gui/effect_labels.py:7
+msgid "Saturation"
+msgstr ""
+
 #: src/app_constance/default_keys.py:key_dict
 msgid "Save"
 msgstr ""
 
-#: src/gui/main_window.py:118
+#: src/gui/main_window.py:135
 msgid "Save &As..."
+msgstr ""
+
+#: src/gui/animation_workspace.py:346
+msgid "Save an editable .photonanim project or export GIF/WebP. Use Export Current Frame for still images."
+msgstr ""
+
+#: src/gui/animation_workspace.py:338
+msgid "Save Animation Project"
 msgstr ""
 
 #: src/app_constance/default_keys.py:key_dict
 msgid "Save As"
 msgstr ""
 
-#: src/gui/main_window.py:390
+#: src/gui/animation_workspace.py:338
 msgid "Save Image As"
 msgstr ""
 
-#: src/gui/explorer.py:282
-msgid "Search"
+#: src/tools/image_batch_converter/ui.py:251
+msgid "Save Preset"
 msgstr ""
 
-#: src/gui/explorer.py:285
-#: src/gui/explorer.py:299
+#: src/gui/animation_workspace.py:373
+msgid "Saved: "
+msgstr ""
+
+#: src/gui/animation_workspace.py:366
+msgid "Saving Document"
+msgstr ""
+
+#: src/gui/explorer.py:447
 msgid "Search current folder"
 msgstr ""
 
-#: src/gui/explorer.py:300
+#: src/gui/explorer.py:445
 msgid "Search current folder..."
+msgstr ""
+
+#: src/gui/explorer.py:600
+msgid "Search failed: {error}"
 msgstr ""
 
 #: src/app_constance/default_keys.py:key_dict
 msgid "Search files"
+msgstr ""
+
+#: src/gui/dialogs/hotkeys_dialog.py:104
+#: src/gui/dialogs/hotkeys_dialog.py:105
+msgid "Search hotkeys"
 msgstr ""
 
 #: src/gui_controls/toggle_button.py:126
@@ -816,7 +1773,15 @@ msgstr ""
 msgid "Section expanded - activate to collapse"
 msgstr ""
 
-#: src/gui/editor_panel.py:315
+#: src/gui/dialogs/new_image_dialog.py:64
+msgid "Select Background Color"
+msgstr ""
+
+#: src/gui/explorer.py:273
+msgid "Select Folder"
+msgstr ""
+
+#: src/gui/editor_panel.py:275
 msgid "Select Pen Color"
 msgstr ""
 
@@ -824,12 +1789,29 @@ msgstr ""
 msgid "Select Text Color"
 msgstr ""
 
-#: src/gui/explorer.py:106
-msgid "Selected file preview"
+#: src/tools/image_batch_converter/ui.py:271
+msgid "Selected folder"
 msgstr ""
 
-#: src/gui/editor_panel.py:129
+#: src/gui/animation_workspace.py:47
+msgid "Selected frames"
+msgstr ""
+
+#: src/tools/image_batch_converter/ui.py:152
+msgid "Separate frames"
+msgstr ""
+
+#: src/gui/editor_panel.py:123
+#: src/gui/effect_labels.py:6
 msgid "Sepia"
+msgstr ""
+
+#: src/tools/image_batch_converter/ui.py:295
+msgid "Set Log File..."
+msgstr ""
+
+#: src/gui/effect_labels.py:23
+msgid "Shadow colour"
 msgstr ""
 
 #: src/gui/overlay_panel.py:65
@@ -840,20 +1822,36 @@ msgstr ""
 msgid "Shape:"
 msgstr ""
 
-#: src/gui/dialogs/hotkeys_dialog.py:34
+#: src/gui/effect_labels.py:8
+msgid "Sharpen"
+msgstr ""
+
+#: src/gui/dialogs/hotkeys_dialog.py:112
 msgid "Shortcut"
 msgstr ""
 
-#: src/taskbar_icon.py:54
+#: src/gui/dialogs/hotkeys_dialog.py:356
+msgid "Shortcut conflict"
+msgstr ""
+
+#: src/taskbar_icon.py:71
 msgid "Show"
+msgstr ""
+
+#: src/app_constance/default_keys.py:key_dict
+msgid "Show Animation Panel"
 msgstr ""
 
 #: src/gui/dialogs/text_overlay_dialog.py:68
 msgid "Show background behind text"
 msgstr ""
 
-#: src/gui/main_window.py:199
+#: src/gui/main_window.py:225
 msgid "Show or hide the Explorer panel"
+msgstr ""
+
+#: src/tools/image_batch_converter/ui.py:263
+msgid "Show Progress"
 msgstr ""
 
 #: src/gui/dialogs/text_overlay_dialog.py:70
@@ -864,20 +1862,52 @@ msgstr ""
 msgid "Size:"
 msgstr ""
 
-#: src/gui/main_window.py:210
+#: src/gui/explorer.py:695
+msgid "Sort by"
+msgstr ""
+
+#: src/gui/animation_workspace.py:273
+msgid "Sort naturally by filename"
+msgstr ""
+
+#: src/tools/image_batch_converter/ui.py:73
+msgid "Source"
+msgstr ""
+
+#: src/gui/effect_labels.py:9
+msgid "Speckle Reduction"
+msgstr ""
+
+#: src/gui/main_window.py:237
 msgid "Status &Bar"
 msgstr ""
 
-#: src/gui/main_window.py:280
+#: src/gui/main_window.py:327
 msgid "Status bar"
 msgstr ""
 
-#: src/gui/main_window.py:285
+#: src/gui/main_window.py:332
 msgid "Status message"
 msgstr ""
 
-#: src/gui/main_window.py:446
+#: src/gui/effect_labels.py:20
+msgid "Strength (%)"
+msgstr ""
+
+#: src/gui/animation_workspace.py:271
+msgid "Stretch"
+msgstr ""
+
+#: src/gui/main_window.py:530
 msgid "Stroke drawn"
+msgstr ""
+
+#: src/gui/animation_workspace.py:474
+msgid "Stroke width:"
+msgstr ""
+
+#: src/tools/image_batch_converter/ui.py:94
+msgid "Subfolders discovered when Begin is pressed"
 msgstr ""
 
 #: src/gui/dialogs/preferences_dialog.py:37
@@ -892,39 +1922,48 @@ msgstr ""
 msgid "Text Color"
 msgstr ""
 
+#: src/gui/animation_panel.py:121
+msgid "Text list"
+msgstr ""
+
 #: src/gui/dialogs/text_overlay_dialog.py:36
 msgid "Text overlay position"
 msgstr ""
 
+#: src/gui/animation_workspace.py:473
 #: src/gui/dialogs/text_overlay_dialog.py:33
 msgid "Text:"
 msgstr ""
 
-#: src/gui/main_window.py:519
+#: src/gui/main_window.py:612
 msgid "The file '{path}' no longer exists and will be removed from recent files."
+msgstr ""
+
+#: src/gui/main_window.py:665
+msgid "The image has been modified. Do you want to save your changes?"
 msgstr ""
 
 #: src/gui/dialogs/preferences_dialog.py:42
 msgid "Theme:"
 msgstr ""
 
-#: src/gui/main_window.py:218
-msgid "Toggle &Grid"
+#: src/gui/effect_labels.py:20
+msgid "Threshold"
 msgstr ""
 
-#: src/gui/main_window.py:228
-msgid "Toggle &Pixel Info"
+#: src/gui/dialogs/export_dialog.py:38
+msgid "TIFF compression"
 msgstr ""
 
-#: src/gui/main_window.py:223
-msgid "Toggle &Ruler"
+#: src/gui/dialogs/export_dialog.py:42
+msgid "TIFF compression:"
 msgstr ""
 
-#: src/gui/editor_panel.py:279
+#: src/gui/editor_panel.py:244
 msgid "Toggle canvas drawing mode"
 msgstr ""
 
-#: src/gui/editor_panel.py:235
+#: src/gui/editor_panel.py:204
 msgid "Toggle crop mode"
 msgstr ""
 
@@ -964,8 +2003,20 @@ msgstr ""
 msgid "Toggle Ruler Overlay"
 msgstr ""
 
-#: src/gui/explorer.py:286
-msgid "Toggle search"
+#: src/app_constance/default_keys.py:key_dict
+msgid "Toggle Status Bar"
+msgstr ""
+
+#: src/app_constance/default_keys.py:key_dict
+msgid "Toggle Toolbar"
+msgstr ""
+
+#: src/gui/animation_workspace.py:75
+msgid "Tools"
+msgstr ""
+
+#: src/gui/effect_labels.py:18
+msgid "Top"
 msgstr ""
 
 #: src/gui/dialogs/text_overlay_dialog.py:44
@@ -980,43 +2031,133 @@ msgstr ""
 msgid "Top Right"
 msgstr ""
 
-#: src/gui/editor_panel.py:373
+#: src/gui/dialogs/new_animation_dialog.py:19
+msgid "Total plays"
+msgstr ""
+
+#: src/gui/animation_panel.py:117
+msgid "Total plays:"
+msgstr ""
+
+#: src/gui/animation_panel.py:116
+msgid "Total plays; zero means infinite"
+msgstr ""
+
+#: src/gui/editor_panel.py:342
+#: src/gui/effect_labels.py:13
 msgid "Transform"
 msgstr ""
 
-#: src/gui/editor_panel.py:185
+#: src/gui/editor_panel.py:157
 msgid "Transform tools"
+msgstr ""
+
+#: src/gui/dialogs/export_dialog.py:45
+msgid "Transparency background:"
+msgstr ""
+
+#: src/gui/dialogs/export_dialog.py:22
+msgid "Transparency threshold:"
+msgstr ""
+
+#: src/gui/dialogs/new_animation_dialog.py:8
+msgid "Transparent background"
+msgstr ""
+
+#: src/gui_controls/job_progress_dialog.py:31
+msgid "Tray notification"
+msgstr ""
+
+#: src/gui_controls/job_progress_dialog.py:94
+msgid "Tray notification unavailable"
+msgstr ""
+
+#: src/gui/dialogs/hotkeys_dialog.py:35
+msgid "Type a shortcut or use Capture key. Leave empty to unbind."
+msgstr ""
+
+#: src/gui/dialogs/hotkeys_dialog.py:325
+msgid "Unbind shortcut"
 msgstr ""
 
 #: src/app_constance/default_keys.py:key_dict
 msgid "Undo"
 msgstr ""
 
-#: src/gui/main_window.py:416
+#: src/gui/main_window.py:476
 msgid "Undone"
 msgstr ""
 
-#: src/update_checker.py:45
+#: src/gui/main_window.py:664
+msgid "Unsaved Changes"
+msgstr ""
+
+#: src/update_checker.py:61
 msgid "Update Available - {title}"
 msgstr ""
 
-#: src/update_checker.py:46
+#: src/update_checker.py:62
 msgid "Update available dialog"
 msgstr ""
 
-#: src/gui/dialogs/about_dialog.py:28
-msgid "Version {version}<br>{description}<br><br>{copyright}<br>License: {license}"
+#: src/gui/dialogs/about_dialog.py:34
+msgid "Version {version}"
+msgstr ""
+
+#: src/gui/explorer.py:692
+msgid "View"
 msgstr ""
 
 #: src/app_constance/default_keys.py:key_dict
 msgid "Viewer"
 msgstr ""
 
-#: src/gui/main_window.py:175
+#: src/gui/animation_workspace.py:480
+msgid "Visible"
+msgstr ""
+
+#: src/gui/main_window.py:689
+msgid "Wait for active jobs before exiting? Choose No to cancel them and exit after cleanup."
+msgstr ""
+
+#: src/gui/dialogs/export_dialog.py:21
+msgid "WebP effort:"
+msgstr ""
+
+#: src/gui/dialogs/about_dialog.py:67
+msgid "Website"
+msgstr ""
+
+#: src/gui_controls/job_progress_dialog.py:28
+msgid "When finished:"
+msgstr ""
+
+#: src/gui/effect_labels.py:22
+msgid "White point"
+msgstr ""
+
+#: src/gui/effect_labels.py:17
+msgid "Width (pixels)"
+msgstr ""
+
+#: src/gui/animation_workspace.py:473
+#: src/gui/dialogs/new_image_dialog.py:37
+msgid "Width:"
+msgstr ""
+
+#: src/gui/animation_workspace.py:473
+msgid "X:"
+msgstr ""
+
+#: src/gui/animation_workspace.py:473
+msgid "Y:"
+msgstr ""
+
+#: src/gui/main_window.py:201
 msgid "Zoom &In"
 msgstr ""
 
-#: src/gui/main_window.py:180
+#: src/gui/main_window.py:206
 msgid "Zoom &Out"
 msgstr ""
 
@@ -1028,20 +2169,24 @@ msgstr ""
 msgid "Zoom Out"
 msgstr ""
 
-#: src/gui/main_window.py:286
+#: src/gui/main_window.py:333
 msgid "Zoom: 100%"
 msgstr ""
 
-#: src/gui/main_window.py:449
+#: src/gui/main_window.py:533
 msgid "Zoom: {percent:.0f}%"
 msgstr ""
 
-#: src/gui/dialogs/hotkeys_dialog.py:89
-msgid "{action} in {section}, current shortcut: {shortcut}"
+#: src/update_checker.py:182
+msgid "{app} is up to date (version {version})."
 msgstr ""
 
-#: src/update_checker.py:166
-msgid "{app} is up to date (version {version})."
+#: src/gui/dialogs/export_dialog.py:149
+msgid "{bytes} bytes; {count} decoded frames; {duration} ms total."
+msgstr ""
+
+#: src/gui/dialogs/export_dialog.py:100
+msgid "{count} frames, {width} × {height}, {duration} ms. GIF timing rounds to 10 ms; identical frames may merge."
 msgstr ""
 
 #: src/gui_controls/toggle_button.py:127
@@ -1052,27 +2197,27 @@ msgstr ""
 msgid "{name} - expanded"
 msgstr ""
 
-#: src/gui/main_window.py:397
-msgid "{name} already exists. Overwrite it?"
+#: src/gui/dialogs/hotkeys_dialog.py:357
+msgid "{shortcut} is assigned to both {first} and {second}. Change or disable one binding."
 msgstr ""
 
-#: src/gui/editor_panel.py:53
+#: src/gui/editor_panel.py:55
 msgid "{title} value"
 msgstr ""
 
-#: src/gui/editor_panel.py:198
+#: src/gui/editor_panel.py:170
 msgid "↔ Flip H"
 msgstr ""
 
-#: src/gui/editor_panel.py:200
+#: src/gui/editor_panel.py:172
 msgid "↕ Flip V"
 msgstr ""
 
-#: src/gui/editor_panel.py:194
+#: src/gui/editor_panel.py:166
 msgid "↺ 90°"
 msgstr ""
 
-#: src/gui/editor_panel.py:192
+#: src/gui/editor_panel.py:164
 msgid "↻ 90°"
 msgstr ""
 

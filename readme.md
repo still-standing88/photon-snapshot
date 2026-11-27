@@ -1,116 +1,82 @@
 # Photon Snapshot
 
-Image viewer/editor. Built with Python using PySide6 QT and Pillow.
-
-![Photon Snapshot window screenshot](./assets/app-Screenshot.png)
+Photon Snapshot is an accessible cross-platform image viewer and editor with customizable hotkeys.
+It lets you crop and adjust images, apply basic filters, and create and edit animations.
 
 ## Features
 
-* **Explorer panel** (dockable, hideable) with a pinned-folder Library, a
-  file list, a path bar, and current-folder search - browse and open images
-  directly without an Open File dialog.
-* **Image editing**, grouped by category into a collapsible accordion:
-  Adjustments (brightness/contrast), Transform (rotate/flip), Crop,
-  Overlays (grid, ruler, pixel info, shapes, text), and Draw (freehand
-  canvas drawing that paints directly onto the image's pixels).
-* Full undo/redo history for every edit.
-* **Responsive layout**: the Explorer dock and the editing-tools panel can
-  each be shown/hidden, and the rest of the interface reclaims their space
-  when they're hidden. The menubar, toolbar, and status bar are all
-  independently toggleable from the View menu.
-* **Keyboard navigation**: F6 / Shift+F6 cycle focus between the toolbar,
-  Explorer, image canvas, and status bar, matching the pane-navigation
-  behavior of [playForm](https://github.com/still-standing88/playform).
-* **akeyconfig**: every action's keyboard shortcut is remappable from
-  Options -> Hotkeys.
-* **Multilingual UI**: English, Arabic (with RTL layout), French, and
-  Spanish, switchable from Options -> Preferences.
-* **Built-in updater**: checks the project's GitHub releases on startup
-  (and on demand from Options -> Check for Updates) and offers to open the
-  new release's download page.
-* System tray icon with minimize-to-tray support, and a startup splash
-  screen.
-* All application data - preferences, recent/favorite files, pinned
-  library folders, key bindings, and window layout - is stored in a single
-  SQLite database under `~/.photon-snapshot/`.
-* Accessible by design: every info-bearing label is keyboard-reachable
-  (Tab), every interactive control has an accessible name, and numeric
-  inputs use range-capped spin boxes rather than free-form text fields.
+- Crop, blur, rotate, and adjust images.
+- Add image overlays and effects, including text.
+- Browse images in a dedicated Explorer and pin favorite folders to its library.
+- Process and convert images in the Batch Image Converter.
 
 ## Building
 
-### Build Environment
+Photon Snapshot is built with Python, Pillow, and PySide6. Use Python 3.12 and the tools for your platform.
 
-Photon Snapshot requires Python 3.12 or higher. You'll also require UPX for
-compressing the executable's size. Download UPX from
-[here](https://github.com/upx/upx/releases/tag/v5.0.1).
+- **Windows x64** — Install Visual Studio Build Tools with Desktop development with C++ and a Windows SDK. To build an MSI, install WiX Toolset 3.14.1 and add its bin directory to PATH.
+- **macOS 14+ on Intel or Apple Silicon** — Install the Xcode Command Line Tools with `xcode-select --install`. Use Python built for the architecture you want to package.
+- **Ubuntu 24.04 x64** — Install the compiler, Python headers, patchelf, and Qt's system libraries.
 
-Clone the repo
+```sh
+sudo apt install build-essential python3.12-dev python3.12-venv patchelf \
+  libdbus-1-3 libegl1 libfontconfig1 libgl1 libglib2.0-0t64 libgssapi-krb5-2 libxkbcommon-x11-0 \
+  libxcb-cursor0 libxcb-icccm4 libxcb-image0 libxcb-keysyms1 libxcb-render-util0 \
+  libxcb-shape0 libxcb-xinerama0 libxcb-xkb1
+```
 
-```bash
+Clone the repository.
+
+```sh
 git clone https://github.com/still-standing88/photon-snapshot.git
 cd photon-snapshot
 ```
 
-Create a new environment, or install packages globally
+On Windows, create the virtual environment with `py -3.12 -m venv venv` and activate it with `.\venv\Scripts\Activate.ps1` in PowerShell. On macOS and Linux, run `python3.12 -m venv venv` and `source venv/bin/activate`.
 
-```bash
-python -m venv venv
-```
+Install dependencies, compile the translations, run the tests, and build.
 
-Then on Windows
-
-```bash
-venv\scripts\activate
-```
-
-For Linux/Mac
-
-```bash
-source venv/bin/activate
-```
-
-Then install requirements
-
-```bash
-pip install -r requirements.txt
-```
-
-For development tasks (the `invoke`-based `tasks.py` - i18n pipeline,
-running from source, etc.) also install:
-
-```bash
-pip install -r requirements-dev.txt
-```
-
-### Building
-
-Before running the command, make sure UPX is on your path variable.
-
-```bash
+```sh
+python -m pip install --upgrade pip
+python build.py --install
+python scripts/compile_lang.py
+python -m unittest discover -s tests -v
 python build.py
 ```
 
-For MSI package distribution
+Nuitka creates the standalone build under `dist/`. Keep the entire distribution folder together when running or packaging the executable.
+
+| Platform | Build output |
+| --- | --- |
+| Windows | `dist/app.dist/PhotonSnapshot.exe` |
+| macOS | `dist/app.app` |
+| Linux | `dist/app.dist/PhotonSnapshot` |
+
+On Windows, create the MSI from the standalone distribution. Run the verification script from a Windows account without an existing Photon Snapshot installation.
 
 ```powershell
-powershell .\installer\windows\build-msi.ps1 -SourceDir dist\app.dist -OutputDir dist\ -Version 1.1.0
+.\installer\windows\build-msi.ps1 -SourceDir dist\app.dist -OutputDir dist\installer
+.\scripts\verify_windows_package.ps1
 ```
 
-### Translations
+Run the packaged smoke test with the executable from the table. On macOS use `dist/app.app/Contents/MacOS/PhotonSnapshot`. Set `QT_QPA_PLATFORM` to `offscreen` for headless testing and pass `--self-test dist/codec-smoke` to check image codecs, project saves, and batch conversion. The result is written to `dist/codec-smoke/release-smoke.json`.
 
-The UI strings live in `lang/photon_snapshot.pot` (extracted from every
-`_("...")` call in `src/`) and the per-language `.po` files under
-`lang/<code>/LC_MESSAGES/`. To regenerate everything after changing source
-strings or translations:
+The GitHub Actions workflow can build and upload test artifacts on demand. Pushing a version tag that matches the app version, such as `v1.0.0`, publishes the tested packages to GitHub Releases. It produces an MSI and portable ZIP for Windows, a DMG for each macOS architecture, and a compressed standalone build for Ubuntu.
 
-```bash
-invoke i18n
+## Verifying a release
+
+The build workflow uses PlayForm’s signing format. It signs each executable with RSA-4096 PSS using SHA-256 and publishes a platform manifest with CRC32, SHA-256, and SHA-512 checksums.
+
+The Windows and Linux packages put the `.sig` file beside the executable. Both macOS DMGs put `PhotonSnapshot.sig` beside `PhotonSnapshot.app`. The executable is inside the bundle at `PhotonSnapshot.app/Contents/MacOS/PhotonSnapshot`.
+
+From the repository, point the verifier at the extracted executable and its signature. The example uses the contents of the Windows ZIP. The verifier uses the public key in [signing/release-public.pem](./signing/release-public.pem).
+
+```sh
+python -m pip install cryptography
+python scripts/sign_release.py verify app.dist/PhotonSnapshot.exe app.dist/PhotonSnapshot.exe.sig
 ```
 
-or run the three steps individually: `scripts/extract_strings.py`,
-`scripts/build_po.py` (reads `scripts/translations_data.py`), then
-`scripts/compile_lang.py` (produces the `.mo` catalogs the app loads).
+GitHub Actions reads the matching PEM private key from the repository secret `PHOTON_SIGNING_PRIVATE_KEY`.
 
 ## License
 

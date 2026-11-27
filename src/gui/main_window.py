@@ -1,9 +1,11 @@
 import os
 
+from PIL import Image as PILImage
+
 from PySide6.QtWidgets import (QMainWindow, QWidget, QVBoxLayout, QHBoxLayout,
-                             QSplitter, QMessageBox, QFileDialog, QApplication, QSizePolicy)
-from PySide6.QtCore import Qt, QTimer
-from PySide6.QtGui import QAction, QKeySequence, QIcon
+                             QSplitter, QMessageBox, QFileDialog, QSizePolicy)
+from PySide6.QtCore import Qt, QTimer, QSignalBlocker
+from PySide6.QtGui import QAction, QActionGroup, QKeySequence, QIcon
 
 from .viewer import ImageViewer
 from .explorer import ExplorerWidget
@@ -14,26 +16,30 @@ from .dialogs.hotkeys_dialog import HotkeysDialog
 from .dialogs.preferences_dialog import PreferencesDialog
 from .dialogs.about_dialog import AboutDialog
 from core.editor import Editor
+from core.image import PhotonImage
 from core.utils import get_all_image_filter, get_save_formats
 from gui_controls.common_controls import TabableLabel
 from app_config import key_config
 from app_config.prefs import prefs
+from .animation_workspace import AnimationWorkspace
 
 
-class MainWindow(QMainWindow):
+class MainWindow(QMainWindow, AnimationWorkspace):
 
     def __init__(self):
         super().__init__()
         self.editor = Editor()
+        self.initialize_workspace()
         self.current_file_path = None
         self.recent_files_actions = []
         self.focusable_widgets = []
         self.current_focus_index = -1
+        self._force_exit = False
 
         self.setWindowTitle("Photon Snapshot")
         self.setGeometry(100, 100, 1400, 900)
         self.setWindowIcon(QIcon(":icons/photon-snapshot.png"))
-        self.setAccessibleName(_("Photon Snapshot main window"))
+        self.setAccessibleName("Photon Snapshot")
         # No hardcoded QMainWindow stylesheet here - colors come from the
         # app-wide qdarkstyle stylesheet applied by utilities.theme_manager
         # so the dark/light/system theme setting actually takes effect.
@@ -46,6 +52,7 @@ class MainWindow(QMainWindow):
         self.setup_menu_bar()
         self.setup_toolbar()
         self.setup_status_bar()
+        self.add_workspace_actions()
         self.setup_shortcuts()
         self.connect_signals()
 
@@ -72,7 +79,7 @@ class MainWindow(QMainWindow):
         self.viewer.setSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Expanding)
         self.editor_panel = EditorPanel(self.editor)
 
-        self.center_splitter.addWidget(self.viewer)
+        self.center_splitter.addWidget(self.build_canvas_workspace())
         self.center_splitter.addWidget(self.editor_panel)
         self.center_splitter.setStretchFactor(0, 1)
         self.center_splitter.setStretchFactor(1, 0)
@@ -92,6 +99,16 @@ class MainWindow(QMainWindow):
 
         # ------------------------------------------------------- File ----
         file_menu = menubar.addMenu(_("&File"))
+        self.file_menu = file_menu
+
+        self.new_action = QAction(_("&New..."), self)
+        self.new_action.setText(_("New Image..."))
+        self.new_action.setShortcut(QKeySequence.StandardKey.New)
+        self.new_action.setStatusTip(_("Create a new blank image"))
+        self.new_action.triggered.connect(self.new_file)
+        key_config.bind_action("Main Window", "New", self.new_action)
+        self.new_menu = file_menu.addMenu(_("&New"))
+        self.new_menu.addAction(self.new_action)
 
         self.open_action = QAction(_("&Open..."), self)
         self.open_action.setShortcut(QKeySequence.StandardKey.Open)
@@ -128,7 +145,9 @@ class MainWindow(QMainWindow):
         self.update_recent_files_menu()
 
         clear_recent_action = QAction(_("Clear Recent Files"), self)
+        clear_recent_action.setData("clear")
         clear_recent_action.triggered.connect(self.clear_recent_files)
+        key_config.bind_action("Main Window", "Clear Recent Files", clear_recent_action)
         self.recent_files_menu.addSeparator()
         self.recent_files_menu.addAction(clear_recent_action)
 
@@ -146,6 +165,7 @@ class MainWindow(QMainWindow):
 
         # ------------------------------------------------------- Edit ----
         edit_menu = menubar.addMenu(_("&Edit"))
+        self.edit_menu = edit_menu
 
         self.undo_action = QAction(_("&Undo"), self)
         self.undo_action.setShortcut(QKeySequence.StandardKey.Undo)
@@ -168,9 +188,15 @@ class MainWindow(QMainWindow):
         self.reset_action.setEnabled(False)
         key_config.bind_action("Main Window", "Reset to Original", self.reset_action)
         edit_menu.addAction(self.reset_action)
+        edit_menu.addMenu(self.editor_panel.effect_menu)
+        self.coordinate_crop_action = edit_menu.addAction(
+            _("Crop by Coordinates..."), self.editor_panel.crop_by_coordinates
+        )
+        self.coordinate_crop_action.setEnabled(False)
 
         # ------------------------------------------------------- View ----
         view_menu = menubar.addMenu(_("&View"))
+        self.view_menu = view_menu
 
         self.zoom_in_action = QAction(_("Zoom &In"), self)
         self.zoom_in_action.triggered.connect(self.viewer.zoom_in)
@@ -205,33 +231,53 @@ class MainWindow(QMainWindow):
         self.show_toolbar_action.setCheckable(True)
         self.show_toolbar_action.setChecked(True)
         self.show_toolbar_action.toggled.connect(self._toggle_toolbar)
+        key_config.bind_action("Main Window", "Toggle Toolbar", self.show_toolbar_action)
         view_menu.addAction(self.show_toolbar_action)
 
         self.show_statusbar_action = QAction(_("Status &Bar"), self)
         self.show_statusbar_action.setCheckable(True)
         self.show_statusbar_action.setChecked(True)
         self.show_statusbar_action.toggled.connect(self._toggle_statusbar)
+        key_config.bind_action("Main Window", "Toggle Status Bar", self.show_statusbar_action)
         view_menu.addAction(self.show_statusbar_action)
 
         view_menu.addSeparator()
 
-        self.toggle_grid_action = QAction(_("Toggle &Grid"), self)
-        self.toggle_grid_action.triggered.connect(self.viewer.toggle_grid_overlay)
+        self.toggle_grid_action = QAction(_("&Grid"), self)
+        self.toggle_grid_action.setCheckable(True)
+        self.toggle_grid_action.toggled.connect(self.viewer.set_grid_overlay_visible)
+        self.toggle_grid_action.setShortcutContext(Qt.ShortcutContext.WidgetWithChildrenShortcut)
+        self.viewer.addAction(self.toggle_grid_action)
         key_config.bind_action("Viewer", "Toggle Grid Overlay", self.toggle_grid_action)
         view_menu.addAction(self.toggle_grid_action)
 
-        self.toggle_ruler_action = QAction(_("Toggle &Ruler"), self)
-        self.toggle_ruler_action.triggered.connect(self.viewer.toggle_ruler_overlay)
+        self.toggle_ruler_action = QAction(_("&Ruler"), self)
+        self.toggle_ruler_action.setCheckable(True)
+        self.toggle_ruler_action.toggled.connect(self.viewer.set_ruler_overlay_visible)
+        self.toggle_ruler_action.setShortcutContext(Qt.ShortcutContext.WidgetWithChildrenShortcut)
+        self.viewer.addAction(self.toggle_ruler_action)
         key_config.bind_action("Viewer", "Toggle Ruler Overlay", self.toggle_ruler_action)
         view_menu.addAction(self.toggle_ruler_action)
 
-        self.toggle_pixel_info_action = QAction(_("Toggle &Pixel Info"), self)
-        self.toggle_pixel_info_action.triggered.connect(self.viewer.toggle_pixel_info_mode)
+        self.toggle_pixel_info_action = QAction(_("&Pixel Info"), self)
+        self.toggle_pixel_info_action.setCheckable(True)
+        self.toggle_pixel_info_action.toggled.connect(self.viewer.set_pixel_info_mode)
+        self.toggle_pixel_info_action.setShortcutContext(Qt.ShortcutContext.WidgetWithChildrenShortcut)
+        self.viewer.addAction(self.toggle_pixel_info_action)
         key_config.bind_action("Viewer", "Toggle Pixel Info", self.toggle_pixel_info_action)
         view_menu.addAction(self.toggle_pixel_info_action)
+        # One optional radio group per independent overlay gives native
+        # radio indicators while still allowing multiple overlays at once.
+        self._overlay_action_groups = []
+        for action in (self.toggle_grid_action, self.toggle_ruler_action, self.toggle_pixel_info_action):
+            group = QActionGroup(self)
+            group.setExclusionPolicy(QActionGroup.ExclusionPolicy.ExclusiveOptional)
+            group.addAction(action)
+            self._overlay_action_groups.append(group)
 
         # ---------------------------------------------------- Options ----
         options_menu = menubar.addMenu(_("&Options"))
+        self.options_menu = options_menu
 
         preferences_action = QAction(_("&Preferences..."), self)
         preferences_action.triggered.connect(self.open_preferences)
@@ -252,6 +298,7 @@ class MainWindow(QMainWindow):
 
         about_action = QAction(_("&About Photon Snapshot"), self)
         about_action.triggered.connect(self.open_about_dialog)
+        key_config.bind_action("Main Window", "About", about_action)
         options_menu.addAction(about_action)
 
     # ---------------------------------------------------------- toolbar ----
@@ -295,35 +342,57 @@ class MainWindow(QMainWindow):
         key_config.make_shortcut("Main Window", "Previous Pane", self, self.focus_manager.focus_previous_widget)
         key_config.make_shortcut("Main Window", "Focus Explorer", self, lambda: self._focus_pane(self.explorer_widget))
         key_config.make_shortcut("Main Window", "Focus Viewer", self, lambda: self._focus_pane(self.viewer))
+        for action, callback in (
+            ("Toggle Crop Mode", self.editor_panel.crop_panel.crop_mode_checkbox.toggle),
+            ("Toggle Drawing Mode", self.editor_panel.draw_panel.draw_mode_checkbox.toggle),
+            ("Clear Overlays", self._clear_overlays),
+            ("Cancel/Escape Mode", self._cancel_viewer_modes),
+        ):
+            key_config.make_shortcut("Viewer", action, self.viewer, callback,
+                                     Qt.ShortcutContext.WidgetWithChildrenShortcut)
 
     def _focus_pane(self, widget):
         if widget is self.explorer_widget and not self.explorer_dock.isVisible():
             self.show_explorer_action.setChecked(True)
-        widget.setFocus()
+        self.focus_manager._focus_navigation_target(widget)
 
     # -------------------------------------------------------- signals ----
     def connect_signals(self):
-        self.explorer_widget.file_selected.connect(self.load_image_file)
         self.explorer_widget.open_image.connect(self.load_image_file)
         self.viewer.zoom_changed.connect(self._update_zoom_display)
         self.viewer.stroke_finished.connect(self._on_stroke_finished)
         self.editor.set_state_change_callback(self._on_editor_state_changed)
-        self.editor_panel.crop_panel.crop_mode_toggled.connect(self.viewer.enable_crop_mode)
+        self.editor_panel.edit_dialog_opening.connect(self._begin_edit)
+        self.editor_panel.crop_panel.crop_mode_toggled.connect(self._set_crop_mode)
         self.editor_panel.crop_panel.crop_applied.connect(self._apply_crop)
 
-        self.editor_panel.draw_panel.drawing_mode_toggled.connect(self.viewer.set_drawing_mode)
+        self.editor_panel.draw_panel.drawing_mode_toggled.connect(self._set_drawing_mode)
         self.editor_panel.draw_panel.pen_color_changed.connect(self.viewer.set_pen_color)
         self.editor_panel.draw_panel.pen_width_changed.connect(self.viewer.set_pen_width)
 
         self.explorer_widget.explorer.recent_files_updated.connect(lambda *_: self.update_recent_files_menu())
 
         overlay_panel = self.editor_panel.overlay_panel
-        overlay_panel.grid_toggled.connect(self.viewer.toggle_grid_overlay)
-        overlay_panel.ruler_toggled.connect(self.viewer.toggle_ruler_overlay)
-        overlay_panel.pixel_info_toggled.connect(self.viewer.toggle_pixel_info_mode)
-        overlay_panel.text_overlay_requested.connect(self.viewer.add_text_overlay)
+        overlay_panel.grid_toggled.connect(self.viewer.set_grid_overlay_visible)
+        overlay_panel.ruler_toggled.connect(self.viewer.set_ruler_overlay_visible)
+        overlay_panel.pixel_info_toggled.connect(self.viewer.set_pixel_info_mode)
+        overlay_panel.text_overlay_requested.connect(self.add_document_text)
         overlay_panel.shape_mode_changed.connect(self._on_shape_mode_changed)
-        overlay_panel.overlays_cleared.connect(self.viewer.clear_overlays)
+        overlay_panel.overlays_cleared.connect(self._clear_overlays)
+        self.viewer.overlay_state_changed.connect(self._sync_overlay_controls)
+        self._sync_overlay_controls()
+
+    def _sync_overlay_controls(self):
+        panel = self.editor_panel.overlay_panel
+        for action, button, checked in (
+            (self.toggle_grid_action, panel.grid_btn, self.viewer.grid_overlay_visible()),
+            (self.toggle_ruler_action, panel.ruler_btn, self.viewer.ruler_overlay_visible()),
+            (self.toggle_pixel_info_action, panel.pixel_info_btn,
+             self.viewer.pixel_info_mode and self.viewer.show_overlays),
+        ):
+            with QSignalBlocker(action), QSignalBlocker(button):
+                action.setChecked(checked)
+                button.setChecked(checked)
 
     def on_explorer_visibility_changed(self, visible: bool):
         if self.show_explorer_action.isChecked() != visible:
@@ -340,6 +409,37 @@ class MainWindow(QMainWindow):
         self.dock_manager.update_focusable_widgets()
 
     # ---------------------------------------------------------- files ----
+    def new_file(self):
+        """File -> New: create a blank canvas and load it into the editor.
+        Pairs with Canvas Drawing mode - a fresh surface to paint on that
+        can then be saved like any other image."""
+        from gui.dialogs.new_image_dialog import NewImageDialog
+        dialog = NewImageDialog(self)
+        if not dialog.exec():
+            return
+        if not self._confirm_close():
+            return
+
+        width, height, color = dialog.values()
+        if color.alpha() < 255:
+            pil_img = PILImage.new(
+                "RGBA", (width, height),
+                (color.red(), color.green(), color.blue(), color.alpha()))
+        else:
+            pil_img = PILImage.new(
+                "RGB", (width, height),
+                (color.red(), color.green(), color.blue()))
+
+        self.editor.load_image(PhotonImage(pil_img))
+        self.editor.state.dirty = True
+        self.current_file_path = None
+        self.viewer.set_image(self.editor.current_image)
+        self.editor_panel.reset_controls()
+        self._update_window_title()
+        self._update_image_info()
+        self.status_label.setText(
+            _("New {width} × {height} image").format(width=width, height=height))
+
     def open_file(self):
         file_path, _sel = QFileDialog.getOpenFileName(self, _("Open Image"), "", get_all_image_filter())
         if file_path:
@@ -356,74 +456,33 @@ class MainWindow(QMainWindow):
             self.load_image_file(file_path)
 
     def load_image_file(self, file_path: str):
-        try:
-            if self.editor.load_image_from_file(file_path):
-                self.current_file_path = file_path
-                self.viewer.set_image(self.editor.current_image)
-                self.editor_panel.reset_controls()
-                self._update_window_title()
-                self._update_image_info()
-                self.status_label.setText(_("Loaded: {name}").format(name=os.path.basename(file_path)))
-                self.explorer_widget.explorer.add_recent_file(file_path)
-            else:
-                QMessageBox.warning(self, _("Error"), _("Failed to load image"))
-        except Exception as e:
-            QMessageBox.critical(self, _("Error"), _("Error loading image: {error}").format(error=str(e)))
+        self.load_document_file(file_path)
+
 
     def cli_load_file(self, ipc_msg_data: dict):
         self.load_file(ipc_msg_data["msg_data"])
 
     def save_file(self):
-        if self.current_file_path and self.editor.current_image:
-            try:
-                self.editor.save_image(self.current_file_path)
-                self.status_label.setText(_("Image saved"))
-            except Exception as e:
-                QMessageBox.critical(self, _("Error"), _("Error saving image: {error}").format(error=str(e)))
+        self.save_document()
+
 
     def save_file_as(self):
-        if not self.editor.current_image:
-            return
+        self.save_document(save_as=True)
 
-        formats = get_save_formats()
-        filter_str = ";;".join([f"{fmt} files (*.{fmt.lower()})" for fmt in formats])
-        file_path, selected_filter = QFileDialog.getSaveFileName(self, _("Save Image As"), "", filter_str)
-        if not file_path:
-            return
-
-        if prefs.get("confirm_on_overwrite", True) and os.path.exists(file_path):
-            reply = QMessageBox.question(
-                self, _("Overwrite File?"),
-                _("{name} already exists. Overwrite it?").format(name=os.path.basename(file_path)),
-                QMessageBox.StandardButton.Yes | QMessageBox.StandardButton.No,
-            )
-            if reply != QMessageBox.StandardButton.Yes:
-                return
-
-        try:
-            format_name = selected_filter.split()[0]
-            self.editor.save_image(file_path, format_name)
-            self.current_file_path = file_path
-            self._update_window_title()
-            self.status_label.setText(_("Image saved as {name}").format(name=os.path.basename(file_path)))
-            self.explorer_widget.explorer.add_recent_file(file_path)
-        except Exception as e:
-            QMessageBox.critical(self, _("Error"), _("Error saving image: {error}").format(error=str(e)))
 
     def undo(self):
         if self.editor.undo():
-            self.viewer.set_image(self.editor.current_image)
+            # _on_editor_state_changed already refreshes the viewer.
             self.status_label.setText(_("Undone"))
 
     def redo(self):
         if self.editor.redo():
-            self.viewer.set_image(self.editor.current_image)
             self.status_label.setText(_("Redone"))
 
     def reset_image(self):
         if self.editor.current_image:
             self.editor.reset_to_original()
-            self.viewer.set_image(self.editor.current_image)
+            self.refresh_document_view()
             self.editor_panel.reset_controls()
             self.status_label.setText(_("Reset to original"))
 
@@ -432,17 +491,42 @@ class MainWindow(QMainWindow):
         if crop_rect and self.editor.current_image:
             box = (crop_rect.x(), crop_rect.y(), crop_rect.x() + crop_rect.width(), crop_rect.y() + crop_rect.height())
             self.editor.crop(box)
-            self.viewer.set_image(self.editor.current_image)
+            self.refresh_document_view()
             self.viewer.enable_crop_mode(False)
             self.editor_panel.crop_panel.crop_mode_checkbox.setChecked(False)
 
     def _on_shape_mode_changed(self, shape_type: str):
+        if shape_type:
+            self.editor_panel.crop_panel.crop_mode_checkbox.setChecked(False)
+            self.editor_panel.draw_panel.draw_mode_checkbox.setChecked(False)
         self.viewer.set_shape_drawing_mode(shape_type or None)
+
+    def _set_crop_mode(self, enabled: bool):
+        if enabled:
+            self.editor_panel.draw_panel.draw_mode_checkbox.setChecked(False)
+            self.editor_panel.overlay_panel.reset_shape_tool()
+        self.viewer.enable_crop_mode(enabled)
+
+    def _set_drawing_mode(self, enabled: bool):
+        if enabled:
+            self.editor_panel.crop_panel.crop_mode_checkbox.setChecked(False)
+            self.editor_panel.overlay_panel.reset_shape_tool()
+        self.viewer.set_drawing_mode(enabled)
+
+    def _clear_overlays(self):
+        self.viewer.clear_overlays()
+        if self.editor.document and self.editor.document.has_artwork:
+            self.editor.clear_artwork()
+
+    def _cancel_viewer_modes(self):
+        self.editor_panel.crop_panel.crop_mode_checkbox.setChecked(False)
+        self.editor_panel.draw_panel.draw_mode_checkbox.setChecked(False)
+        self.editor_panel.overlay_panel.reset_shape_tool()
 
     def _on_stroke_finished(self, points: list, color: tuple, width: int):
         if self.editor.current_image:
             self.editor.draw_stroke(points, color, width)
-            self.viewer.set_image(self.editor.current_image)
+            self.refresh_document_view()
             self.status_label.setText(_("Stroke drawn"))
 
     def _update_zoom_display(self, zoom_factor: float):
@@ -450,9 +534,13 @@ class MainWindow(QMainWindow):
 
     def _update_window_title(self):
         if self.current_file_path:
-            self.setWindowTitle(f"Photon Snapshot - {os.path.basename(self.current_file_path)}")
+            base = f"Photon Snapshot - {os.path.basename(self.current_file_path)}"
         else:
-            self.setWindowTitle("Photon Snapshot")
+            base = "Photon Snapshot"
+        # The [*] placeholder + setWindowModified is Qt's cross-platform
+        # modified-file indicator (shows an asterisk on Windows/Linux).
+        self.setWindowTitle(base + "[*]")
+        self.setWindowModified(self.editor.is_dirty)
 
     def _update_image_info(self):
         if self.editor.current_image:
@@ -463,6 +551,8 @@ class MainWindow(QMainWindow):
 
     def _on_editor_state_changed(self):
         has_image = self.editor.current_image is not None
+        self.editor_panel.set_document_available(has_image)
+        self.coordinate_crop_action.setEnabled(has_image)
         self.save_action.setEnabled(has_image)
         self.save_as_action.setEnabled(has_image)
         self.reset_action.setEnabled(has_image)
@@ -470,8 +560,10 @@ class MainWindow(QMainWindow):
         self.redo_action.setEnabled(self.editor.can_redo())
 
         if self.editor.current_image:
-            self.viewer.set_image(self.editor.current_image)
+            self.refresh_document_view()
             self._update_image_info()
+
+        self._update_window_title()
 
     # ---------------------------------------------------- recent files ----
     def update_recent_files_menu(self):
@@ -487,6 +579,7 @@ class MainWindow(QMainWindow):
                 recent_file_actions.append(action)
         for action in recent_file_actions:
             self.recent_files_menu.removeAction(action)
+            action.deleteLater()
 
         recent_files = self.explorer_widget.explorer.get_recent_files()
 
@@ -541,30 +634,69 @@ class MainWindow(QMainWindow):
 
     # -------------------------------------------------------- tray/close ----
     def _minimize_to_tray(self):
+        self.playback.stop()
+        from PySide6.QtWidgets import QSystemTrayIcon
+        if not QSystemTrayIcon.isSystemTrayAvailable():
+            self.showMinimized()
+            return
         self.dock_manager.hide_floating_docks()
         self.hide()
 
     def close_application(self):
-        self.dock_manager.save_window_state()
-        QApplication.quit()
+        """Tray-menu Quit. Route through close() so the unsaved-changes
+        prompt in closeEvent runs; QApplication.quit() bypassed it."""
+        self._force_exit = True
+        try:
+            self.close()
+        finally:
+            self._force_exit = False
+
+    def _confirm_close(self) -> bool:
+        """Prompt about unsaved edits. Returns True when it's OK to close."""
+        if not (self.editor.current_image and self.editor.is_dirty):
+            return True
+
+        buttons = (QMessageBox.StandardButton.Save
+                   | QMessageBox.StandardButton.Discard
+                   | QMessageBox.StandardButton.Cancel)
+        reply = QMessageBox.question(
+            self,
+            _("Unsaved Changes"),
+            _("The image has been modified. Do you want to save your changes?"),
+            buttons,
+        )
+        if reply == QMessageBox.StandardButton.Cancel:
+            return False
+        if reply == QMessageBox.StandardButton.Save:
+            if self.current_file_path:
+                self.save_file()
+            else:
+                self.save_file_as()
+            # Still dirty means the save was cancelled or failed.
+            return not self.editor.is_dirty
+        return True  # Discard
 
     def closeEvent(self, event):
-        if prefs.get("minimize_to_tray_on_close", False):
+        if not self._force_exit and prefs.get("minimize_to_tray_on_close", False):
             event.ignore()
             self._minimize_to_tray()
             return
+        if not self._exit_authorized and not self._confirm_close():
+            event.ignore()
+            return
+        self.playback.stop()
+        if self.jobs.active:
+            reply = QMessageBox.question(self, _('Active Jobs'), _('Wait for active jobs before exiting? Choose No to cancel them and exit after cleanup.'),
+                QMessageBox.StandardButton.Yes | QMessageBox.StandardButton.No | QMessageBox.StandardButton.Cancel)
+            event.ignore()
+            if reply == QMessageBox.StandardButton.Cancel:
+                return
+            self._pending_exit = True
+            if reply == QMessageBox.StandardButton.No:
+                self.jobs.cancel_all()
+            return
         self.dock_manager.save_window_state()
         super().closeEvent(event)
-
-    def keyPressEvent(self, event):
-        if event.key() == Qt.Key.Key_Escape:
-            if self.viewer.crop_mode:
-                self.viewer.enable_crop_mode(False)
-                self.editor_panel.crop_panel.crop_mode_checkbox.setChecked(False)
-            elif self.viewer.shape_drawing_mode:
-                self.viewer.set_shape_drawing_mode(None)
-                self.editor_panel.overlay_panel.reset_shape_tool()
-            elif self.viewer.drawing_mode:
-                self.editor_panel.draw_panel.draw_mode_checkbox.setChecked(False)
-        else:
-            super().keyPressEvent(event)
+        if event.isAccepted() and self._force_exit:
+            from PySide6.QtWidgets import QApplication
+            QApplication.instance().quit()

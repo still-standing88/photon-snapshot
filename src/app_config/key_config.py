@@ -1,149 +1,211 @@
-"""akeyconfig: the app-wide, remappable key-binding system.
+"""Remappable, widget-scoped Qt shortcuts persisted in the app database.
 
-Adapted from playForm's ``app_config/key_config.py``. playForm's version
-manages OS-wide global hotkeys (for background media control) on top of an
-in-app config file; Photon Snapshot only needs in-app shortcuts, so this
-version drops the ``keyboard`` package dependency and the global-hotkey
-machinery, and persists bindings to the SQLite database (see
-:mod:`app_db`) instead of a ``key_config.cfg`` file.
-
-Usage:
-    from app_config import key_config
-    key_config.load_keys()
-    ...
-    action = QAction(_("Open file"), window)
-    key_config.bind_action("Main Window", "Open file", action)
-    ...
-    # later, from the hotkeys dialog:
-    key_config.set_sequence("Main Window", "Open file", "Ctrl+Shift+O")
+Adapted from playForm, including preservation of custom bindings on upgrade
+and enable/disable without forgetting a sequence.
 """
-
 from __future__ import annotations
 
+import re
 from typing import Callable
 
-from PySide6.QtGui import QKeySequence, QShortcut
+from PySide6.QtCore import Qt
+from PySide6.QtGui import QAction, QKeySequence, QShortcut
 
 from app_constance import default_keys
 
-# section -> {action: sequence}
-key_dict: dict[str, dict[str, str]] = {
-    section: dict(actions) for section, actions in default_keys.key_dict.items()
-}
-
-# Live, possibly user-modified bindings. Same shape as key_dict.
+key_dict = {section: dict(actions) for section, actions in default_keys.key_dict.items()}
 bindings: dict[str, dict[str, str]] = {}
-
-# Registered QAction/QShortcut targets, so a remap can immediately update
-# every bound widget: {(section, action): [QAction | QShortcut, ...]}
+_disabled: set[tuple[str, str]] = set()
 _bound_targets: dict[tuple[str, str], list] = {}
-
-# Callables to invoke when a binding changes, e.g. to refresh a dialog.
 _change_listeners: list[Callable[[], None]] = []
 
 
 def _db():
     from app_db import db
-
     return db
 
 
-def is_valid_hotkey(sequence: str) -> bool:
+def normalize_sequence(sequence: str) -> str | None:
+    """Return Qt portable text for one chord, or None for invalid input."""
+    if not isinstance(sequence, str):
+        return None
+    sequence = sequence.strip()
     if not sequence:
-        return True
-    return not QKeySequence(sequence).isEmpty()
+        return ""
+    sequence = re.sub(r"\b(win|windows|super|cmd)\s*\+", "Meta+", sequence, flags=re.I)
+    sequence = re.sub(r"\bPage\s+Up\b", "PgUp", sequence, flags=re.I)
+    sequence = re.sub(r"\bPage\s+Down\b", "PgDown", sequence, flags=re.I)
+    keys = QKeySequence.fromString(sequence, QKeySequence.SequenceFormat.PortableText)
+    if keys.count() != 1 or keys[0].key() in (
+        Qt.Key.Key_unknown, Qt.Key.Key_Control, Qt.Key.Key_Shift,
+        Qt.Key.Key_Alt, Qt.Key.Key_Meta, Qt.Key.Key_AltGr,
+    ):
+        return None
+    return keys.toString(QKeySequence.SequenceFormat.PortableText) or None
 
 
-def keys_to_default():
-    """Reset the in-memory + persisted bindings to the shipped defaults."""
-    global bindings
-    bindings = {section: dict(actions) for section, actions in key_dict.items()}
-    _save_all()
-    _reapply_all()
+def is_valid_hotkey(sequence: str) -> bool:
+    return normalize_sequence(sequence) is not None
 
 
-def _save_all():
-    db = _db()
-    db.clear_key_bindings()
-    for section, actions in bindings.items():
-        for action, sequence in actions.items():
-            db.set_key_binding(section, action, sequence)
-
-
-def load_keys():
-    """Load bindings from the database, seeding it with defaults on first
-    run or if the stored schema no longer matches (e.g. after an app
-    update added/removed an action)."""
-    global bindings
-    db = _db()
-    stored = db.get_all_key_bindings()
-
-    if not stored or not _matches_schema(stored):
-        keys_to_default()
-        return
-
-    bindings = stored
-
-
-def _matches_schema(stored: dict) -> bool:
-    if set(stored.keys()) != set(key_dict.keys()):
-        return False
-    for section, actions in key_dict.items():
-        if set(stored.get(section, {}).keys()) != set(actions.keys()):
-            return False
-    return True
+def _check_action(section: str, action: str):
+    if action not in key_dict.get(section, {}):
+        raise KeyError(f"Unknown shortcut: {section}/{action}")
 
 
 def get_sequence(section: str, action: str) -> str:
-    return bindings.get(section, {}).get(action, key_dict.get(section, {}).get(action, ""))
+    _check_action(section, action)
+    return bindings.get(section, {}).get(action, key_dict[section][action])
 
 
-def set_sequence(section: str, action: str, sequence: str):
-    bindings.setdefault(section, {})[action] = sequence
-    _db().set_key_binding(section, action, sequence)
-    _reapply_one(section, action)
-    for listener in _change_listeners:
+def is_hotkey_enabled(section: str, action: str) -> bool:
+    _check_action(section, action)
+    return (section, action) not in _disabled
+
+
+def get_active_sequence(section: str, action: str) -> str:
+    return get_sequence(section, action) if is_hotkey_enabled(section, action) else ""
+
+
+def snapshot_configuration() -> tuple[dict, set]:
+    return (
+        {s: {a: get_sequence(s, a) for a in actions} for s, actions in key_dict.items()},
+        set(_disabled),
+    )
+
+
+def save_configuration(new_bindings: dict, disabled=()):
+    """Validate and persist a draft before publishing it to live widgets."""
+    global bindings, _disabled
+    normalized = {}
+    for section, actions in key_dict.items():
+        normalized[section] = {}
+        for action in actions:
+            sequence = normalize_sequence(new_bindings[section][action])
+            if sequence is None:
+                raise ValueError(f"Invalid shortcut for {section}/{action}")
+            normalized[section][action] = sequence
+    disabled = {(s, a) for s, a in disabled if a in key_dict.get(s, {})}
+    _db().save_key_configuration(normalized, sorted(f"{s}::{a}" for s, a in disabled))
+    bindings, _disabled = normalized, disabled
+    _reapply_all()
+    for listener in tuple(_change_listeners):
         listener()
 
 
+def load_keys():
+    """Merge new defaults with saved keys instead of resetting customizations."""
+    db = _db()
+    stored = db.get_all_key_bindings()
+    merged = {}
+    for section, actions in key_dict.items():
+        merged[section] = {}
+        for action, default in actions.items():
+            sequence = normalize_sequence(stored.get(section, {}).get(action, default))
+            merged[section][action] = default if sequence is None else sequence
+    saved_disabled = db.get_pref("disabled_hotkeys", [])
+    if not isinstance(saved_disabled, list):
+        saved_disabled = []
+    disabled = {(s, a) for s, actions in key_dict.items() for a in actions
+                if f"{s}::{a}" in saved_disabled}
+    save_configuration(merged, disabled)
+
+
+def keys_to_default():
+    save_configuration(key_dict)
+
+
+def set_sequence(section: str, action: str, sequence: str):
+    _check_action(section, action)
+    draft, disabled = snapshot_configuration()
+    draft[section][action] = sequence
+    save_configuration(draft, disabled)
+
+
+def set_hotkey_enabled(section: str, action: str, enabled: bool):
+    _check_action(section, action)
+    draft, disabled = snapshot_configuration()
+    if enabled:
+        disabled.discard((section, action))
+    else:
+        disabled.add((section, action))
+    save_configuration(draft, disabled)
+
+
+def reset_hotkey(section: str, action: str):
+    _check_action(section, action)
+    draft, disabled = snapshot_configuration()
+    draft[section][action] = key_dict[section][action]
+    disabled.discard((section, action))
+    save_configuration(draft, disabled)
+
+
+def find_conflicts(draft: dict, disabled=()) -> list[tuple]:
+    """Main-window bindings overlap both panes; separate panes may share keys."""
+    active = [(s, a, normalize_sequence(seq)) for s, actions in draft.items()
+              for a, seq in actions.items() if seq and (s, a) not in disabled]
+    conflicts = []
+    for index, (section, action, sequence) in enumerate(active):
+        for other_section, other_action, other_sequence in active[index + 1:]:
+            overlaps = section == other_section or "Main Window" in (section, other_section)
+            if overlaps and sequence and sequence == other_sequence:
+                conflicts.append(((section, action), (other_section, other_action), sequence))
+    return conflicts
+
+
+def _forget_target(key, target):
+    targets = _bound_targets.get(key, [])
+    targets[:] = [item for item in targets if item is not target]
+    if not targets:
+        _bound_targets.pop(key, None)
+
+
 def bind_action(section: str, action: str, target):
-    """Attach a QAction or QShortcut to a binding, applying the current
-    sequence immediately and keeping it in sync with future remaps."""
-    sequence = get_sequence(section, action)
-    _apply_sequence(target, sequence)
-    _bound_targets.setdefault((section, action), []).append(target)
+    """Register a QAction/QShortcut once and unregister when Qt destroys it."""
+    _check_action(section, action)
+    if not isinstance(target, (QAction, QShortcut)):
+        raise TypeError("A shortcut target must be a QAction or QShortcut")
+    key = section, action
+    targets = _bound_targets.setdefault(key, [])
+    if not any(item is target for item in targets):
+        targets.append(target)
+        target.destroyed.connect(lambda _=None: _forget_target(key, target))
+    _apply_sequence(target, get_active_sequence(section, action))
     return target
 
 
-def make_shortcut(section: str, action: str, parent, callback: Callable) -> QShortcut:
-    sequence = get_sequence(section, action)
-    shortcut = QShortcut(QKeySequence(sequence), parent)
+def make_shortcut(section: str, action: str, parent, callback: Callable,
+                  context=Qt.ShortcutContext.WindowShortcut) -> QShortcut:
+    shortcut = QShortcut(parent)
+    shortcut.setContext(context)
     shortcut.activated.connect(callback)
-    _bound_targets.setdefault((section, action), []).append(shortcut)
-    return shortcut
+    return bind_action(section, action, shortcut)
 
 
 def _apply_sequence(target, sequence: str):
-    try:
-        target.setShortcut(QKeySequence(sequence))
-    except Exception:
-        pass
-
-
-def _reapply_one(section: str, action: str):
-    sequence = get_sequence(section, action)
-    for target in _bound_targets.get((section, action), []):
-        _apply_sequence(target, sequence)
+    keys = QKeySequence.fromString(sequence, QKeySequence.SequenceFormat.PortableText)
+    if isinstance(target, QShortcut):
+        target.setKey(keys)
+    else:
+        target.setShortcut(keys)
 
 
 def _reapply_all():
-    for (section, action) in list(_bound_targets.keys()):
-        _reapply_one(section, action)
+    for (section, action), targets in tuple(_bound_targets.items()):
+        sequence = get_active_sequence(section, action)
+        for target in tuple(targets):
+            _apply_sequence(target, sequence)
 
 
 def add_change_listener(callback: Callable[[], None]):
-    _change_listeners.append(callback)
+    if callback not in _change_listeners:
+        _change_listeners.append(callback)
+
+
+def remove_change_listener(callback: Callable[[], None]):
+    if callback in _change_listeners:
+        _change_listeners.remove(callback)
 
 
 def all_sections() -> list[str]:
-    return list(key_dict.keys())
+    return list(key_dict)

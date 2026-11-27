@@ -1,8 +1,8 @@
-AppGuard --only-binary=AppGuard
+--only-binary=AppGuard
+AppGuard; sys_platform == "win32" or sys_platform == "darwin"
 nuitka
-PySide6
+# The app uses Qt Core, Gui, Widgets, Network, and the resource compiler.
 PySide6_Essentials
-PySide6_Addons
 pillow
 peewee
 QDarkStyle==3.2.3

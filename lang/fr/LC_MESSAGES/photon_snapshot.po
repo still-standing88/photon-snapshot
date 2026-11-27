@@ -6,6 +6,9 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
+msgid " ms"
+msgstr " ms"
+
 msgid " px"
 msgstr " px"
 
@@ -27,14 +30,26 @@ msgstr "&Fichier"
 msgid "&Fit to Window"
 msgstr "&Ajuster à la fenêtre"
 
+msgid "&Grid"
+msgstr "&Grille"
+
 msgid "&Hotkeys..."
 msgstr "&Raccourcis clavier..."
+
+msgid "&New"
+msgstr "&Nouveau"
+
+msgid "&New..."
+msgstr "&Nouveau..."
 
 msgid "&Open..."
 msgstr "&Ouvrir..."
 
 msgid "&Options"
 msgstr "&Options"
+
+msgid "&Pixel Info"
+msgstr "&Informations sur le pixel"
 
 msgid "&Preferences..."
 msgstr "&Préférences..."
@@ -44,6 +59,9 @@ msgstr "&Rétablir"
 
 msgid "&Reset to Original"
 msgstr "&Réinitialiser à l'original"
+
+msgid "&Ruler"
+msgstr "&Règle"
 
 msgid "&Save"
 msgstr "&Enregistrer"
@@ -60,6 +78,9 @@ msgstr "Afficha&ge"
 msgid "<b>A new version of {app} is available!</b><br>Your version: <b>{current}</b> -> New version: <b>{new}</b>"
 msgstr "<b>Une nouvelle version de {app} est disponible !</b><br>Votre version : <b>{current}</b> -> Nouvelle version : <b>{new}</b>"
 
+msgid "About"
+msgstr "À propos"
+
 msgid "About dialog"
 msgstr "Boîte de dialogue À propos"
 
@@ -69,17 +90,44 @@ msgstr "À propos de {app}"
 msgid "Action"
 msgstr "Action"
 
-msgid "Action shortcuts"
-msgstr "Raccourcis des actions"
+msgid "Active Jobs"
+msgstr "Tâches actives"
 
 msgid "Actual Size"
 msgstr "Taille réelle"
 
+msgid "Add Blank"
+msgstr "Ajouter une image vide"
+
 msgid "Add Current Folder to Library"
 msgstr "Ajouter le dossier actuel à la bibliothèque"
 
+msgid "Add Edit..."
+msgstr "Ajouter une modification..."
+
+msgid "Add Files..."
+msgstr "Ajouter des fichiers..."
+
+msgid "Add Filter..."
+msgstr "Ajouter un filtre..."
+
 msgid "Add Folder to Library"
 msgstr "Ajouter le dossier à la bibliothèque"
+
+msgid "Add Folder..."
+msgstr "Ajouter un dossier..."
+
+msgid "Add Image Files"
+msgstr "Ajouter des images"
+
+msgid "Add Image Folder"
+msgstr "Ajouter un dossier d’images"
+
+msgid "Add new"
+msgstr "Ajouter"
+
+msgid "Add new path to library"
+msgstr "Ajouter un chemin à la bibliothèque"
 
 msgid "Add Text Overlay"
 msgstr "Ajouter une incrustation de texte"
@@ -99,6 +147,39 @@ msgstr "Ajouter à la bibliothèque"
 msgid "Adjustments"
 msgstr "Réglages"
 
+msgid "All Files"
+msgstr "Tous les fichiers"
+
+msgid "All frames"
+msgstr "Toutes les images"
+
+msgid "All supported image formats"
+msgstr "Tous les formats d’image pris en charge"
+
+msgid "All supported images"
+msgstr "Toutes les images prises en charge"
+
+msgid "An accessible, cross-platform image viewer and editor with customizable hotkeys."
+msgstr "Une visionneuse et un éditeur d’images accessibles et multiplateformes, avec des raccourcis personnalisables."
+
+msgid "Animation"
+msgstr "Animation"
+
+msgid "Animation frame strip"
+msgstr "Liste des images de l’animation"
+
+msgid "Animation frames"
+msgstr "Images de l’animation"
+
+msgid "Animation handling:"
+msgstr "Traitement des animations:"
+
+msgid "Animation Panel"
+msgstr "Panneau d’animation"
+
+msgid "Animation Preview"
+msgstr "Aperçu de l’animation"
+
 msgid "Application information"
 msgstr "Informations sur l'application"
 
@@ -107,6 +188,9 @@ msgstr "Langue de l'application"
 
 msgid "Application theme"
 msgstr "Thème de l'application"
+
+msgid "Applied image effects in order"
+msgstr "Effets d’image appliqués dans l’ordre"
 
 msgid "Apply"
 msgstr "Appliquer"
@@ -123,8 +207,53 @@ msgstr "Appliquer l'effet niveaux de gris"
 msgid "Apply sepia effect"
 msgstr "Appliquer l'effet sépia"
 
+msgid "Apply to:"
+msgstr "Appliquer à:"
+
+msgid "Applying Frame Edits"
+msgstr "Application des modifications"
+
 msgid "Are you sure you want to reset all hotkeys to default?"
 msgstr "Voulez-vous vraiment réinitialiser tous les raccourcis par défaut ?"
+
+msgid "Artwork Colour"
+msgstr "Couleur du dessin"
+
+msgid "Auto Contrast"
+msgstr "Contraste automatique"
+
+msgid "Background Color"
+msgstr "Couleur de fond"
+
+msgid "Background:"
+msgstr "Fond :"
+
+msgid "Batch conversion finished"
+msgstr "Conversion par lot terminée"
+
+msgid "Batch Image Converter"
+msgstr "Convertisseur d’images par lot"
+
+msgid "Batch Image Converter..."
+msgstr "Convertisseur d’images par lot..."
+
+msgid "Batch preset name"
+msgstr "Nom du préréglage de conversion"
+
+msgid "Batch source files and folders"
+msgstr "Fichiers et dossiers sources"
+
+msgid "Begin"
+msgstr "Commencer"
+
+msgid "Black point"
+msgstr "Point noir"
+
+msgid "Black point must be below white point."
+msgstr "Le point noir doit être inférieur au point blanc."
+
+msgid "Blur area"
+msgstr "Zone de flou"
 
 msgid "Bottom Center"
 msgstr "Bas centre"
@@ -135,8 +264,14 @@ msgstr "Bas gauche"
 msgid "Bottom Right"
 msgstr "Bas droite"
 
+msgid "Bounded fit without enlargement"
+msgstr "Adapter sans agrandir"
+
 msgid "Brightness"
 msgstr "Luminosité"
+
+msgid "Browse..."
+msgstr "Parcourir..."
 
 msgid "Building interface..."
 msgstr "Construction de l'interface..."
@@ -147,11 +282,29 @@ msgstr "Annuler"
 msgid "Cancel/Escape Mode"
 msgstr "Annuler/quitter le mode"
 
+msgid "Cancelling... Waiting for the current encoder to finish."
+msgstr "Annulation… Attente de la fin de l’encodage."
+
+msgid "Cancelling... Waiting for the current operation to finish."
+msgstr "Annulation… Attente de la fin de l’opération."
+
+msgid "Cannot Begin"
+msgstr "Impossible de commencer"
+
+msgid "Cannot Open Image"
+msgstr "Impossible d’ouvrir l’image"
+
 msgid "Canvas drawing tools"
 msgstr "Outils de dessin sur toile"
 
-msgid "Category: {name}"
-msgstr "Catégorie : {name}"
+msgid "Canvas height in pixels"
+msgstr "Hauteur du canevas en pixels"
+
+msgid "Canvas width in pixels"
+msgstr "Largeur du canevas en pixels"
+
+msgid "Capture key"
+msgstr "Enregistrer une touche"
 
 msgid "Center"
 msgstr "Centre"
@@ -168,6 +321,24 @@ msgstr "Vérifier les mises à jour"
 msgid "Check for updates on startup"
 msgstr "Vérifier les mises à jour au démarrage"
 
+msgid "Choose an Animation Format"
+msgstr "Choisir un format d’animation"
+
+msgid "Choose background color"
+msgstr "Choisir la couleur de fond"
+
+msgid "Choose background..."
+msgstr "Choisir l’arrière-plan..."
+
+msgid "Choose GIF or WebP to preview an animation."
+msgstr "Choisir GIF ou WebP pour prévisualiser une animation."
+
+msgid "Choose Image Edit"
+msgstr "Choisir une modification d’image"
+
+msgid "Choose Image Filter"
+msgstr "Choisir un filtre d’image"
+
 msgid "Choose overlay text color"
 msgstr "Choisir la couleur du texte incrusté"
 
@@ -176,6 +347,12 @@ msgstr "Choisir la couleur du crayon"
 
 msgid "Circle"
 msgstr "Cercle"
+
+msgid "Clear"
+msgstr "Effacer"
+
+msgid "Clear All"
+msgstr "Tout effacer"
 
 msgid "Clear All Overlays"
 msgstr "Effacer toutes les incrustations"
@@ -195,23 +372,71 @@ msgstr "Effacer les fichiers récents"
 msgid "Click and drag on the image to draw. This permanently edits the pixels."
 msgstr "Cliquez et faites glisser sur l'image pour dessiner. Ceci modifie définitivement les pixels."
 
+msgid "Click the canvas to place text"
+msgstr "Cliquer sur l’image pour placer le texte"
+
 msgid "Click to Place"
 msgstr "Cliquer pour placer"
+
+msgid "Close"
+msgstr "Fermer"
 
 msgid "Color:"
 msgstr "Couleur :"
 
+msgid "Colour"
+msgstr "Couleur"
+
+msgid "Colour..."
+msgstr "Couleur..."
+
+msgid "Confirm"
+msgstr "Confirmer"
+
 msgid "Confirm before overwriting files"
 msgstr "Confirmer avant d'écraser les fichiers"
+
+msgid "Contain with padding"
+msgstr "Adapter avec marges"
+
+msgid "Continue conversion in the background? Choose No to cancel the job."
+msgstr "Continuer la conversion en arrière-plan ? Choisir Non pour annuler."
 
 msgid "Contrast"
 msgstr "Contraste"
 
+msgid "Conversion Log"
+msgstr "Journal de conversion"
+
+msgid "Conversion Still Running"
+msgstr "Conversion en cours"
+
+msgid "Convert"
+msgstr "Convertir"
+
 msgid "Copy Path"
 msgstr "Copier le chemin"
 
+msgid "Copyright"
+msgstr "Droits d’auteur"
+
+msgid "Could not save shortcuts: {error}"
+msgstr "Impossible d’enregistrer les raccourcis : {error}"
+
+msgid "Create a new blank image"
+msgstr "Créer une nouvelle image vierge"
+
+msgid "Create log file"
+msgstr "Créer un fichier journal"
+
 msgid "Crop"
 msgstr "Recadrer"
+
+msgid "Crop by Coordinates"
+msgstr "Recadrer par coordonnées"
+
+msgid "Crop by Coordinates..."
+msgstr "Recadrer par coordonnées..."
 
 msgid "Crop Mode"
 msgstr "Mode recadrage"
@@ -219,17 +444,53 @@ msgstr "Mode recadrage"
 msgid "Crop tools"
 msgstr "Outils de recadrage"
 
-msgid "Current folder path"
-msgstr "Chemin du dossier actuel"
+msgid "Crop, resize and rotation apply to every frame."
+msgstr "Le recadrage, le redimensionnement et la rotation s’appliquent à toutes les images."
+
+msgid "Current frame"
+msgstr "Image actuelle"
+
+msgid "Current path"
+msgstr "Chemin actuel"
 
 msgid "Current zoom level"
 msgstr "Niveau de zoom actuel"
 
+msgid "Custom Format..."
+msgstr "Format personnalisé..."
+
+msgid "Cutoff (%)"
+msgstr "Écrêtage (%)"
+
 msgid "Dark"
 msgstr "Sombre"
 
-msgid "Displays the currently loaded image. Supports crop, shape, and freehand drawing modes."
-msgstr "Affiche l'image actuellement chargée. Prend en charge le recadrage, les formes et le dessin à main levée."
+msgid "Degrees"
+msgstr "Degrés"
+
+msgid "Delete"
+msgstr "Supprimer"
+
+msgid "Delete Frames"
+msgstr "Supprimer les images"
+
+msgid "Delete original files after verified conversion"
+msgstr "Supprimer les originaux après vérification"
+
+msgid "Delete Preset"
+msgstr "Supprimer le préréglage"
+
+msgid "Destination"
+msgstr "Destination"
+
+msgid "Destination folder"
+msgstr "Dossier de destination"
+
+msgid "Destination Folder"
+msgstr "Dossier de destination"
+
+msgid "Disable"
+msgstr "Désactiver"
 
 msgid "Draw"
 msgstr "Dessiner"
@@ -237,8 +498,32 @@ msgstr "Dessiner"
 msgid "Drawing Mode"
 msgstr "Mode dessin"
 
+msgid "Duotone"
+msgstr "Bichromie"
+
+msgid "Duplicate"
+msgstr "Dupliquer"
+
+msgid "Duplicate Frames"
+msgstr "Dupliquer les images"
+
+msgid "Duration:"
+msgstr "Durée:"
+
 msgid "E&xit"
 msgstr "&Quitter"
+
+msgid "Edit"
+msgstr "Modifier"
+
+msgid "Edit Artwork"
+msgstr "Modifier les dessins"
+
+msgid "Edit Text and Shapes"
+msgstr "Modifier le texte et les formes"
+
+msgid "Edit Text and Shapes..."
+msgstr "Modifier le texte et les formes..."
 
 msgid "Editing tool categories"
 msgstr "Catégories d'outils d'édition"
@@ -249,20 +534,38 @@ msgstr "Panneaux d'outils d'édition"
 msgid "Editing tools"
 msgstr "Outils d'édition"
 
+msgid "Editing: {action} in {section}"
+msgstr "Modification : {action} dans {section}"
+
+msgid "Effect"
+msgstr "Effet"
+
 msgid "Effects and adjustments"
 msgstr "Effets et réglages"
+
+msgid "Enable"
+msgstr "Activer"
+
+msgid "Encoded Output Preview"
+msgstr "Aperçu du résultat encodé"
+
+msgid "Enter a colour in #RRGGBB format, such as #204060."
+msgstr "Saisissez une couleur au format #RRGGBB, par exemple #204060."
+
+msgid "Enter one key combination, such as Ctrl+Shift+P."
+msgstr "Saisissez une combinaison de touches, par exemple Ctrl+Shift+P."
 
 msgid "Enter text..."
 msgstr "Saisir du texte..."
 
+msgid "Entire image"
+msgstr "Image entière"
+
 msgid "Error"
 msgstr "Erreur"
 
-msgid "Error loading image: {error}"
-msgstr "Erreur lors du chargement de l'image : {error}"
-
-msgid "Error saving image: {error}"
-msgstr "Erreur lors de l'enregistrement de l'image : {error}"
+msgid "Exact dimensions"
+msgstr "Dimensions exactes"
 
 msgid "Exit"
 msgstr "Quitter"
@@ -270,26 +573,74 @@ msgstr "Quitter"
 msgid "Explorer"
 msgstr "Explorateur"
 
-msgid "Failed to load image"
-msgstr "Échec du chargement de l'image"
+msgid "Explorer Toolbar"
+msgstr "Barre d'outils de l'explorateur"
 
-msgid "File list"
-msgstr "Liste des fichiers"
+msgid "Export Animation"
+msgstr "Exporter l’animation"
 
-msgid "File name"
-msgstr "Nom du fichier"
+msgid "Export Animation..."
+msgstr "Exporter l’animation..."
+
+msgid "Export complete"
+msgstr "Exportation terminée"
+
+msgid "Export Current Frame"
+msgstr "Exporter l’image actuelle"
+
+msgid "Export Current Frame..."
+msgstr "Exporter l’image actuelle..."
+
+msgid "Export Frames"
+msgstr "Exporter les images"
+
+msgid "Export Frames Folder"
+msgstr "Dossier des images exportées"
+
+msgid "Export Frames..."
+msgstr "Exporter les images..."
+
+msgid "Exporting Images"
+msgstr "Exportation des images"
+
+msgid "Factor"
+msgstr "Facteur"
+
+msgid "File"
+msgstr "Fichier"
 
 msgid "File Not Found"
 msgstr "Fichier introuvable"
 
-msgid "File size"
-msgstr "Taille du fichier"
+msgid "Files"
+msgstr "Fichiers"
 
-msgid "Files and folders in the current directory. Enter opens a folder or image, double-click opens images."
-msgstr "Fichiers et dossiers du répertoire actuel. Entrée ouvre un dossier ou une image, le double-clic ouvre les images."
+msgid "Fill with cropping"
+msgstr "Remplir en recadrant"
+
+msgid "Filter"
+msgstr "Filtre"
+
+msgid "Filter by Format"
+msgstr "Filtrer par format"
+
+msgid "Filters"
+msgstr "Filtres"
+
+msgid "First frame"
+msgstr "Première image"
+
+msgid "First Frame"
+msgstr "Première image"
 
 msgid "Fit to Window"
 msgstr "Ajuster à la fenêtre"
+
+msgid "Fit with transparent padding"
+msgstr "Adapter avec marges transparentes"
+
+msgid "Flip horizontal"
+msgstr "Retourner horizontalement"
 
 msgid "Flip image horizontally"
 msgstr "Retourner l'image horizontalement"
@@ -297,14 +648,77 @@ msgstr "Retourner l'image horizontalement"
 msgid "Flip image vertically"
 msgstr "Retourner l'image verticalement"
 
+msgid "Flip vertical"
+msgstr "Retourner verticalement"
+
 msgid "Focus Explorer"
 msgstr "Focus sur l'explorateur"
+
+msgid "Focus Path"
+msgstr "Placer le focus sur le chemin"
 
 msgid "Focus Viewer"
 msgstr "Focus sur la visionneuse"
 
-msgid "Go to parent folder"
-msgstr "Aller au dossier parent"
+msgid "Folder"
+msgstr "Dossier"
+
+msgid "Folder Options"
+msgstr "Options du dossier"
+
+msgid "Folder path"
+msgstr "Chemin du dossier"
+
+msgid "Font size:"
+msgstr "Taille de police:"
+
+msgid "Format (extension):"
+msgstr "Format (extension) :"
+
+msgid "Format:"
+msgstr "Format:"
+
+msgid "Formats"
+msgstr "Formats"
+
+msgid "Frame duration in milliseconds"
+msgstr "Durée de l’image en millisecondes"
+
+msgid "Frame edit scope"
+msgstr "Portée des modifications"
+
+msgid "Frame position"
+msgstr "Position de l’image"
+
+msgid "Frame {number} of {count}, {duration} milliseconds"
+msgstr "Image {number} sur {count}, {duration} millisecondes"
+
+msgid "Frame {number} · {duration} ms"
+msgstr "Image {number} · {duration} ms"
+
+msgid "Frame:"
+msgstr "Image:"
+
+msgid "Frames"
+msgstr "Images de l’animation"
+
+msgid "Gamma"
+msgstr "Gamma"
+
+msgid "Gamma and Levels"
+msgstr "Gamma et niveaux"
+
+msgid "Gaussian Blur"
+msgstr "Flou gaussien"
+
+msgid "GIF binary transparency"
+msgstr "Transparence binaire GIF"
+
+msgid "GIF dithering"
+msgstr "Tramage GIF"
+
+msgid "GIF palette colours:"
+msgstr "Couleurs de la palette GIF:"
 
 msgid "Go Up"
 msgstr "Monter"
@@ -315,8 +729,17 @@ msgstr "Niveaux de gris"
 msgid "Grid"
 msgstr "Grille"
 
+msgid "Height (pixels)"
+msgstr "Hauteur (pixels)"
+
+msgid "Height:"
+msgstr "Hauteur :"
+
 msgid "Hide"
 msgstr "Masquer"
+
+msgid "Highlight colour"
+msgstr "Couleur des hautes lumières"
 
 msgid "Hotkeys Configuration"
 msgstr "Configuration des raccourcis clavier"
@@ -330,17 +753,59 @@ msgstr "Configuration des raccourcis"
 msgid "HTTP {status}"
 msgstr "HTTP {status}"
 
+msgid "Icon View"
+msgstr "Vue en icônes"
+
 msgid "Image canvas"
 msgstr "Toile de l'image"
+
+msgid "Image Conversion Progress"
+msgstr "Progression de la conversion"
 
 msgid "Image dimensions"
 msgstr "Dimensions de l'image"
 
-msgid "Image saved"
-msgstr "Image enregistrée"
+msgid "Image Effects"
+msgstr "Effets d’image"
 
-msgid "Image saved as {name}"
-msgstr "Image enregistrée sous {name}"
+msgid "Image Encoding Settings"
+msgstr "Paramètres d’encodage d’image"
+
+msgid "Images"
+msgstr "Images"
+
+msgid "Import Frame Sizing"
+msgstr "Dimensions des images importées"
+
+msgid "Import Frames"
+msgstr "Importer des images"
+
+msgid "Import Frames..."
+msgstr "Importer des images..."
+
+msgid "Import order follows file selection. Choose sizing for the existing canvas."
+msgstr "L’ordre suit la sélection des fichiers. Choisir les dimensions pour le canevas actuel."
+
+msgid "Importing Frames"
+msgstr "Importation des images"
+
+msgid "Include all subfolders"
+msgstr "Inclure tous les sous-dossiers"
+
+msgid "Infinite"
+msgstr "Infini"
+
+msgid "Initial duration and total plays (0 = infinite):"
+msgstr "Durée initiale et nombre de lectures (0 = infini) :"
+
+msgid "Initial frame duration"
+msgstr "Durée initiale de l’image"
+
+msgid "Invalid Folder"
+msgstr "Dossier non valide"
+
+msgid "Invalid shortcut"
+msgstr "Raccourci non valide"
 
 msgid "Invert"
 msgstr "Inverser"
@@ -351,8 +816,14 @@ msgstr "Inverser les couleurs"
 msgid "Language:"
 msgstr "Langue :"
 
+msgid "Last Frame"
+msgstr "Dernière image"
+
 msgid "Later"
 msgstr "Plus tard"
+
+msgid "Left"
+msgstr "Gauche"
 
 msgid "Left Center"
 msgstr "Centre gauche"
@@ -360,20 +831,38 @@ msgstr "Centre gauche"
 msgid "Library"
 msgstr "Bibliothèque"
 
+msgid "License"
+msgstr "Licence"
+
 msgid "Light"
 msgstr "Clair"
 
 msgid "Line"
 msgstr "Ligne"
 
-msgid "Loaded: {name}"
-msgstr "Chargé : {name}"
+msgid "List View"
+msgstr "Vue en liste"
+
+msgid "Live Log"
+msgstr "Journal en direct"
+
+msgid "Load Preset"
+msgstr "Charger le préréglage"
+
+msgid "Loaded: "
+msgstr "Chargé : "
 
 msgid "Loading key bindings..."
 msgstr "Chargement des raccourcis clavier..."
 
 msgid "Loading..."
 msgstr "Chargement..."
+
+msgid "Log file path"
+msgstr "Chemin du journal"
+
+msgid "Lossless WebP"
+msgstr "WebP sans perte"
 
 msgid "Main"
 msgstr "Principale"
@@ -387,17 +876,74 @@ msgstr "Barre d'outils principale"
 msgid "Main Window"
 msgstr "Fenêtre principale"
 
+msgid "Metadata is removed by default. GIF supports transparent or opaque pixels; partial alpha is thresholded."
+msgstr "Les métadonnées sont supprimées par défaut. GIF utilise une transparence binaire avec seuil."
+
 msgid "Minimize to Tray"
 msgstr "Réduire dans la barre d'état"
 
 msgid "Minimize to tray when window is closed"
 msgstr "Réduire dans la barre d'état à la fermeture de la fenêtre"
 
+msgid "Mode"
+msgstr "Mode"
+
+msgid "Move Down"
+msgstr "Descendre"
+
+msgid "Move Earlier"
+msgstr "Déplacer avant"
+
+msgid "Move Later"
+msgstr "Déplacer après"
+
+msgid "Move Up"
+msgstr "Monter"
+
+msgid "Name (A–Z)"
+msgstr "Nom (A–Z)"
+
+msgid "Name (Z–A)"
+msgstr "Nom (Z–A)"
+
+msgid "Neighborhood radius (pixels)"
+msgstr "Rayon du voisinage (pixels)"
+
+msgid "New"
+msgstr "Nouveau"
+
+msgid "New Animation"
+msgstr "Nouvelle animation"
+
+msgid "New Animation..."
+msgstr "Nouvelle animation..."
+
+msgid "New Image"
+msgstr "Nouvelle image"
+
+msgid "New image dialog"
+msgstr "Boîte de dialogue de nouvelle image"
+
+msgid "New Image..."
+msgstr "Nouvelle image..."
+
+msgid "New {width} × {height} image"
+msgstr "Nouvelle image de {width} × {height}"
+
+msgid "Newest first"
+msgstr "Plus récents d’abord"
+
+msgid "Next"
+msgstr "Suivant"
+
+msgid "Next Frame"
+msgstr "Image suivante"
+
 msgid "Next Pane"
 msgstr "Panneau suivant"
 
-msgid "No preview"
-msgstr "Aucun aperçu"
+msgid "No notification"
+msgstr "Aucune notification"
 
 msgid "No recent files"
 msgstr "Aucun fichier récent"
@@ -414,14 +960,20 @@ msgstr "Aucune version n'a encore été publiée pour cette application."
 msgid "No Update Available"
 msgstr "Aucune mise à jour disponible"
 
-msgid "none"
-msgstr "aucun"
-
 msgid "None"
 msgstr "Aucune"
 
 msgid "OK"
 msgstr "OK"
+
+msgid "Oldest first"
+msgstr "Plus anciens d’abord"
+
+msgid "Onion skin"
+msgstr "Pelure d’oignon"
+
+msgid "Opacity:"
+msgstr "Opacité:"
 
 msgid "Open &Folder..."
 msgstr "Ouvrir un &dossier..."
@@ -453,6 +1005,21 @@ msgstr "Ouvrir l'image"
 msgid "Open Selected"
 msgstr "Ouvrir la sélection"
 
+msgid "Opening Image"
+msgstr "Ouverture de l’image"
+
+msgid "Operation Failed"
+msgstr "Échec de l’opération"
+
+msgid "Optimize JPEG"
+msgstr "Optimiser JPEG"
+
+msgid "Original folders"
+msgstr "Dossiers d’origine"
+
+msgid "Output image format"
+msgstr "Format d’image de sortie"
+
 msgid "Overlay text"
 msgstr "Texte de l'incrustation"
 
@@ -465,11 +1032,23 @@ msgstr "Outils d'incrustation"
 msgid "Overlays"
 msgstr "Incrustations"
 
-msgid "Overwrite File?"
-msgstr "Écraser le fichier ?"
+msgid "Overwrite existing files"
+msgstr "Écraser les fichiers existants"
 
-msgid "Parent"
-msgstr "Parent"
+msgid "Parent Directory"
+msgstr "Dossier parent"
+
+msgid "Path"
+msgstr "Chemin"
+
+msgid "Path && Search"
+msgstr "Chemin && recherche"
+
+msgid "Path:"
+msgstr "Chemin :"
+
+msgid "Pause"
+msgstr "Pause"
 
 msgid "Pen Color"
 msgstr "Couleur du crayon"
@@ -483,20 +1062,35 @@ msgstr "Épaisseur du crayon :"
 msgid "Photon Snapshot"
 msgstr "Photon Snapshot"
 
-msgid "Photon Snapshot main window"
-msgstr "Fenêtre principale de Photon Snapshot"
-
-msgid "Pinned folders for quick access. Double-click or press Enter to open. Right-click for more actions."
-msgstr "Dossiers épinglés pour un accès rapide. Double-cliquez ou appuyez sur Entrée pour ouvrir. Clic droit pour plus d'actions."
-
 msgid "Pixel Info"
 msgstr "Info pixel"
+
+msgid "Play"
+msgstr "Lire"
+
+msgid "Play/Pause"
+msgstr "Lire/Pause"
+
+msgid "Playback started"
+msgstr "Lecture démarrée"
+
+msgid "Playback stopped"
+msgstr "Lecture arrêtée"
 
 msgid "Please restart {app} for the language change to take effect."
 msgstr "Veuillez redémarrer {app} pour que le changement de langue prenne effet."
 
+msgid "Please select a valid, existing folder."
+msgstr "Veuillez sélectionner un dossier existant et valide."
+
+msgid "PNG compression:"
+msgstr "Compression PNG:"
+
 msgid "Position:"
 msgstr "Position :"
+
+msgid "Positions are measured in image pixels from the top-left corner."
+msgstr "Les positions sont mesurées en pixels depuis le coin supérieur gauche de l’image."
 
 msgid "Preferences"
 msgstr "Préférences"
@@ -504,20 +1098,65 @@ msgstr "Préférences"
 msgid "Preferences dialog"
 msgstr "Boîte de dialogue des préférences"
 
-msgid "Press the desired key combination; press Enter or change focus to accept."
-msgstr "Appuyez sur la combinaison de touches souhaitée ; appuyez sur Entrée ou changez de focus pour valider."
+msgid "Preparing Export Preview"
+msgstr "Préparation de l’aperçu"
+
+msgid "Preparing..."
+msgstr "Préparation..."
+
+msgid "Preserve animation"
+msgstr "Conserver l’animation"
+
+msgid "Preserve subfolders"
+msgstr "Conserver les sous-dossiers"
+
+msgid "Preserve supported metadata"
+msgstr "Conserver les métadonnées prises en charge"
+
+msgid "Preset needs correction: "
+msgstr "Le préréglage doit être corrigé : "
+
+msgid "Preset:"
+msgstr "Préréglage:"
+
+msgid "Press a key combination and release it to accept. Escape cancels recording."
+msgstr "Appuyez sur une combinaison de touches et relâchez-la pour valider. Échap annule l’enregistrement."
+
+msgid "Preview Encoded Output..."
+msgstr "Aperçu du résultat encodé..."
 
 msgid "Preview thumbnail"
 msgstr "Miniature d'aperçu"
 
+msgid "Previous"
+msgstr "Précédent"
+
+msgid "Previous Frame"
+msgstr "Image précédente"
+
 msgid "Previous Pane"
 msgstr "Panneau précédent"
+
+msgid "Processing"
+msgstr "Traitement"
+
+msgid "Progress"
+msgstr "Progression"
 
 msgid "Project website link"
 msgstr "Lien vers le site du projet"
 
+msgid "Publisher"
+msgstr "Éditeur"
+
+msgid "Quality:"
+msgstr "Qualité:"
+
 msgid "Quit"
 msgstr "Quitter"
+
+msgid "Radius (pixels)"
+msgstr "Rayon (pixels)"
 
 msgid "Ready"
 msgstr "Prêt"
@@ -527,6 +1166,9 @@ msgstr "Fichiers récents"
 
 msgid "Rectangle"
 msgstr "Rectangle"
+
+msgid "Rectangle by coordinates"
+msgstr "Rectangle par coordonnées"
 
 msgid "Redo"
 msgstr "Rétablir"
@@ -540,11 +1182,17 @@ msgstr "Actualiser"
 msgid "Release notes"
 msgstr "Notes de version"
 
-msgid "Remove from Library"
-msgstr "Retirer de la bibliothèque"
+msgid "Remove"
+msgstr "Supprimer"
 
 msgid "Reset all shortcuts to default"
 msgstr "Réinitialiser tous les raccourcis par défaut"
+
+msgid "Reset Current Frame"
+msgstr "Réinitialiser l’image actuelle"
+
+msgid "Reset hotkey"
+msgstr "Réinitialiser le raccourci"
 
 msgid "Reset to Default"
 msgstr "Réinitialiser par défaut"
@@ -555,11 +1203,26 @@ msgstr "Réinitialisé à l'original"
 msgid "Reset to Original"
 msgstr "Réinitialiser à l'original"
 
+msgid "Resize"
+msgstr "Redimensionner"
+
 msgid "Restart Required"
 msgstr "Redémarrage requis"
 
+msgid "Resume"
+msgstr "Reprendre"
+
 msgid "Right Center"
 msgstr "Centre droite"
+
+msgid "Right-click to add files or folders. Shift+F10 opens the context menu."
+msgstr "Clic droit pour ajouter des fichiers ou dossiers. Maj+F10 ouvre le menu contextuel."
+
+msgid "Right-click to add, edit or reorder effects."
+msgstr "Clic droit pour ajouter, modifier ou réordonner les effets."
+
+msgid "Rotate"
+msgstr "Pivoter"
 
 msgid "Rotate 90 degrees clockwise"
 msgstr "Rotation de 90 degrés dans le sens horaire"
@@ -570,11 +1233,20 @@ msgstr "Rotation de 90 degrés dans le sens antihoraire"
 msgid "Ruler"
 msgstr "Règle"
 
+msgid "Saturation"
+msgstr "Saturation"
+
 msgid "Save"
 msgstr "Enregistrer"
 
 msgid "Save &As..."
 msgstr "Enregistrer &sous..."
+
+msgid "Save an editable .photonanim project or export GIF/WebP. Use Export Current Frame for still images."
+msgstr "Enregistrer un projet .photonanim ou exporter GIF/WebP. Exporter l’image actuelle pour une image fixe."
+
+msgid "Save Animation Project"
+msgstr "Enregistrer le projet d’animation"
 
 msgid "Save As"
 msgstr "Enregistrer sous"
@@ -582,8 +1254,14 @@ msgstr "Enregistrer sous"
 msgid "Save Image As"
 msgstr "Enregistrer l'image sous"
 
-msgid "Search"
-msgstr "Recherche"
+msgid "Save Preset"
+msgstr "Enregistrer le préréglage"
+
+msgid "Saved: "
+msgstr "Enregistré : "
+
+msgid "Saving Document"
+msgstr "Enregistrement du document"
 
 msgid "Search current folder"
 msgstr "Rechercher dans le dossier actuel"
@@ -591,8 +1269,14 @@ msgstr "Rechercher dans le dossier actuel"
 msgid "Search current folder..."
 msgstr "Rechercher dans le dossier actuel..."
 
+msgid "Search failed: {error}"
+msgstr "Échec de la recherche : {error}"
+
 msgid "Search files"
 msgstr "Rechercher des fichiers"
+
+msgid "Search hotkeys"
+msgstr "Rechercher des raccourcis"
 
 msgid "Section collapsed - activate to expand"
 msgstr "Section repliée - activer pour déplier"
@@ -600,17 +1284,35 @@ msgstr "Section repliée - activer pour déplier"
 msgid "Section expanded - activate to collapse"
 msgstr "Section dépliée - activer pour replier"
 
+msgid "Select Background Color"
+msgstr "Sélectionner la couleur de fond"
+
+msgid "Select Folder"
+msgstr "Sélectionner un dossier"
+
 msgid "Select Pen Color"
 msgstr "Sélectionner la couleur du crayon"
 
 msgid "Select Text Color"
 msgstr "Sélectionner la couleur du texte"
 
-msgid "Selected file preview"
-msgstr "Aperçu du fichier sélectionné"
+msgid "Selected folder"
+msgstr "Dossier sélectionné"
+
+msgid "Selected frames"
+msgstr "Images sélectionnées"
+
+msgid "Separate frames"
+msgstr "Images séparées"
 
 msgid "Sepia"
 msgstr "Sépia"
+
+msgid "Set Log File..."
+msgstr "Définir le fichier journal..."
+
+msgid "Shadow colour"
+msgstr "Couleur des ombres"
 
 msgid "Shape drawing tool"
 msgstr "Outil de dessin de forme"
@@ -618,11 +1320,20 @@ msgstr "Outil de dessin de forme"
 msgid "Shape:"
 msgstr "Forme :"
 
+msgid "Sharpen"
+msgstr "Accentuer la netteté"
+
 msgid "Shortcut"
 msgstr "Raccourci"
 
+msgid "Shortcut conflict"
+msgstr "Conflit de raccourcis"
+
 msgid "Show"
 msgstr "Afficher"
+
+msgid "Show Animation Panel"
+msgstr "Afficher le panneau d’animation"
 
 msgid "Show background behind text"
 msgstr "Afficher un fond derrière le texte"
@@ -630,11 +1341,26 @@ msgstr "Afficher un fond derrière le texte"
 msgid "Show or hide the Explorer panel"
 msgstr "Afficher ou masquer le panneau Explorateur"
 
+msgid "Show Progress"
+msgstr "Afficher la progression"
+
 msgid "Show text background"
 msgstr "Afficher le fond du texte"
 
 msgid "Size:"
 msgstr "Taille :"
+
+msgid "Sort by"
+msgstr "Trier par"
+
+msgid "Sort naturally by filename"
+msgstr "Trier naturellement par nom"
+
+msgid "Source"
+msgstr "Source"
+
+msgid "Speckle Reduction"
+msgstr "Réduction des taches"
 
 msgid "Status &Bar"
 msgstr "&Barre d'état"
@@ -645,8 +1371,20 @@ msgstr "Barre d'état"
 msgid "Status message"
 msgstr "Message d'état"
 
+msgid "Strength (%)"
+msgstr "Intensité (%)"
+
+msgid "Stretch"
+msgstr "Étirer"
+
 msgid "Stroke drawn"
 msgstr "Trait dessiné"
+
+msgid "Stroke width:"
+msgstr "Épaisseur du trait:"
+
+msgid "Subfolders discovered when Begin is pressed"
+msgstr "Sous-dossiers détectés au démarrage"
 
 msgid "System"
 msgstr "Système"
@@ -657,6 +1395,9 @@ msgstr "Système par défaut"
 msgid "Text Color"
 msgstr "Couleur du texte"
 
+msgid "Text list"
+msgstr "Liste textuelle"
+
 msgid "Text overlay position"
 msgstr "Position de l'incrustation de texte"
 
@@ -666,17 +1407,20 @@ msgstr "Texte :"
 msgid "The file '{path}' no longer exists and will be removed from recent files."
 msgstr "Le fichier « {path} » n'existe plus et sera retiré des fichiers récents."
 
+msgid "The image has been modified. Do you want to save your changes?"
+msgstr "L’image a été modifiée. Voulez-vous enregistrer vos modifications ?"
+
 msgid "Theme:"
 msgstr "Thème :"
 
-msgid "Toggle &Grid"
-msgstr "Afficher/masquer la &grille"
+msgid "Threshold"
+msgstr "Seuil"
 
-msgid "Toggle &Pixel Info"
-msgstr "Afficher/masquer les infos &pixel"
+msgid "TIFF compression"
+msgstr "Compression TIFF"
 
-msgid "Toggle &Ruler"
-msgstr "Afficher/masquer la &règle"
+msgid "TIFF compression:"
+msgstr "Compression TIFF:"
 
 msgid "Toggle canvas drawing mode"
 msgstr "Activer/désactiver le mode dessin"
@@ -711,8 +1455,17 @@ msgstr "Afficher/masquer l'incrustation de règle"
 msgid "Toggle Ruler Overlay"
 msgstr "Afficher/masquer la règle"
 
-msgid "Toggle search"
-msgstr "Afficher/masquer la recherche"
+msgid "Toggle Status Bar"
+msgstr "Afficher/masquer la barre d’état"
+
+msgid "Toggle Toolbar"
+msgstr "Afficher/masquer la barre d’outils"
+
+msgid "Tools"
+msgstr "Outils"
+
+msgid "Top"
+msgstr "Haut"
 
 msgid "Top Center"
 msgstr "Haut centre"
@@ -723,11 +1476,41 @@ msgstr "Haut gauche"
 msgid "Top Right"
 msgstr "Haut droite"
 
+msgid "Total plays"
+msgstr "Nombre de lectures"
+
+msgid "Total plays:"
+msgstr "Nombre de lectures:"
+
+msgid "Total plays; zero means infinite"
+msgstr "Nombre de lectures ; zéro signifie infini"
+
 msgid "Transform"
 msgstr "Transformer"
 
 msgid "Transform tools"
 msgstr "Outils de transformation"
+
+msgid "Transparency background:"
+msgstr "Arrière-plan de transparence:"
+
+msgid "Transparency threshold:"
+msgstr "Seuil de transparence:"
+
+msgid "Transparent background"
+msgstr "Arrière-plan transparent"
+
+msgid "Tray notification"
+msgstr "Notification de la zone de notification"
+
+msgid "Tray notification unavailable"
+msgstr "Notification indisponible"
+
+msgid "Type a shortcut or use Capture key. Leave empty to unbind."
+msgstr "Saisissez un raccourci ou enregistrez une touche. Laissez le champ vide pour supprimer l’affectation."
+
+msgid "Unbind shortcut"
+msgstr "Supprimer l’affectation"
 
 msgid "Undo"
 msgstr "Annuler"
@@ -735,17 +1518,53 @@ msgstr "Annuler"
 msgid "Undone"
 msgstr "Annulé"
 
+msgid "Unsaved Changes"
+msgstr "Modifications non enregistrées"
+
 msgid "Update Available - {title}"
 msgstr "Mise à jour disponible - {title}"
 
 msgid "Update available dialog"
 msgstr "Boîte de dialogue de mise à jour disponible"
 
-msgid "Version {version}<br>{description}<br><br>{copyright}<br>License: {license}"
-msgstr "Version {version}<br>{description}<br><br>{copyright}<br>Licence : {license}"
+msgid "Version {version}"
+msgstr "Version {version}"
+
+msgid "View"
+msgstr "Affichage"
 
 msgid "Viewer"
 msgstr "Visionneuse"
+
+msgid "Visible"
+msgstr "Visible"
+
+msgid "Wait for active jobs before exiting? Choose No to cancel them and exit after cleanup."
+msgstr "Attendre les tâches avant de quitter ? Choisir Non pour les annuler puis quitter."
+
+msgid "WebP effort:"
+msgstr "Effort WebP:"
+
+msgid "Website"
+msgstr "Site web"
+
+msgid "When finished:"
+msgstr "À la fin:"
+
+msgid "White point"
+msgstr "Point blanc"
+
+msgid "Width (pixels)"
+msgstr "Largeur (pixels)"
+
+msgid "Width:"
+msgstr "Largeur :"
+
+msgid "X:"
+msgstr "X:"
+
+msgid "Y:"
+msgstr "Y:"
 
 msgid "Zoom &In"
 msgstr "Zoom &avant"
@@ -765,11 +1584,14 @@ msgstr "Zoom : 100 %"
 msgid "Zoom: {percent:.0f}%"
 msgstr "Zoom : {percent:.0f} %"
 
-msgid "{action} in {section}, current shortcut: {shortcut}"
-msgstr "{action} dans {section}, raccourci actuel : {shortcut}"
-
 msgid "{app} is up to date (version {version})."
 msgstr "{app} est à jour (version {version})."
+
+msgid "{bytes} bytes; {count} decoded frames; {duration} ms total."
+msgstr "{bytes} octets ; {count} images décodées ; {duration} ms au total."
+
+msgid "{count} frames, {width} × {height}, {duration} ms. GIF timing rounds to 10 ms; identical frames may merge."
+msgstr "{count} images, {width} × {height}, {duration} ms. GIF arrondit à 10 ms ; les images identiques peuvent fusionner."
 
 msgid "{name} - collapsed"
 msgstr "{name} - replié"
@@ -777,8 +1599,8 @@ msgstr "{name} - replié"
 msgid "{name} - expanded"
 msgstr "{name} - déplié"
 
-msgid "{name} already exists. Overwrite it?"
-msgstr "{name} existe déjà. L'écraser ?"
+msgid "{shortcut} is assigned to both {first} and {second}. Change or disable one binding."
+msgstr "{shortcut} est affecté à {first} et à {second}. Modifiez ou désactivez l’une des affectations."
 
 msgid "{title} value"
 msgstr "Valeur de {title}"

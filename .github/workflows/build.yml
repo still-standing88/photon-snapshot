@@ -6,177 +6,253 @@ on:
       - "v*"
   workflow_dispatch:
 
+permissions:
+  contents: read
+
+concurrency:
+  group: build-release-${{ github.ref }}
+
 jobs:
   build:
+    name: Build ${{ matrix.platform }} ${{ matrix.arch }}
+    runs-on: ${{ matrix.os }}
     strategy:
+      fail-fast: false
       matrix:
         include:
-          - os: windows-latest
+          - os: windows-2025
             platform: windows
             arch: x64
-          - os: macos-latest
+            executable: dist/app.dist/PhotonSnapshot.exe
+          - os: macos-15-intel
             platform: macos
             arch: x64
-          - os: macos-14
+            executable: dist/app.app/Contents/MacOS/PhotonSnapshot
+          - os: macos-15
             platform: macos
             arch: arm64
+            executable: dist/app.app/Contents/MacOS/PhotonSnapshot
+          - os: ubuntu-24.04
+            platform: linux
+            arch: x64
+            executable: dist/app.dist/PhotonSnapshot
 
-    runs-on: ${{ matrix.os }}
+    env:
+      QT_QPA_PLATFORM: offscreen
 
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
+        with:
+          persist-credentials: false
 
-      - name: Set up Python
-        uses: actions/setup-python@v4
+      - uses: actions/setup-python@v7
         with:
           python-version: "3.12"
+          architecture: ${{ matrix.arch }}
+          cache: pip
 
-      - name: Setup MSVC (Windows)
-        if: matrix.platform == 'windows'
-        uses: ilammy/msvc-dev-cmd@v1
-        with:
-          arch: x64
-
-      - name: Install system dependencies (macOS)
-        if: matrix.platform == 'macos'
+      - name: Check target architecture and version
+        id: version
+        shell: bash
+        env:
+          TARGET_ARCH: ${{ matrix.arch }}
         run: |
-          xcode-select --install || true
+          python - <<'PY'
+          import os
+          import platform
+          import re
+          import sys
+
+          sys.path.insert(0, "src")
+          from app_info import APP_VERSION
+
+          machine = platform.machine().lower()
+          arch = {"amd64": "x64", "x86_64": "x64", "aarch64": "arm64"}.get(machine, machine)
+          if arch != os.environ["TARGET_ARCH"]:
+              sys.exit(f"Expected {os.environ['TARGET_ARCH']}, got {machine}")
+          if not re.fullmatch(r"[0-9]+\.[0-9]+\.[0-9]+", APP_VERSION):
+              sys.exit(f"Invalid package version: {APP_VERSION}")
+          if os.environ["GITHUB_REF_TYPE"] == "tag" and os.environ["GITHUB_REF_NAME"] != f"v{APP_VERSION}":
+              sys.exit(f"Release tag must be v{APP_VERSION}")
+          with open(os.environ["GITHUB_OUTPUT"], "a", encoding="utf-8") as output:
+              print(f"value={APP_VERSION}", file=output)
+          PY
+
+      - name: Install Linux build and Qt libraries
+        if: matrix.platform == 'linux'
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y build-essential patchelf libdbus-1-3 libegl1 libfontconfig1 \
+            libgl1 libglib2.0-0t64 libgssapi-krb5-2 libxkbcommon-x11-0 libxcb-cursor0 \
+            libxcb-icccm4 libxcb-image0 libxcb-keysyms1 libxcb-render-util0 \
+            libxcb-shape0 libxcb-xinerama0 libxcb-xkb1
 
       - name: Install Python dependencies
-        run: |
-          python -m pip install --upgrade pip
-          python build.py --install
+        run: python build.py --install
 
-      - name: Get version from tag
-        id: get_version
-        shell: bash
+      - name: Compile translation catalogs
         run: |
-          if [[ $GITHUB_REF == refs/tags/* ]]; then
-            VERSION=${GITHUB_REF#refs/tags/v}
-          else
-            VERSION="dev-$(date +'%Y%m%d')-$(git rev-parse --short HEAD)"
-          fi
-          echo "version=$VERSION" >> $GITHUB_OUTPUT
-          echo "Version: $VERSION"
+          python scripts/extract_strings.py
+          python scripts/build_po.py
+          python scripts/compile_lang.py
+
+      - name: Run regression tests
+        run: python -m unittest discover -s tests -v
 
       - name: Build executable
         run: python build.py
 
-      - name: Debug - List dist directory contents
+      - name: Verify packaged executable
         shell: bash
+        env:
+          APP_EXECUTABLE: ${{ matrix.executable }}
+          PACKAGE_VERSION: ${{ steps.version.outputs.value }}
         run: |
-          echo "Contents of dist directory:"
-          ls -la dist/ || echo "dist directory not found"
-          find dist/ -type f -name "*" | head -20 || echo "No files found in dist"
+          python - <<'PY'
+          import json
+          import os
+          from pathlib import Path
+          import subprocess
 
-      - name: Install WiX Toolset (Windows)
-        if: matrix.platform == 'windows'
+          smoke_dir = Path("dist/codec-smoke")
+          executable = Path(os.environ["APP_EXECUTABLE"]).resolve()
+          completed = subprocess.run([str(executable), "--self-test", str(smoke_dir)])
+          report = smoke_dir / "release-smoke.json"
+          if report.is_file():
+              print(report.read_text(encoding="utf-8"))
+          completed.check_returncode()
+          result = json.loads(report.read_text(encoding="utf-8"))
+          if not result["passed"] or result["version"] != os.environ["PACKAGE_VERSION"]:
+              raise SystemExit(f"Unexpected packaged smoke result: {result}")
+          PY
+
+      - name: Install signing dependency
+        run: python -m pip install cryptography
+
+      - name: Sign executable and generate release manifest
+        shell: bash
+        env:
+          APP_EXECUTABLE: ${{ matrix.executable }}
+          PACKAGE_VERSION: ${{ steps.version.outputs.value }}
+          TARGET_PLATFORM: ${{ matrix.platform }}
+          TARGET_ARCH: ${{ matrix.arch }}
+          PHOTON_SIGNING_PRIVATE_KEY: ${{ secrets.PHOTON_SIGNING_PRIVATE_KEY }}
         run: |
-          choco install wixtoolset -y
-          echo "C:\Program Files (x86)\WiX Toolset v3.11\bin" | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8 -Append
-
-      - name: Build MSI (Windows)
-        if: matrix.platform == 'windows'
-        shell: powershell
-        run: |
-          $distDir = "dist/app.dist"
-          $outputDir = "dist/installer"
-          New-Item -ItemType Directory -Force -Path $outputDir
-          .\installer\windows\build-msi.ps1 -SourceDir $distDir -OutputDir $outputDir -Version "${{ steps.get_version.outputs.version }}"
-
-      - name: Create DMG (macOS)
-        if: matrix.platform == 'macos'
-        run: |
-          brew install create-dmg
-          mkdir -p dist/dmg
-
-          # On macOS, Nuitka with --macos-create-app-bundle creates app.app from app.py
-          if [ -d "dist/app.app" ]; then
-            cp -r "dist/app.app" dist/dmg/PhotonSnapshot.app
-            APP_NAME="PhotonSnapshot.app"
-          else
-            echo "Error: app.app bundle not found in dist directory"
-            echo "Directory contents:"
-            ls -la dist/
-            exit 1
+          output_dir="${APP_EXECUTABLE%/*}"
+          member="${APP_EXECUTABLE##*/}"
+          signature="$member.sig"
+          if [[ "$TARGET_PLATFORM" == macos ]]; then
+            # Keep detached signing files outside the code-signed app bundle.
+            output_dir=dist/dmg
+            member="PhotonSnapshot.app/Contents/MacOS/$member"
           fi
+          mkdir -p "$output_dir" artifacts
+          manifest="$output_dir/$TARGET_PLATFORM-$TARGET_ARCH-manifest.json"
+          python scripts/sign_release.py sign "$APP_EXECUTABLE" "$output_dir/$signature" "$manifest" \
+            --version "$PACKAGE_VERSION" --member "$member"
+          cp "$manifest" artifacts/
 
-          create-dmg \
-            --volname "Photon Snapshot" \
-            --window-pos 200 120 \
-            --window-size 600 300 \
-            --icon-size 100 \
-            --icon "$APP_NAME" 175 120 \
-            --hide-extension "$APP_NAME" \
-            --app-drop-link 425 120 \
-            "dist/PhotonSnapshot-${{ steps.get_version.outputs.version }}-${{ matrix.arch }}.dmg" \
-            "dist/dmg/"
+      - name: Locate WiX Toolset
+        if: matrix.platform == 'windows'
+        shell: pwsh
+        run: |
+          if (-not (Get-Command heat.exe -ErrorAction SilentlyContinue)) {
+            $bin = Join-Path ${env:ProgramFiles(x86)} 'WiX Toolset v3.14\bin'
+            if (-not (Test-Path (Join-Path $bin 'heat.exe'))) {
+              throw 'WiX Toolset 3.14 is missing from the runner.'
+            }
+            $bin | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8 -Append
+          }
 
-      - name: Prepare artifacts
-        shell: bash
+      - name: Package and verify Windows release
+        if: matrix.platform == 'windows'
+        shell: pwsh
+        env:
+          PACKAGE_VERSION: ${{ steps.version.outputs.value }}
+        run: |
+          $version = $env:PACKAGE_VERSION
+          .\installer\windows\build-msi.ps1 -SourceDir dist\app.dist -OutputDir dist\installer -Version $version
+          $msi = "dist\installer\PhotonSnapshot-$version.msi"
+          .\scripts\verify_windows_package.ps1 -MsiPath $msi -ReportDir dist\installer-smoke
+          Copy-Item -LiteralPath $msi -Destination artifacts
+          Compress-Archive -Path dist\app.dist -DestinationPath "artifacts\PhotonSnapshot-$version-windows-x64.zip"
+
+      - name: Package macOS release
+        if: matrix.platform == 'macos'
+        env:
+          PACKAGE_VERSION: ${{ steps.version.outputs.value }}
+          TARGET_ARCH: ${{ matrix.arch }}
+        run: |
+          mkdir -p artifacts dist/dmg
+          ditto dist/app.app dist/dmg/PhotonSnapshot.app
+          python scripts/sign_release.py verify \
+            dist/dmg/PhotonSnapshot.app/Contents/MacOS/PhotonSnapshot dist/dmg/PhotonSnapshot.sig
+          ln -s /Applications dist/dmg/Applications
+          dmg="artifacts/PhotonSnapshot-$PACKAGE_VERSION-macos-$TARGET_ARCH.dmg"
+          hdiutil create -volname "Photon Snapshot" -srcfolder dist/dmg -fs HFS+ -format UDZO "$dmg"
+          hdiutil verify "$dmg"
+
+      - name: Package Linux release
+        if: matrix.platform == 'linux'
+        env:
+          PACKAGE_VERSION: ${{ steps.version.outputs.value }}
         run: |
           mkdir -p artifacts
-          if [[ "${{ matrix.platform }}" == "windows" ]]; then
-            cp dist/installer/*.msi artifacts/
-            cp -r dist/app.dist artifacts/PhotonSnapshot-${{ steps.get_version.outputs.version }}-windows-${{ matrix.arch }}
-            cd artifacts && zip -r PhotonSnapshot-${{ steps.get_version.outputs.version }}-windows-${{ matrix.arch }}.zip PhotonSnapshot-${{ steps.get_version.outputs.version }}-windows-${{ matrix.arch }}/
-          elif [[ "${{ matrix.platform }}" == "macos" ]]; then
-            cp dist/*.dmg artifacts/
-            cp -r dist/app.dist artifacts/PhotonSnapshot-${{ steps.get_version.outputs.version }}-macos-${{ matrix.arch }}
-            cd artifacts && tar -czf PhotonSnapshot-${{ steps.get_version.outputs.version }}-macos-${{ matrix.arch }}.tar.gz PhotonSnapshot-${{ steps.get_version.outputs.version }}-macos-${{ matrix.arch }}/
-          fi
+          tar -czf "artifacts/PhotonSnapshot-$PACKAGE_VERSION-linux-x64.tar.gz" -C dist app.dist
 
-      - name: Upload artifacts
-        uses: actions/upload-artifact@v4
+      - name: Upload release packages
+        uses: actions/upload-artifact@v7
         with:
           name: photon-snapshot-${{ matrix.platform }}-${{ matrix.arch }}
           path: artifacts/*
+          if-no-files-found: error
+          compression-level: 0
 
   release:
+    name: Publish GitHub release
     needs: build
-    runs-on: ubuntu-latest
-    if: startsWith(github.ref, 'refs/tags/')
+    if: github.ref_type == 'tag'
+    runs-on: ubuntu-24.04
+    permissions:
+      contents: write
 
     steps:
-      - uses: actions/checkout@v4
-
-      - name: Download all artifacts
-        uses: actions/download-artifact@v4
+      - uses: actions/download-artifact@v8
         with:
+          pattern: photon-snapshot-*
           path: release-artifacts
+          merge-multiple: true
 
-      - name: Get version from tag
-        id: get_version
-        run: |
-          VERSION=${GITHUB_REF#refs/tags/v}
-          echo "version=$VERSION" >> $GITHUB_OUTPUT
-
-      - name: Create Release
-        uses: softprops/action-gh-release@v1
-        with:
-          tag_name: ${{ github.ref_name }}
-          name: Photon Snapshot v${{ steps.get_version.outputs.version }}
-          draft: false
-          prerelease: false
-          files: |
-            release-artifacts/**/*.msi
-            release-artifacts/**/*.dmg
-            release-artifacts/**/*.zip
-            release-artifacts/**/*.tar.gz
-          body: |
-            ## What's Changed
-            - Release version ${{ steps.get_version.outputs.version }}
-
-            Photon Snapshot is a modern, accessible image viewer and editor,
-            developed by still-standing88 (https://github.com/still-standing88).
-
-            ## Downloads
-            - **Windows**: Download the MSI installer or ZIP archive
-            - **macOS (Intel)**: Download the DMG for x64
-            - **macOS (Apple Silicon)**: Download the DMG for arm64
-
-            ## Installation
-            - **Windows**: Run the MSI installer or extract the ZIP archive
-            - **macOS**: Mount the DMG and drag the app to Applications folder
+      - name: Publish verified release assets
+        shell: bash
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+        run: |
+          tag="$GITHUB_REF_NAME"
+          prefix="release-artifacts/PhotonSnapshot-${tag#v}"
+          assets=(
+            "$prefix.msi"
+            "$prefix-windows-x64.zip"
+            "$prefix-macos-x64.dmg"
+            "$prefix-macos-arm64.dmg"
+            "$prefix-linux-x64.tar.gz"
+            "release-artifacts/windows-x64-manifest.json"
+            "release-artifacts/macos-x64-manifest.json"
+            "release-artifacts/macos-arm64-manifest.json"
+            "release-artifacts/linux-x64-manifest.json"
+          )
+          for asset in "${assets[@]}"; do
+            if [[ ! -s "$asset" ]]; then
+              echo "Missing release asset: $asset" >&2
+              exit 1
+            fi
+          done
+
+          if gh release view "$tag" >/dev/null 2>&1; then
+            gh release upload "$tag" "${assets[@]}" --clobber
+          else
+            gh release create "$tag" "${assets[@]}" --verify-tag --draft \
+              --title "Photon Snapshot $tag" --generate-notes
+          fi
+          gh release edit "$tag" --draft=false

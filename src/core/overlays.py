@@ -1,6 +1,6 @@
 from abc import ABC, abstractmethod
 from PySide6.QtGui import QPainter, QPen, QBrush, QColor, QFont, QFontMetrics
-from PySide6.QtCore import QRect, QPoint, Qt
+from PySide6.QtCore import QRect, QPoint, Qt, QObject, Signal
 from typing import List, Tuple, Optional
 from enum import Enum
 import math
@@ -22,7 +22,8 @@ class AnchorPosition(Enum):
 class Overlay(ABC):
     def __init__(self, name: str, visible: bool = True):
         self.name = name
-        self.visible = visible
+        self._visible = visible
+        self._visibility_listeners = []
         self.opacity = 1.0
         self.color = QColor(255, 255, 255)
         self.padding = 8
@@ -35,6 +36,18 @@ class Overlay(ABC):
     
     def set_visible(self, visible: bool):
         self.visible = visible
+
+    @property
+    def visible(self):
+        return self._visible
+
+    @visible.setter
+    def visible(self, visible):
+        visible = bool(visible)
+        if visible != self._visible:
+            self._visible = visible
+            for callback in tuple(self._visibility_listeners):
+                callback()
     
     def set_opacity(self, opacity: float):
         self.opacity = max(0.0, min(1.0, opacity))
@@ -374,24 +387,40 @@ class PixelInfoOverlay(Overlay):
         self.pixel_color = pixel_color
 
 
-class OverlayManager:
+class OverlayManager(QObject):
+    changed = Signal()
+
     def __init__(self):
+        super().__init__()
         self.overlays: List[Overlay] = []
         self.active_overlay_types = set()
+        self._visibility_callbacks = {}
     
     def add_overlay(self, overlay: Overlay):
+        if overlay in self.overlays:
+            return
         self.overlays.append(overlay)
         self.active_overlay_types.add(type(overlay).__name__)
+        callback = lambda: self.changed.emit()
+        self._visibility_callbacks[overlay] = callback
+        overlay._visibility_listeners.append(callback)
+        self.changed.emit()
     
     def remove_overlay(self, overlay: Overlay):
         if overlay in self.overlays:
             self.overlays.remove(overlay)
+            overlay._visibility_listeners.remove(self._visibility_callbacks.pop(overlay))
             if not any(isinstance(o, type(overlay)) for o in self.overlays):
                 self.active_overlay_types.discard(type(overlay).__name__)
+            self.changed.emit()
     
     def clear_overlays(self):
+        for overlay, callback in self._visibility_callbacks.items():
+            overlay._visibility_listeners.remove(callback)
+        self._visibility_callbacks.clear()
         self.overlays.clear()
         self.active_overlay_types.clear()
+        self.changed.emit()
     
     def get_overlays_by_type(self, overlay_type: type) -> List[Overlay]:
         return [o for o in self.overlays if isinstance(o, overlay_type)]

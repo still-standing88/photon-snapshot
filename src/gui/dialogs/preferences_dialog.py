@@ -57,7 +57,6 @@ class PreferencesDialog(QDialog):
 
         restart_note = QLabel(_("Changing the language requires restarting the application."))
         restart_note.setWordWrap(True)
-        restart_note.setStyleSheet("color: #999999; font-size: 11px;")
         layout.addWidget(restart_note)
 
         layout.addStretch()

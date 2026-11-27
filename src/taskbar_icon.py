@@ -1,6 +1,6 @@
 from PySide6.QtWidgets import QSystemTrayIcon, QMenu
 from PySide6.QtGui import QIcon, QAction
-from PySide6.QtCore import QObject
+from PySide6.QtCore import QObject, QEvent
 import resources_rc
 
 import app_info
@@ -17,6 +17,7 @@ class TaskbarIcon(QObject):
     def __init__(self, window):
         super().__init__(window)
         self.window = window
+        self.window.taskbar_icon = self
 
         self.tray_icon = QSystemTrayIcon(self)
         self.tray_icon.setIcon(QIcon(":icons/photon-snapshot.png"))
@@ -24,9 +25,16 @@ class TaskbarIcon(QObject):
 
         self.create_menu()
         self.tray_icon.activated.connect(self.on_tray_activated)
+        self.window.installEventFilter(self)
+        self._sync_label()
 
     def create_menu(self):
-        menu = QMenu()
+        # The menu must be parented (and kept as an attribute): Qt's
+        # setContextMenu() does NOT take ownership, so a parentless local
+        # QMenu would be garbage-collected once this method returns,
+        # leaving the tray icon with a dangling pointer.
+        self.tray_menu = QMenu(self.window)
+        menu = self.tray_menu
 
         self.show_action = QAction(_("Hide"), self)
         self.show_action.triggered.connect(self.on_toggle_window)
@@ -39,6 +47,14 @@ class TaskbarIcon(QObject):
         menu.addAction(quit_action)
 
         self.tray_icon.setContextMenu(menu)
+        menu.aboutToShow.connect(self._sync_label)
+
+    def eventFilter(self, watched, event):
+        if watched is self.window and event.type() in (
+            QEvent.Type.Show, QEvent.Type.Hide, QEvent.Type.WindowStateChange,
+        ):
+            self._sync_label()
+        return super().eventFilter(watched, event)
 
     def on_tray_activated(self, reason):
         if reason == QSystemTrayIcon.ActivationReason.DoubleClick:
@@ -51,10 +67,14 @@ class TaskbarIcon(QObject):
             self.show_window()
 
     def _sync_label(self):
-        self.show_action.setText(_("Hide") if self.window.isVisible() else _("Show"))
+        visible = self.window.isVisible() and not self.window.isMinimized()
+        self.show_action.setText(_("Hide") if visible else _("Show"))
 
     def show_window(self):
-        self.window.show()
+        if self.window.isMinimized():
+            self.window.showNormal()
+        else:
+            self.window.show()
         self.window.raise_()
         self.window.activateWindow()
         if hasattr(self.window, "dock_manager"):
@@ -62,6 +82,8 @@ class TaskbarIcon(QObject):
         self._sync_label()
 
     def hide_window(self):
+        if hasattr(self.window, 'playback'):
+            self.window.playback.stop()
         if hasattr(self.window, "dock_manager"):
             self.window.dock_manager.hide_floating_docks()
         self.window.hide()

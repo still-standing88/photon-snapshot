@@ -19,7 +19,7 @@ from typing import Any, Optional
 
 from . import base_database
 from .base_database import database, write_queue
-from .models import ALL_MODELS, FileCategory, KeyBinding, Pref, UserFile, WindowState
+from .models import ALL_MODELS, FileCategory, KeyBinding, Pref, UserFile, WindowState, UserPreset
 
 
 class AppDatabase:
@@ -171,6 +171,22 @@ class AppDatabase:
     def clear_key_bindings(self):
         write_queue.run(lambda: KeyBinding.delete().execute())
 
+    def save_key_configuration(self, bindings: dict, disabled: list[str]):
+        """Commit a complete shortcut configuration in one transaction."""
+        def save():
+            with database.atomic():
+                KeyBinding.delete().execute()
+                rows = [
+                    {"section": section, "action": action, "sequence": sequence}
+                    for section, actions in bindings.items()
+                    for action, sequence in actions.items()
+                ]
+                if rows:
+                    KeyBinding.insert_many(rows).execute()
+                self._set_pref_impl("disabled_hotkeys", disabled)
+
+        write_queue.run(save)
+
     def has_key_bindings(self) -> bool:
         return KeyBinding.select().limit(1).exists()
 
@@ -185,6 +201,20 @@ class AppDatabase:
     def load_window_state(self, key: str) -> Optional[str]:
         row = WindowState.get_or_none(WindowState.key == key)
         return row.value if row else None
+
+    def list_presets(self, kind):
+        return [row.name for row in UserPreset.select().where(UserPreset.kind == kind).order_by(UserPreset.name)]
+
+    def get_preset(self, kind, name):
+        row = UserPreset.get_or_none((UserPreset.kind == kind) & (UserPreset.name == name))
+        return json.loads(row.payload) if row else None
+
+    def save_preset(self, kind, name, payload):
+        write_queue.run(lambda: UserPreset.insert(kind=kind, name=name, payload=json.dumps(payload)).on_conflict(
+            conflict_target=[UserPreset.kind, UserPreset.name], update={UserPreset.payload: json.dumps(payload)}).execute())
+
+    def delete_preset(self, kind, name):
+        write_queue.run(lambda: UserPreset.delete().where((UserPreset.kind == kind) & (UserPreset.name == name)).execute())
 
 
 # Process-wide singleton, mirroring playForm's module-level `prefs`/`media_db`

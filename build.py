@@ -2,18 +2,12 @@ import os
 import sys
 import subprocess
 import platform
+import shutil
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).parent / "src"))
 import app_info  # noqa: E402 - needs the sys.path tweak above
 
-
-qt_plugins = [
-    "platforms",
-    "styles",
-    "iconengines",
-    "imageformats",
-]
 
 def compile_resources():
     assets_dir = Path(__file__).parent / "assets"
@@ -28,7 +22,7 @@ def compile_resources():
     try:
         print("Compiling Qt resources...")
         subprocess.run([
-            "pyside6-rcc", 
+            sys.executable, '-c', 'from PySide6.scripts.pyside_tool import rcc; rcc()',
             str(qrc_file), 
             "-o", 
             str(output_file)
@@ -55,6 +49,13 @@ def build_executable():
     if not compile_resources():
         return False
     
+    from PySide6.QtCore import QLibraryInfo
+
+    qt_plugins = ["platforms", "iconengines", "imageformats"]
+    qt_plugin_dir = Path(QLibraryInfo.path(QLibraryInfo.LibraryPath.PluginsPath))
+    if (qt_plugin_dir / "styles").is_dir():
+        qt_plugins.append("styles")
+
     current_platform = platform.system().lower()
     
     nuitka_args = [
@@ -62,7 +63,12 @@ def build_executable():
         "--standalone",
         "--deployment",
         "--no-debug-immortal-assumptions",
+        # Keep standalone builds within hosted runner linker memory limits.
+        "--lto=no",
         "--enable-plugin=pyside6",
+        "--include-package=PIL",
+        "--include-package=tools.image_batch_converter",
+        f"--include-data-dir={Path(__file__).parent / 'lang'}=lang",
         f"--include-qt-plugins={','.join(qt_plugins)}",
         "--report=compilation-report.xml",
         f"--output-dir={Path(__file__).parent / 'dist'}",
@@ -90,10 +96,12 @@ def build_executable():
             nuitka_args.append(f"--windows-icon-from-ico={icon_file}")
 
     elif current_platform == "darwin":
-        icon_file = assets_dir / "photon-snapshot.icns"
+        icon_file = assets_dir / "photon-snapshot.png"
         nuitka_args.extend([
             "--macos-create-app-bundle",
-            "--macos-app-name=PhotonSnapshot",
+            f"--macos-app-name={app_info.APP_NAME}",
+            "--macos-signed-app-name=io.github.still-standing88.photon-snapshot",
+            "--output-filename=PhotonSnapshot",
         ])
         if icon_file.exists():
             nuitka_args.append(f"--macos-app-icon={icon_file}")
@@ -137,7 +145,7 @@ def install_requirements():
 
 def main():
     if len(sys.argv) > 1 and sys.argv[1] == "--install":
-        install_requirements()
+        return 0 if install_requirements() else 1
     else:
         print("Photon Snapshot Build Script")
         print("Usage:")
@@ -145,8 +153,8 @@ def main():
         print("  python build.py              Build executable")
         print()
         
-        build_executable()
+        return 0 if build_executable() else 1
 
 
 if __name__ == "__main__":
-    main()
+    raise SystemExit(main())

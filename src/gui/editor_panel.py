@@ -1,13 +1,15 @@
 from PySide6.QtWidgets import (QWidget, QVBoxLayout, QHBoxLayout, QGroupBox,
                              QSlider, QLabel, QPushButton, QDoubleSpinBox, QSpinBox,
                              QComboBox, QFrame, QSizePolicy, QButtonGroup, QCheckBox,
-                             QScrollArea, QColorDialog)
+                             QScrollArea, QColorDialog, QMenu)
 from PySide6.QtCore import Qt, Signal
 from PySide6.QtGui import QColor
 from core.editor import Editor
 from gui_controls.accordion import Accordion
 from gui_controls.common_controls import TabableLabel
 from .overlay_panel import OverlayPanel
+from .dialogs.effect_dialog import CropRegionDialog, EffectDialog
+from .effect_labels import effect_label
 
 
 class SliderGroup(QWidget):
@@ -60,24 +62,6 @@ class SliderGroup(QWidget):
         layout.addLayout(slider_layout)
 
         self.setLayout(layout)
-        self.setStyleSheet("""
-            QSlider::groove:horizontal {
-                border: 1px solid #404040;
-                height: 8px;
-                background: #2b2b2b;
-                border-radius: 4px;
-            }
-            QSlider::handle:horizontal {
-                background: #0078d4;
-                border: 1px solid #005a9e;
-                width: 18px;
-                border-radius: 9px;
-                margin: -5px 0;
-            }
-            QSlider::handle:horizontal:hover {
-                background: #106ebe;
-            }
-        """)
 
     def _on_slider_changed(self, value):
         if self._syncing:
@@ -97,8 +81,17 @@ class SliderGroup(QWidget):
         self.value_changed.emit(value)
 
     def set_value(self, value: float):
+        """Programmatic set (e.g. resetting controls after loading an
+        image). Must NOT emit value_changed - the old version did, which
+        executed a phantom 'Brightness 1.0' action on the freshly loaded
+        image and polluted its undo history."""
         value = max(self.min_val, min(self.max_val, value))
-        self.value_spin.setValue(value)
+        self._syncing = True
+        try:
+            self.value_spin.setValue(value)
+            self.slider.setValue(int(value * self.multiplier))
+        finally:
+            self._syncing = False
 
 
 class EffectsPanel(QWidget):
@@ -122,7 +115,8 @@ class EffectsPanel(QWidget):
         self.brightness_slider.value_changed.connect(self.brightness_changed.emit)
         self.contrast_slider.value_changed.connect(self.contrast_changed.emit)
 
-        effects_layout = QHBoxLayout()
+        # Long translated labels must fit the narrow editing pane.
+        effects_layout = QVBoxLayout()
 
         self.grayscale_btn = QPushButton(_("Grayscale"))
         self.grayscale_btn.setAccessibleName(_("Apply grayscale effect"))
@@ -130,9 +124,6 @@ class EffectsPanel(QWidget):
         self.sepia_btn.setAccessibleName(_("Apply sepia effect"))
         self.invert_btn = QPushButton(_("Invert"))
         self.invert_btn.setAccessibleName(_("Invert colors"))
-
-        for btn in [self.grayscale_btn, self.sepia_btn, self.invert_btn]:
-            btn.setStyleSheet(_BUTTON_STYLE)
 
         self.grayscale_btn.clicked.connect(self.grayscale_applied.emit)
         self.sepia_btn.clicked.connect(self.sepia_applied.emit)
@@ -145,33 +136,14 @@ class EffectsPanel(QWidget):
         layout.addWidget(self.brightness_slider)
         layout.addWidget(self.contrast_slider)
         layout.addLayout(effects_layout)
+        self.more_effects_btn = QPushButton(_("Image Effects"))
+        layout.addWidget(self.more_effects_btn)
 
         self.setLayout(layout)
 
     def reset_sliders(self):
         self.brightness_slider.set_value(1.0)
         self.contrast_slider.set_value(1.0)
-
-
-_BUTTON_STYLE = """
-    QPushButton {
-        background-color: #404040;
-        border: 1px solid #555555;
-        color: #ffffff;
-        padding: 5px 10px;
-        border-radius: 3px;
-    }
-    QPushButton:hover {
-        background-color: #505050;
-    }
-    QPushButton:pressed {
-        background-color: #303030;
-    }
-    QPushButton:disabled {
-        background-color: #2b2b2b;
-        color: #666666;
-    }
-"""
 
 
 class TransformPanel(QWidget):
@@ -199,9 +171,6 @@ class TransformPanel(QWidget):
         self.flip_h_btn.setAccessibleName(_("Flip image horizontally"))
         self.flip_v_btn = QPushButton(_("↕ Flip V"))
         self.flip_v_btn.setAccessibleName(_("Flip image vertically"))
-
-        for btn in [self.rotate_cw_btn, self.rotate_ccw_btn, self.flip_h_btn, self.flip_v_btn]:
-            btn.setStyleSheet(_BUTTON_STYLE)
 
         self.rotate_cw_btn.clicked.connect(self.rotate_90_cw.emit)
         self.rotate_ccw_btn.clicked.connect(self.rotate_90_ccw.emit)
@@ -233,15 +202,9 @@ class CropPanel(QWidget):
 
         self.crop_mode_checkbox = QCheckBox(_("Crop Mode"))
         self.crop_mode_checkbox.setAccessibleName(_("Toggle crop mode"))
-        self.crop_mode_checkbox.setStyleSheet("""
-            QCheckBox::indicator { width: 13px; height: 13px; }
-            QCheckBox::indicator:unchecked { background-color: #2b2b2b; border: 1px solid #404040; }
-            QCheckBox::indicator:checked { background-color: #0078d4; border: 1px solid #005a9e; }
-        """)
 
         self.apply_crop_btn = QPushButton(_("Apply Crop"))
         self.apply_crop_btn.setAccessibleName(_("Apply crop selection"))
-        self.apply_crop_btn.setStyleSheet(_BUTTON_STYLE)
         self.apply_crop_btn.setEnabled(False)
 
         self.crop_mode_checkbox.toggled.connect(self._on_crop_mode_toggled)
@@ -249,6 +212,8 @@ class CropPanel(QWidget):
 
         layout.addWidget(self.crop_mode_checkbox)
         layout.addWidget(self.apply_crop_btn)
+        self.coordinates_btn = QPushButton(_("Crop by Coordinates..."))
+        layout.addWidget(self.coordinates_btn)
 
         self.setLayout(layout)
 
@@ -277,11 +242,6 @@ class DrawPanel(QWidget):
 
         self.draw_mode_checkbox = QCheckBox(_("Drawing Mode"))
         self.draw_mode_checkbox.setAccessibleName(_("Toggle canvas drawing mode"))
-        self.draw_mode_checkbox.setStyleSheet("""
-            QCheckBox::indicator { width: 13px; height: 13px; }
-            QCheckBox::indicator:unchecked { background-color: #2b2b2b; border: 1px solid #404040; }
-            QCheckBox::indicator:checked { background-color: #0078d4; border: 1px solid #005a9e; }
-        """)
         self.draw_mode_checkbox.toggled.connect(self.drawing_mode_toggled.emit)
         layout.addWidget(self.draw_mode_checkbox)
 
@@ -306,7 +266,7 @@ class DrawPanel(QWidget):
 
         hint = TabableLabel(_("Click and drag on the image to draw. This permanently edits the pixels."))
         hint.setWordWrap(True)
-        hint.setStyleSheet("color: #999999; font-size: 11px;")
+        hint.setStyleSheet("font-size: 11px;")
         layout.addWidget(hint)
 
         self.setLayout(layout)
@@ -342,6 +302,8 @@ class EditorPanel(QWidget):
     QSplitter pane in MainWindow, so panels can shrink/grow with the window
     (responsive layout requirement)."""
 
+    edit_dialog_opening = Signal()
+
     def __init__(self, editor: Editor):
         super().__init__()
         self.editor = editor
@@ -350,6 +312,7 @@ class EditorPanel(QWidget):
         self.setSizePolicy(QSizePolicy.Policy.Preferred, QSizePolicy.Policy.Expanding)
         self.setup_ui()
         self.connect_signals()
+        self.set_document_available(False)
 
     def setup_ui(self):
         outer_layout = QVBoxLayout()
@@ -364,6 +327,12 @@ class EditorPanel(QWidget):
         self.accordion = Accordion()
 
         self.effects_panel = EffectsPanel()
+        self.effect_menu = QMenu(_("Image Effects"), self)
+        for effect_id in ('saturation', 'auto_contrast', 'sharpen', 'gaussian_blur',
+                          'speckle_reduction', 'levels', 'duotone'):
+            self.effect_menu.addAction(effect_label(effect_id),
+                                       lambda checked=False, key=effect_id: self.open_effect(key))
+        self.effects_panel.more_effects_btn.setMenu(self.effect_menu)
         self.transform_panel = TransformPanel()
         self.crop_panel = CropPanel()
         self.overlay_panel = OverlayPanel()
@@ -387,11 +356,38 @@ class EditorPanel(QWidget):
         self.effects_panel.grayscale_applied.connect(self.editor.apply_grayscale)
         self.effects_panel.sepia_applied.connect(self.editor.apply_sepia)
         self.effects_panel.invert_applied.connect(self.editor.apply_invert)
+        self.crop_panel.coordinates_btn.clicked.connect(self.crop_by_coordinates)
 
         self.transform_panel.rotate_90_cw.connect(lambda: self.editor.rotate(90))
         self.transform_panel.rotate_90_ccw.connect(lambda: self.editor.rotate(-90))
         self.transform_panel.flip_horizontal.connect(self.editor.flip_horizontal)
         self.transform_panel.flip_vertical.connect(self.editor.flip_vertical)
+
+    def set_document_available(self, available):
+        self.effect_menu.setEnabled(available)
+        self.effects_panel.more_effects_btn.setEnabled(available)
+        self.crop_panel.coordinates_btn.setEnabled(available)
+
+    def open_effect(self, effect_id):
+        image = self.editor.current_image
+        if image is None:
+            return
+        self.edit_dialog_opening.emit()
+        document = self.editor.document
+        dialog = EffectDialog(effect_id, parent=self.window(), canvas_size=image.size)
+        if dialog.exec() and self.editor.document is document:
+            self.editor.apply_effect(effect_id, dialog.values(), region=dialog.region())
+
+    def crop_by_coordinates(self):
+        image = self.editor.current_image
+        if image is None:
+            return
+        self.edit_dialog_opening.emit()
+        document = self.editor.document
+        dialog = CropRegionDialog(image.size, self.window())
+        if dialog.exec() and self.editor.document is document:
+            self.editor.crop(dialog.box())
+            self.crop_panel.crop_mode_checkbox.setChecked(False)
 
     def reset_controls(self):
         self.effects_panel.reset_sliders()

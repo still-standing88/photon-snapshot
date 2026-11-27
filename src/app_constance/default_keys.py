@@ -8,6 +8,7 @@ fire while the app is in the background.
 
 key_dict = {
     "Main Window": {
+        "New": "Ctrl+N",
         "Open file": "Ctrl+O",
         "Open folder": "Ctrl+Shift+O",
         "Save": "Ctrl+S",
@@ -16,6 +17,10 @@ key_dict = {
         "Redo": "Ctrl+Y",
         "Reset to Original": "Ctrl+R",
         "Toggle Explorer": "Ctrl+E",
+        "Toggle Toolbar": "",
+        "Toggle Status Bar": "",
+        "Clear Recent Files": "",
+        "About": "",
         "Focus Explorer": "Alt+E",
         "Focus Viewer": "Alt+V",
         "Zoom In": "Ctrl+=",
@@ -29,6 +34,15 @@ key_dict = {
         "Exit": "Alt+X",
         "Next Pane": "F6",
         "Previous Pane": "Shift+F6",
+        "New Animation": "Ctrl+Alt+N",
+        "Import Frames": "Ctrl+Alt+I",
+        "Export Animation": "Ctrl+Alt+S",
+        "Export Current Frame": "",
+        "Export Frames": "",
+        "Batch Image Converter": "Ctrl+B",
+        "Show Animation Panel": "",
+        "Reset Current Frame": "",
+        "Edit Artwork": "",
     },
     "Explorer": {
         "Search files": "Ctrl+F",
@@ -37,6 +51,10 @@ key_dict = {
         "Open Selected": "Return",
         "Add to Favorites": "Ctrl+D",
         "Add Folder to Library": "Ctrl+Shift+L",
+        "List View": "",
+        "Icon View": "",
+        "Focus Path": "Alt+D",
+        "Add Current Folder to Library": "",
     },
     "Viewer": {
         "Toggle Grid Overlay": "G",
@@ -46,5 +64,16 @@ key_dict = {
         "Toggle Drawing Mode": "D",
         "Clear Overlays": "Alt+C",
         "Cancel/Escape Mode": "Escape",
+    },
+    "Animation": {
+        "Previous Frame": "Left",
+        "Next Frame": "Right",
+        "First Frame": "Home",
+        "Last Frame": "End",
+        "Play/Pause": "Space",
+        "Duplicate Frames": "Ctrl+D",
+        "Delete Frames": "Delete",
+        "Move Earlier": "Alt+Left",
+        "Move Later": "Alt+Right",
     },
 }

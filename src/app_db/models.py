@@ -54,7 +54,16 @@ class WindowState(BaseModel):
     value = TextField()
 
 
-ALL_MODELS = [Pref, UserFile, KeyBinding, WindowState]
+class UserPreset(BaseModel):
+    kind = CharField()
+    name = CharField()
+    payload = TextField()
+
+    class Meta:
+        primary_key = CompositeKey('kind', 'name')
+
+
+ALL_MODELS = [Pref, UserFile, KeyBinding, WindowState, UserPreset]
 
 
 class FileCategory:

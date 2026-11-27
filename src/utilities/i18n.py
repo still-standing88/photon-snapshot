@@ -58,10 +58,17 @@ def install_translation(language: str | None = None, domain: str = DOMAIN):
     languages = _language_candidates(language)
     translation = gettext.translation(domain, localedir=localedir, languages=languages, fallback=True)
     translation.install()
+    from PySide6.QtCore import QLocale, Qt
+    from PySide6.QtWidgets import QApplication
+    app = QApplication.instance()
+    if app is not None:
+        effective_language = translation.info().get("language") or language or QLocale.system().name()
+        app.setLayoutDirection(Qt.LayoutDirection.RightToLeft if is_rtl(effective_language)
+                               else Qt.LayoutDirection.LeftToRight)
     return translation
 
 
 def is_rtl(language: str | None) -> bool:
     if not language:
         return False
-    return language.split("_", 1)[0].lower() in RTL_LANGUAGES
+    return language.replace("-", "_").split("_", 1)[0].lower() in RTL_LANGUAGES

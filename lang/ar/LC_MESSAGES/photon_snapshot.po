@@ -6,6 +6,9 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
+msgid " ms"
+msgstr " مللي ثانية"
+
 msgid " px"
 msgstr " بك"
 
@@ -27,14 +30,26 @@ msgstr "&ملف"
 msgid "&Fit to Window"
 msgstr "م&لاءمة النافذة"
 
+msgid "&Grid"
+msgstr "&الشبكة"
+
 msgid "&Hotkeys..."
 msgstr "ا&ختصارات لوحة المفاتيح..."
+
+msgid "&New"
+msgstr "&جديد"
+
+msgid "&New..."
+msgstr "&جديد..."
 
 msgid "&Open..."
 msgstr "&فتح..."
 
 msgid "&Options"
 msgstr "&خيارات"
+
+msgid "&Pixel Info"
+msgstr "&معلومات البكسل"
 
 msgid "&Preferences..."
 msgstr "ت&فضيلات..."
@@ -44,6 +59,9 @@ msgstr "إ&عادة"
 
 msgid "&Reset to Original"
 msgstr "إ&عادة التعيين إلى الأصل"
+
+msgid "&Ruler"
+msgstr "&المسطرة"
 
 msgid "&Save"
 msgstr "&حفظ"
@@ -60,6 +78,9 @@ msgstr "&عرض"
 msgid "<b>A new version of {app} is available!</b><br>Your version: <b>{current}</b> -> New version: <b>{new}</b>"
 msgstr "<b>يتوفر إصدار جديد من {app}!</b><br>إصدارك الحالي: <b>{current}</b> -> الإصدار الجديد: <b>{new}</b>"
 
+msgid "About"
+msgstr "حول"
+
 msgid "About dialog"
 msgstr "مربع حوار حول البرنامج"
 
@@ -69,17 +90,44 @@ msgstr "حول {app}"
 msgid "Action"
 msgstr "الإجراء"
 
-msgid "Action shortcuts"
-msgstr "اختصارات الإجراءات"
+msgid "Active Jobs"
+msgstr "المهام النشطة"
 
 msgid "Actual Size"
 msgstr "الحجم الفعلي"
 
+msgid "Add Blank"
+msgstr "إضافة إطار فارغ"
+
 msgid "Add Current Folder to Library"
 msgstr "إضافة المجلد الحالي إلى المكتبة"
 
+msgid "Add Edit..."
+msgstr "إضافة تعديل..."
+
+msgid "Add Files..."
+msgstr "إضافة ملفات..."
+
+msgid "Add Filter..."
+msgstr "إضافة مرشح..."
+
 msgid "Add Folder to Library"
 msgstr "إضافة مجلد إلى المكتبة"
+
+msgid "Add Folder..."
+msgstr "إضافة مجلد..."
+
+msgid "Add Image Files"
+msgstr "إضافة صور"
+
+msgid "Add Image Folder"
+msgstr "إضافة مجلد صور"
+
+msgid "Add new"
+msgstr "إضافة جديد"
+
+msgid "Add new path to library"
+msgstr "إضافة مسار جديد إلى المكتبة"
 
 msgid "Add Text Overlay"
 msgstr "إضافة تراكب نصي"
@@ -99,6 +147,39 @@ msgstr "إضافة إلى المكتبة"
 msgid "Adjustments"
 msgstr "التعديلات"
 
+msgid "All Files"
+msgstr "جميع الملفات"
+
+msgid "All frames"
+msgstr "كل الإطارات"
+
+msgid "All supported image formats"
+msgstr "كل تنسيقات الصور المدعومة"
+
+msgid "All supported images"
+msgstr "كل الصور المدعومة"
+
+msgid "An accessible, cross-platform image viewer and editor with customizable hotkeys."
+msgstr "عارض ومحرر صور ميسّر ومتعدد المنصات مع اختصارات لوحة مفاتيح قابلة للتخصيص."
+
+msgid "Animation"
+msgstr "الرسوم المتحركة"
+
+msgid "Animation frame strip"
+msgstr "شريط إطارات الحركة"
+
+msgid "Animation frames"
+msgstr "إطارات الحركة"
+
+msgid "Animation handling:"
+msgstr "معالجة الحركة:"
+
+msgid "Animation Panel"
+msgstr "لوحة الحركة"
+
+msgid "Animation Preview"
+msgstr "معاينة الحركة"
+
 msgid "Application information"
 msgstr "معلومات التطبيق"
 
@@ -107,6 +188,9 @@ msgstr "لغة التطبيق"
 
 msgid "Application theme"
 msgstr "سمة التطبيق"
+
+msgid "Applied image effects in order"
+msgstr "تأثيرات الصور بالترتيب"
 
 msgid "Apply"
 msgstr "تطبيق"
@@ -123,8 +207,53 @@ msgstr "تطبيق تأثير التدرج الرمادي"
 msgid "Apply sepia effect"
 msgstr "تطبيق تأثير السيبيا"
 
+msgid "Apply to:"
+msgstr "تطبيق على:"
+
+msgid "Applying Frame Edits"
+msgstr "جار تطبيق التعديلات"
+
 msgid "Are you sure you want to reset all hotkeys to default?"
 msgstr "هل تريد بالتأكيد إعادة تعيين جميع الاختصارات إلى الوضع الافتراضي؟"
+
+msgid "Artwork Colour"
+msgstr "لون الرسم"
+
+msgid "Auto Contrast"
+msgstr "التباين التلقائي"
+
+msgid "Background Color"
+msgstr "لون الخلفية"
+
+msgid "Background:"
+msgstr "الخلفية:"
+
+msgid "Batch conversion finished"
+msgstr "اكتمل التحويل الدفعي"
+
+msgid "Batch Image Converter"
+msgstr "محول الصور الدفعي"
+
+msgid "Batch Image Converter..."
+msgstr "محول الصور الدفعي..."
+
+msgid "Batch preset name"
+msgstr "اسم الإعداد المسبق"
+
+msgid "Batch source files and folders"
+msgstr "ملفات ومجلدات المصدر"
+
+msgid "Begin"
+msgstr "بدء"
+
+msgid "Black point"
+msgstr "نقطة الأسود"
+
+msgid "Black point must be below white point."
+msgstr "يجب أن تكون نقطة الأسود أقل من نقطة الأبيض."
+
+msgid "Blur area"
+msgstr "منطقة التمويه"
 
 msgid "Bottom Center"
 msgstr "أسفل الوسط"
@@ -135,8 +264,14 @@ msgstr "أسفل اليسار"
 msgid "Bottom Right"
 msgstr "أسفل اليمين"
 
+msgid "Bounded fit without enlargement"
+msgstr "ملاءمة دون تكبير"
+
 msgid "Brightness"
 msgstr "السطوع"
+
+msgid "Browse..."
+msgstr "استعراض..."
 
 msgid "Building interface..."
 msgstr "جارٍ إنشاء الواجهة..."
@@ -147,11 +282,29 @@ msgstr "إلغاء"
 msgid "Cancel/Escape Mode"
 msgstr "إلغاء/الخروج من الوضع"
 
+msgid "Cancelling... Waiting for the current encoder to finish."
+msgstr "جار الإلغاء… في انتظار انتهاء الترميز."
+
+msgid "Cancelling... Waiting for the current operation to finish."
+msgstr "جار الإلغاء… في انتظار انتهاء العملية الحالية."
+
+msgid "Cannot Begin"
+msgstr "تعذر البدء"
+
+msgid "Cannot Open Image"
+msgstr "تعذر فتح الصورة"
+
 msgid "Canvas drawing tools"
 msgstr "أدوات الرسم على اللوحة"
 
-msgid "Category: {name}"
-msgstr "الفئة: {name}"
+msgid "Canvas height in pixels"
+msgstr "ارتفاع اللوحة بالبكسل"
+
+msgid "Canvas width in pixels"
+msgstr "عرض اللوحة بالبكسل"
+
+msgid "Capture key"
+msgstr "تسجيل مفتاح"
 
 msgid "Center"
 msgstr "الوسط"
@@ -168,6 +321,24 @@ msgstr "التحقق من التحديثات"
 msgid "Check for updates on startup"
 msgstr "التحقق من التحديثات عند بدء التشغيل"
 
+msgid "Choose an Animation Format"
+msgstr "اختيار تنسيق الحركة"
+
+msgid "Choose background color"
+msgstr "اختيار لون الخلفية"
+
+msgid "Choose background..."
+msgstr "اختيار الخلفية..."
+
+msgid "Choose GIF or WebP to preview an animation."
+msgstr "اختر GIF أو WebP لمعاينة الحركة."
+
+msgid "Choose Image Edit"
+msgstr "اختيار تعديل الصورة"
+
+msgid "Choose Image Filter"
+msgstr "اختيار مرشح الصورة"
+
 msgid "Choose overlay text color"
 msgstr "اختيار لون نص التراكب"
 
@@ -176,6 +347,12 @@ msgstr "اختيار لون القلم"
 
 msgid "Circle"
 msgstr "دائرة"
+
+msgid "Clear"
+msgstr "مسح"
+
+msgid "Clear All"
+msgstr "مسح الكل"
 
 msgid "Clear All Overlays"
 msgstr "مسح جميع التراكبات"
@@ -195,23 +372,71 @@ msgstr "مسح الملفات الأخيرة"
 msgid "Click and drag on the image to draw. This permanently edits the pixels."
 msgstr "انقر واسحب على الصورة للرسم. هذا يعدّل البكسلات بشكل دائم."
 
+msgid "Click the canvas to place text"
+msgstr "انقر على اللوحة لوضع النص"
+
 msgid "Click to Place"
 msgstr "انقر للوضع"
+
+msgid "Close"
+msgstr "إغلاق"
 
 msgid "Color:"
 msgstr "اللون:"
 
+msgid "Colour"
+msgstr "لون"
+
+msgid "Colour..."
+msgstr "لون..."
+
+msgid "Confirm"
+msgstr "تأكيد"
+
 msgid "Confirm before overwriting files"
 msgstr "التأكيد قبل الكتابة فوق الملفات"
+
+msgid "Contain with padding"
+msgstr "ملاءمة مع حواف"
+
+msgid "Continue conversion in the background? Choose No to cancel the job."
+msgstr "متابعة التحويل في الخلفية؟ اختر لا لإلغاء المهمة."
 
 msgid "Contrast"
 msgstr "التباين"
 
+msgid "Conversion Log"
+msgstr "سجل التحويل"
+
+msgid "Conversion Still Running"
+msgstr "التحويل قيد التشغيل"
+
+msgid "Convert"
+msgstr "تحويل"
+
 msgid "Copy Path"
 msgstr "نسخ المسار"
 
+msgid "Copyright"
+msgstr "حقوق النشر"
+
+msgid "Could not save shortcuts: {error}"
+msgstr "تعذر حفظ الاختصارات: {error}"
+
+msgid "Create a new blank image"
+msgstr "إنشاء صورة فارغة جديدة"
+
+msgid "Create log file"
+msgstr "إنشاء ملف سجل"
+
 msgid "Crop"
 msgstr "قص"
+
+msgid "Crop by Coordinates"
+msgstr "قص بالإحداثيات"
+
+msgid "Crop by Coordinates..."
+msgstr "قص بالإحداثيات..."
 
 msgid "Crop Mode"
 msgstr "وضع القص"
@@ -219,17 +444,53 @@ msgstr "وضع القص"
 msgid "Crop tools"
 msgstr "أدوات القص"
 
-msgid "Current folder path"
-msgstr "مسار المجلد الحالي"
+msgid "Crop, resize and rotation apply to every frame."
+msgstr "القص وتغيير الحجم والتدوير تطبق على كل الإطارات."
+
+msgid "Current frame"
+msgstr "الإطار الحالي"
+
+msgid "Current path"
+msgstr "المسار الحالي"
 
 msgid "Current zoom level"
 msgstr "مستوى التكبير الحالي"
 
+msgid "Custom Format..."
+msgstr "تنسيق مخصص..."
+
+msgid "Cutoff (%)"
+msgstr "الاقتطاع اللوني (%)"
+
 msgid "Dark"
 msgstr "داكن"
 
-msgid "Displays the currently loaded image. Supports crop, shape, and freehand drawing modes."
-msgstr "يعرض الصورة المحمّلة حاليًا. يدعم أوضاع القص والأشكال والرسم الحر."
+msgid "Degrees"
+msgstr "درجات"
+
+msgid "Delete"
+msgstr "حذف"
+
+msgid "Delete Frames"
+msgstr "حذف الإطارات"
+
+msgid "Delete original files after verified conversion"
+msgstr "حذف الملفات الأصلية بعد التحقق من التحويل"
+
+msgid "Delete Preset"
+msgstr "حذف الإعداد المسبق"
+
+msgid "Destination"
+msgstr "الوجهة"
+
+msgid "Destination folder"
+msgstr "مجلد الوجهة"
+
+msgid "Destination Folder"
+msgstr "مجلد الوجهة"
+
+msgid "Disable"
+msgstr "تعطيل"
 
 msgid "Draw"
 msgstr "رسم"
@@ -237,8 +498,32 @@ msgstr "رسم"
 msgid "Drawing Mode"
 msgstr "وضع الرسم"
 
+msgid "Duotone"
+msgstr "ثنائي اللون"
+
+msgid "Duplicate"
+msgstr "تكرار"
+
+msgid "Duplicate Frames"
+msgstr "تكرار الإطارات"
+
+msgid "Duration:"
+msgstr "المدة:"
+
 msgid "E&xit"
 msgstr "&خروج"
+
+msgid "Edit"
+msgstr "تعديل"
+
+msgid "Edit Artwork"
+msgstr "تعديل الرسوم"
+
+msgid "Edit Text and Shapes"
+msgstr "تعديل النص والأشكال"
+
+msgid "Edit Text and Shapes..."
+msgstr "تعديل النص والأشكال..."
 
 msgid "Editing tool categories"
 msgstr "فئات أدوات التحرير"
@@ -249,20 +534,38 @@ msgstr "ألواح أدوات التحرير"
 msgid "Editing tools"
 msgstr "أدوات التحرير"
 
+msgid "Editing: {action} in {section}"
+msgstr "تحرير: {action} في {section}"
+
+msgid "Effect"
+msgstr "تأثير"
+
 msgid "Effects and adjustments"
 msgstr "التأثيرات والتعديلات"
+
+msgid "Enable"
+msgstr "تفعيل"
+
+msgid "Encoded Output Preview"
+msgstr "معاينة الناتج المرمز"
+
+msgid "Enter a colour in #RRGGBB format, such as #204060."
+msgstr "أدخل لونًا بتنسيق #RRGGBB، مثل #204060."
+
+msgid "Enter one key combination, such as Ctrl+Shift+P."
+msgstr "أدخل مجموعة مفاتيح واحدة، مثل Ctrl+Shift+P."
 
 msgid "Enter text..."
 msgstr "أدخل نصًا..."
 
+msgid "Entire image"
+msgstr "الصورة كاملة"
+
 msgid "Error"
 msgstr "خطأ"
 
-msgid "Error loading image: {error}"
-msgstr "خطأ في تحميل الصورة: {error}"
-
-msgid "Error saving image: {error}"
-msgstr "خطأ في حفظ الصورة: {error}"
+msgid "Exact dimensions"
+msgstr "أبعاد دقيقة"
 
 msgid "Exit"
 msgstr "خروج"
@@ -270,26 +573,74 @@ msgstr "خروج"
 msgid "Explorer"
 msgstr "المستكشف"
 
-msgid "Failed to load image"
-msgstr "فشل تحميل الصورة"
+msgid "Explorer Toolbar"
+msgstr "شريط أدوات المستكشف"
 
-msgid "File list"
-msgstr "قائمة الملفات"
+msgid "Export Animation"
+msgstr "تصدير الحركة"
 
-msgid "File name"
-msgstr "اسم الملف"
+msgid "Export Animation..."
+msgstr "تصدير الحركة..."
+
+msgid "Export complete"
+msgstr "اكتمل التصدير"
+
+msgid "Export Current Frame"
+msgstr "تصدير الإطار الحالي"
+
+msgid "Export Current Frame..."
+msgstr "تصدير الإطار الحالي..."
+
+msgid "Export Frames"
+msgstr "تصدير الإطارات"
+
+msgid "Export Frames Folder"
+msgstr "مجلد الإطارات المصدرة"
+
+msgid "Export Frames..."
+msgstr "تصدير الإطارات..."
+
+msgid "Exporting Images"
+msgstr "جار تصدير الصور"
+
+msgid "Factor"
+msgstr "المعامل"
+
+msgid "File"
+msgstr "ملف"
 
 msgid "File Not Found"
 msgstr "الملف غير موجود"
 
-msgid "File size"
-msgstr "حجم الملف"
+msgid "Files"
+msgstr "الملفات"
 
-msgid "Files and folders in the current directory. Enter opens a folder or image, double-click opens images."
-msgstr "الملفات والمجلدات في الدليل الحالي. يفتح Enter مجلدًا أو صورة، والنقر المزدوج يفتح الصور."
+msgid "Fill with cropping"
+msgstr "ملء مع قص"
+
+msgid "Filter"
+msgstr "تصفية"
+
+msgid "Filter by Format"
+msgstr "التصفية حسب التنسيق"
+
+msgid "Filters"
+msgstr "المرشحات"
+
+msgid "First frame"
+msgstr "الإطار الأول"
+
+msgid "First Frame"
+msgstr "الإطار الأول"
 
 msgid "Fit to Window"
 msgstr "ملاءمة النافذة"
+
+msgid "Fit with transparent padding"
+msgstr "ملاءمة مع حواف شفافة"
+
+msgid "Flip horizontal"
+msgstr "انعكاس أفقي"
 
 msgid "Flip image horizontally"
 msgstr "قلب الصورة أفقيًا"
@@ -297,14 +648,77 @@ msgstr "قلب الصورة أفقيًا"
 msgid "Flip image vertically"
 msgstr "قلب الصورة رأسيًا"
 
+msgid "Flip vertical"
+msgstr "انعكاس رأسي"
+
 msgid "Focus Explorer"
 msgstr "التركيز على المستكشف"
+
+msgid "Focus Path"
+msgstr "الانتقال إلى حقل المسار"
 
 msgid "Focus Viewer"
 msgstr "التركيز على العارض"
 
-msgid "Go to parent folder"
-msgstr "الانتقال إلى المجلد الأصل"
+msgid "Folder"
+msgstr "مجلد"
+
+msgid "Folder Options"
+msgstr "خيارات المجلد"
+
+msgid "Folder path"
+msgstr "مسار المجلد"
+
+msgid "Font size:"
+msgstr "حجم الخط:"
+
+msgid "Format (extension):"
+msgstr "التنسيق (الامتداد):"
+
+msgid "Format:"
+msgstr "تنسيق:"
+
+msgid "Formats"
+msgstr "التنسيقات"
+
+msgid "Frame duration in milliseconds"
+msgstr "مدة الإطار بالمللي ثانية"
+
+msgid "Frame edit scope"
+msgstr "نطاق تعديل الإطارات"
+
+msgid "Frame position"
+msgstr "موضع الإطار"
+
+msgid "Frame {number} of {count}, {duration} milliseconds"
+msgstr "الإطار {number} من {count}، {duration} مللي ثانية"
+
+msgid "Frame {number} · {duration} ms"
+msgstr "الإطار {number} · {duration} مللي ثانية"
+
+msgid "Frame:"
+msgstr "إطار:"
+
+msgid "Frames"
+msgstr "الإطارات"
+
+msgid "Gamma"
+msgstr "غاما"
+
+msgid "Gamma and Levels"
+msgstr "غاما والمستويات"
+
+msgid "Gaussian Blur"
+msgstr "تمويه غاوسي"
+
+msgid "GIF binary transparency"
+msgstr "شفافية GIF الثنائية"
+
+msgid "GIF dithering"
+msgstr "تنقيط GIF"
+
+msgid "GIF palette colours:"
+msgstr "ألوان لوحة GIF:"
 
 msgid "Go Up"
 msgstr "أعلى"
@@ -315,8 +729,17 @@ msgstr "تدرج رمادي"
 msgid "Grid"
 msgstr "الشبكة"
 
+msgid "Height (pixels)"
+msgstr "الارتفاع (بالبكسل)"
+
+msgid "Height:"
+msgstr "الارتفاع:"
+
 msgid "Hide"
 msgstr "إخفاء"
+
+msgid "Highlight colour"
+msgstr "لون المناطق الساطعة"
 
 msgid "Hotkeys Configuration"
 msgstr "إعداد اختصارات لوحة المفاتيح"
@@ -330,17 +753,59 @@ msgstr "إعداد الاختصارات"
 msgid "HTTP {status}"
 msgstr "HTTP {status}"
 
+msgid "Icon View"
+msgstr "عرض الأيقونات"
+
 msgid "Image canvas"
 msgstr "لوحة الصورة"
+
+msgid "Image Conversion Progress"
+msgstr "تقدم تحويل الصور"
 
 msgid "Image dimensions"
 msgstr "أبعاد الصورة"
 
-msgid "Image saved"
-msgstr "تم حفظ الصورة"
+msgid "Image Effects"
+msgstr "تأثيرات الصور"
 
-msgid "Image saved as {name}"
-msgstr "تم حفظ الصورة باسم {name}"
+msgid "Image Encoding Settings"
+msgstr "إعدادات ترميز الصورة"
+
+msgid "Images"
+msgstr "الصور"
+
+msgid "Import Frame Sizing"
+msgstr "أبعاد الإطارات المستوردة"
+
+msgid "Import Frames"
+msgstr "استيراد إطارات"
+
+msgid "Import Frames..."
+msgstr "استيراد إطارات..."
+
+msgid "Import order follows file selection. Choose sizing for the existing canvas."
+msgstr "يتبع الترتيب اختيار الملفات. اختر الأبعاد المناسبة للوحة الحالية."
+
+msgid "Importing Frames"
+msgstr "جار استيراد الإطارات"
+
+msgid "Include all subfolders"
+msgstr "تضمين كل المجلدات الفرعية"
+
+msgid "Infinite"
+msgstr "بلا نهاية"
+
+msgid "Initial duration and total plays (0 = infinite):"
+msgstr "المدة الأولية وعدد مرات التشغيل (0 = بلا نهاية):"
+
+msgid "Initial frame duration"
+msgstr "مدة الإطار الأولية"
+
+msgid "Invalid Folder"
+msgstr "مجلد غير صالح"
+
+msgid "Invalid shortcut"
+msgstr "اختصار غير صالح"
 
 msgid "Invert"
 msgstr "عكس الألوان"
@@ -351,8 +816,14 @@ msgstr "عكس الألوان"
 msgid "Language:"
 msgstr "اللغة:"
 
+msgid "Last Frame"
+msgstr "الإطار الأخير"
+
 msgid "Later"
 msgstr "لاحقًا"
+
+msgid "Left"
+msgstr "اليسار"
 
 msgid "Left Center"
 msgstr "منتصف اليسار"
@@ -360,20 +831,38 @@ msgstr "منتصف اليسار"
 msgid "Library"
 msgstr "المكتبة"
 
+msgid "License"
+msgstr "الترخيص"
+
 msgid "Light"
 msgstr "فاتح"
 
 msgid "Line"
 msgstr "خط"
 
-msgid "Loaded: {name}"
-msgstr "تم التحميل: {name}"
+msgid "List View"
+msgstr "عرض القائمة"
+
+msgid "Live Log"
+msgstr "السجل المباشر"
+
+msgid "Load Preset"
+msgstr "تحميل الإعداد المسبق"
+
+msgid "Loaded: "
+msgstr "تم التحميل: "
 
 msgid "Loading key bindings..."
 msgstr "جارٍ تحميل اختصارات لوحة المفاتيح..."
 
 msgid "Loading..."
 msgstr "جارٍ التحميل..."
+
+msgid "Log file path"
+msgstr "مسار ملف السجل"
+
+msgid "Lossless WebP"
+msgstr "WebP دون فقد"
 
 msgid "Main"
 msgstr "الرئيسي"
@@ -387,17 +876,74 @@ msgstr "شريط الأدوات الرئيسي"
 msgid "Main Window"
 msgstr "النافذة الرئيسية"
 
+msgid "Metadata is removed by default. GIF supports transparent or opaque pixels; partial alpha is thresholded."
+msgstr "تحذف البيانات الوصفية افتراضيا. يدعم GIF شفافية ثنائية حسب الحد المحدد."
+
 msgid "Minimize to Tray"
 msgstr "تصغير إلى شريط النظام"
 
 msgid "Minimize to tray when window is closed"
 msgstr "التصغير إلى شريط النظام عند إغلاق النافذة"
 
+msgid "Mode"
+msgstr "الوضع"
+
+msgid "Move Down"
+msgstr "نقل لأسفل"
+
+msgid "Move Earlier"
+msgstr "نقل للخلف"
+
+msgid "Move Later"
+msgstr "نقل للأمام"
+
+msgid "Move Up"
+msgstr "نقل لأعلى"
+
+msgid "Name (A–Z)"
+msgstr "الاسم (A–Z)"
+
+msgid "Name (Z–A)"
+msgstr "الاسم (Z–A)"
+
+msgid "Neighborhood radius (pixels)"
+msgstr "نصف قطر الجوار (بالبكسل)"
+
+msgid "New"
+msgstr "جديد"
+
+msgid "New Animation"
+msgstr "حركة جديدة"
+
+msgid "New Animation..."
+msgstr "حركة جديدة..."
+
+msgid "New Image"
+msgstr "صورة جديدة"
+
+msgid "New image dialog"
+msgstr "حوار صورة جديدة"
+
+msgid "New Image..."
+msgstr "صورة جديدة..."
+
+msgid "New {width} × {height} image"
+msgstr "صورة جديدة بحجم {width} × {height}"
+
+msgid "Newest first"
+msgstr "الأحدث أولًا"
+
+msgid "Next"
+msgstr "التالي"
+
+msgid "Next Frame"
+msgstr "الإطار التالي"
+
 msgid "Next Pane"
 msgstr "اللوحة التالية"
 
-msgid "No preview"
-msgstr "لا توجد معاينة"
+msgid "No notification"
+msgstr "دون إشعار"
 
 msgid "No recent files"
 msgstr "لا توجد ملفات حديثة"
@@ -414,14 +960,20 @@ msgstr "لم يُنشر أي إصدار لهذا التطبيق بعد."
 msgid "No Update Available"
 msgstr "لا يوجد تحديث متاح"
 
-msgid "none"
-msgstr "لا شيء"
-
 msgid "None"
 msgstr "بلا"
 
 msgid "OK"
 msgstr "موافق"
+
+msgid "Oldest first"
+msgstr "الأقدم أولًا"
+
+msgid "Onion skin"
+msgstr "عرض الإطار السابق"
+
+msgid "Opacity:"
+msgstr "العتامة:"
 
 msgid "Open &Folder..."
 msgstr "فتح &مجلد..."
@@ -453,6 +1005,21 @@ msgstr "فتح الصورة"
 msgid "Open Selected"
 msgstr "فتح المحدد"
 
+msgid "Opening Image"
+msgstr "جار فتح الصورة"
+
+msgid "Operation Failed"
+msgstr "فشلت العملية"
+
+msgid "Optimize JPEG"
+msgstr "تحسين JPEG"
+
+msgid "Original folders"
+msgstr "المجلدات الأصلية"
+
+msgid "Output image format"
+msgstr "تنسيق الصورة الناتجة"
+
 msgid "Overlay text"
 msgstr "نص التراكب"
 
@@ -465,11 +1032,23 @@ msgstr "أدوات التراكب"
 msgid "Overlays"
 msgstr "التراكبات"
 
-msgid "Overwrite File?"
-msgstr "الكتابة فوق الملف؟"
+msgid "Overwrite existing files"
+msgstr "استبدال الملفات الموجودة"
 
-msgid "Parent"
-msgstr "الأعلى"
+msgid "Parent Directory"
+msgstr "المجلد الأب"
+
+msgid "Path"
+msgstr "المسار"
+
+msgid "Path && Search"
+msgstr "المسار والبحث"
+
+msgid "Path:"
+msgstr "المسار:"
+
+msgid "Pause"
+msgstr "إيقاف مؤقت"
 
 msgid "Pen Color"
 msgstr "لون القلم"
@@ -483,20 +1062,35 @@ msgstr "سُمك القلم:"
 msgid "Photon Snapshot"
 msgstr "Photon Snapshot"
 
-msgid "Photon Snapshot main window"
-msgstr "النافذة الرئيسية لـ Photon Snapshot"
-
-msgid "Pinned folders for quick access. Double-click or press Enter to open. Right-click for more actions."
-msgstr "مجلدات مثبّتة للوصول السريع. انقر نقرًا مزدوجًا أو اضغط Enter للفتح. انقر بزر الفأرة الأيمن للمزيد من الإجراءات."
-
 msgid "Pixel Info"
 msgstr "معلومات البكسل"
+
+msgid "Play"
+msgstr "تشغيل"
+
+msgid "Play/Pause"
+msgstr "تشغيل/إيقاف مؤقت"
+
+msgid "Playback started"
+msgstr "بدأ التشغيل"
+
+msgid "Playback stopped"
+msgstr "توقف التشغيل"
 
 msgid "Please restart {app} for the language change to take effect."
 msgstr "يرجى إعادة تشغيل {app} ليصبح تغيير اللغة نافذ المفعول."
 
+msgid "Please select a valid, existing folder."
+msgstr "يرجى تحديد مجلد صالح وموجود."
+
+msgid "PNG compression:"
+msgstr "ضغط PNG:"
+
 msgid "Position:"
 msgstr "الموضع:"
+
+msgid "Positions are measured in image pixels from the top-left corner."
+msgstr "تُقاس المواضع بالبكسل من الزاوية العلوية اليسرى للصورة."
 
 msgid "Preferences"
 msgstr "التفضيلات"
@@ -504,20 +1098,65 @@ msgstr "التفضيلات"
 msgid "Preferences dialog"
 msgstr "مربع حوار التفضيلات"
 
-msgid "Press the desired key combination; press Enter or change focus to accept."
-msgstr "اضغط تركيبة المفاتيح المطلوبة؛ اضغط Enter أو غيّر التركيز للقبول."
+msgid "Preparing Export Preview"
+msgstr "جار إعداد المعاينة"
+
+msgid "Preparing..."
+msgstr "جار التحضير..."
+
+msgid "Preserve animation"
+msgstr "الحفاظ على الحركة"
+
+msgid "Preserve subfolders"
+msgstr "الحفاظ على المجلدات الفرعية"
+
+msgid "Preserve supported metadata"
+msgstr "الحفاظ على البيانات الوصفية المدعومة"
+
+msgid "Preset needs correction: "
+msgstr "الإعداد المسبق يحتاج تصحيحا: "
+
+msgid "Preset:"
+msgstr "إعداد مسبق:"
+
+msgid "Press a key combination and release it to accept. Escape cancels recording."
+msgstr "اضغط مجموعة مفاتيح ثم حررها لقبولها. يلغي Escape التسجيل."
+
+msgid "Preview Encoded Output..."
+msgstr "معاينة الناتج المرمز..."
 
 msgid "Preview thumbnail"
 msgstr "صورة مصغرة للمعاينة"
 
+msgid "Previous"
+msgstr "السابق"
+
+msgid "Previous Frame"
+msgstr "الإطار السابق"
+
 msgid "Previous Pane"
 msgstr "اللوحة السابقة"
+
+msgid "Processing"
+msgstr "معالجة"
+
+msgid "Progress"
+msgstr "التقدم"
 
 msgid "Project website link"
 msgstr "رابط موقع المشروع"
 
+msgid "Publisher"
+msgstr "الناشر"
+
+msgid "Quality:"
+msgstr "الجودة:"
+
 msgid "Quit"
 msgstr "إنهاء"
+
+msgid "Radius (pixels)"
+msgstr "نصف القطر (بالبكسل)"
 
 msgid "Ready"
 msgstr "جاهز"
@@ -527,6 +1166,9 @@ msgstr "الملفات الأخيرة"
 
 msgid "Rectangle"
 msgstr "مستطيل"
+
+msgid "Rectangle by coordinates"
+msgstr "مستطيل بالإحداثيات"
 
 msgid "Redo"
 msgstr "إعادة"
@@ -540,11 +1182,17 @@ msgstr "تحديث"
 msgid "Release notes"
 msgstr "ملاحظات الإصدار"
 
-msgid "Remove from Library"
-msgstr "إزالة من المكتبة"
+msgid "Remove"
+msgstr "إزالة"
 
 msgid "Reset all shortcuts to default"
 msgstr "إعادة تعيين جميع الاختصارات للوضع الافتراضي"
+
+msgid "Reset Current Frame"
+msgstr "إعادة ضبط الإطار الحالي"
+
+msgid "Reset hotkey"
+msgstr "إعادة تعيين الاختصار"
 
 msgid "Reset to Default"
 msgstr "إعادة التعيين للوضع الافتراضي"
@@ -555,11 +1203,26 @@ msgstr "أُعيد التعيين إلى الأصل"
 msgid "Reset to Original"
 msgstr "إعادة التعيين إلى الأصل"
 
+msgid "Resize"
+msgstr "تغيير الحجم"
+
 msgid "Restart Required"
 msgstr "يلزم إعادة التشغيل"
 
+msgid "Resume"
+msgstr "استئناف"
+
 msgid "Right Center"
 msgstr "منتصف اليمين"
+
+msgid "Right-click to add files or folders. Shift+F10 opens the context menu."
+msgstr "انقر بالزر الأيمن لإضافة ملفات أو مجلدات. Shift+F10 يفتح قائمة السياق."
+
+msgid "Right-click to add, edit or reorder effects."
+msgstr "انقر بالزر الأيمن لإضافة التأثيرات أو تعديلها أو ترتيبها."
+
+msgid "Rotate"
+msgstr "تدوير"
 
 msgid "Rotate 90 degrees clockwise"
 msgstr "تدوير 90 درجة باتجاه عقارب الساعة"
@@ -570,11 +1233,20 @@ msgstr "تدوير 90 درجة عكس عقارب الساعة"
 msgid "Ruler"
 msgstr "المسطرة"
 
+msgid "Saturation"
+msgstr "التشبّع"
+
 msgid "Save"
 msgstr "حفظ"
 
 msgid "Save &As..."
 msgstr "حفظ &باسم..."
+
+msgid "Save an editable .photonanim project or export GIF/WebP. Use Export Current Frame for still images."
+msgstr "احفظ مشروع .photonanim قابل للتعديل أو صدر GIF/WebP. استخدم تصدير الإطار الحالي للصور الثابتة."
+
+msgid "Save Animation Project"
+msgstr "حفظ مشروع الحركة"
 
 msgid "Save As"
 msgstr "حفظ باسم"
@@ -582,8 +1254,14 @@ msgstr "حفظ باسم"
 msgid "Save Image As"
 msgstr "حفظ الصورة باسم"
 
-msgid "Search"
-msgstr "بحث"
+msgid "Save Preset"
+msgstr "حفظ الإعداد المسبق"
+
+msgid "Saved: "
+msgstr "تم الحفظ: "
+
+msgid "Saving Document"
+msgstr "جار حفظ المستند"
 
 msgid "Search current folder"
 msgstr "البحث في المجلد الحالي"
@@ -591,8 +1269,14 @@ msgstr "البحث في المجلد الحالي"
 msgid "Search current folder..."
 msgstr "البحث في المجلد الحالي..."
 
+msgid "Search failed: {error}"
+msgstr "فشل البحث: {error}"
+
 msgid "Search files"
 msgstr "البحث عن ملفات"
+
+msgid "Search hotkeys"
+msgstr "البحث في الاختصارات"
 
 msgid "Section collapsed - activate to expand"
 msgstr "القسم مطوي - فعّله للتوسيع"
@@ -600,17 +1284,35 @@ msgstr "القسم مطوي - فعّله للتوسيع"
 msgid "Section expanded - activate to collapse"
 msgstr "القسم موسّع - فعّله للطي"
 
+msgid "Select Background Color"
+msgstr "تحديد لون الخلفية"
+
+msgid "Select Folder"
+msgstr "تحديد مجلد"
+
 msgid "Select Pen Color"
 msgstr "اختيار لون القلم"
 
 msgid "Select Text Color"
 msgstr "اختيار لون النص"
 
-msgid "Selected file preview"
-msgstr "معاينة الملف المحدد"
+msgid "Selected folder"
+msgstr "المجلد المحدد"
+
+msgid "Selected frames"
+msgstr "الإطارات المحددة"
+
+msgid "Separate frames"
+msgstr "إطارات منفصلة"
 
 msgid "Sepia"
 msgstr "بني داكن (سيبيا)"
+
+msgid "Set Log File..."
+msgstr "تعيين ملف السجل..."
+
+msgid "Shadow colour"
+msgstr "لون الظلال"
 
 msgid "Shape drawing tool"
 msgstr "أداة رسم الأشكال"
@@ -618,11 +1320,20 @@ msgstr "أداة رسم الأشكال"
 msgid "Shape:"
 msgstr "الشكل:"
 
+msgid "Sharpen"
+msgstr "زيادة الحدة"
+
 msgid "Shortcut"
 msgstr "الاختصار"
 
+msgid "Shortcut conflict"
+msgstr "تعارض الاختصارات"
+
 msgid "Show"
 msgstr "إظهار"
+
+msgid "Show Animation Panel"
+msgstr "عرض لوحة الحركة"
 
 msgid "Show background behind text"
 msgstr "إظهار خلفية خلف النص"
@@ -630,11 +1341,26 @@ msgstr "إظهار خلفية خلف النص"
 msgid "Show or hide the Explorer panel"
 msgstr "إظهار أو إخفاء لوحة المستكشف"
 
+msgid "Show Progress"
+msgstr "عرض التقدم"
+
 msgid "Show text background"
 msgstr "إظهار خلفية النص"
 
 msgid "Size:"
 msgstr "الحجم:"
+
+msgid "Sort by"
+msgstr "الترتيب حسب"
+
+msgid "Sort naturally by filename"
+msgstr "ترتيب طبيعي حسب اسم الملف"
+
+msgid "Source"
+msgstr "المصدر"
+
+msgid "Speckle Reduction"
+msgstr "تقليل البقع"
 
 msgid "Status &Bar"
 msgstr "&شريط الحالة"
@@ -645,8 +1371,20 @@ msgstr "شريط الحالة"
 msgid "Status message"
 msgstr "رسالة الحالة"
 
+msgid "Strength (%)"
+msgstr "الشدة (%)"
+
+msgid "Stretch"
+msgstr "تمديد"
+
 msgid "Stroke drawn"
 msgstr "تم رسم الخط"
+
+msgid "Stroke width:"
+msgstr "عرض الخط:"
+
+msgid "Subfolders discovered when Begin is pressed"
+msgstr "تكتشف المجلدات الفرعية عند الضغط على بدء"
 
 msgid "System"
 msgstr "النظام"
@@ -657,6 +1395,9 @@ msgstr "افتراضي النظام"
 msgid "Text Color"
 msgstr "لون النص"
 
+msgid "Text list"
+msgstr "قائمة نصية"
+
 msgid "Text overlay position"
 msgstr "موضع تراكب النص"
 
@@ -666,17 +1407,20 @@ msgstr "النص:"
 msgid "The file '{path}' no longer exists and will be removed from recent files."
 msgstr "الملف ‘{path}’ لم يعد موجودًا وسيُزال من الملفات الأخيرة."
 
+msgid "The image has been modified. Do you want to save your changes?"
+msgstr "تم تعديل الصورة. هل تريد حفظ التغييرات؟"
+
 msgid "Theme:"
 msgstr "السمة:"
 
-msgid "Toggle &Grid"
-msgstr "إظهار/إخفاء ال&شبكة"
+msgid "Threshold"
+msgstr "العتبة"
 
-msgid "Toggle &Pixel Info"
-msgstr "إظهار/إخفاء معلومات ال&بكسل"
+msgid "TIFF compression"
+msgstr "ضغط TIFF"
 
-msgid "Toggle &Ruler"
-msgstr "إظهار/إخفاء الم&سطرة"
+msgid "TIFF compression:"
+msgstr "ضغط TIFF:"
 
 msgid "Toggle canvas drawing mode"
 msgstr "تبديل وضع الرسم"
@@ -711,8 +1455,17 @@ msgstr "تبديل تراكب المسطرة"
 msgid "Toggle Ruler Overlay"
 msgstr "إظهار/إخفاء تراكب المسطرة"
 
-msgid "Toggle search"
-msgstr "تبديل البحث"
+msgid "Toggle Status Bar"
+msgstr "إظهار/إخفاء شريط الحالة"
+
+msgid "Toggle Toolbar"
+msgstr "إظهار/إخفاء شريط الأدوات"
+
+msgid "Tools"
+msgstr "أدوات"
+
+msgid "Top"
+msgstr "الأعلى"
 
 msgid "Top Center"
 msgstr "أعلى الوسط"
@@ -723,11 +1476,41 @@ msgstr "أعلى اليسار"
 msgid "Top Right"
 msgstr "أعلى اليمين"
 
+msgid "Total plays"
+msgstr "عدد مرات التشغيل"
+
+msgid "Total plays:"
+msgstr "عدد مرات التشغيل:"
+
+msgid "Total plays; zero means infinite"
+msgstr "عدد مرات التشغيل؛ صفر يعني بلا نهاية"
+
 msgid "Transform"
 msgstr "تحويل"
 
 msgid "Transform tools"
 msgstr "أدوات التحويل"
+
+msgid "Transparency background:"
+msgstr "خلفية الشفافية:"
+
+msgid "Transparency threshold:"
+msgstr "حد الشفافية:"
+
+msgid "Transparent background"
+msgstr "خلفية شفافة"
+
+msgid "Tray notification"
+msgstr "إشعار شريط النظام"
+
+msgid "Tray notification unavailable"
+msgstr "إشعار شريط النظام غير متاح"
+
+msgid "Type a shortcut or use Capture key. Leave empty to unbind."
+msgstr "اكتب اختصارًا أو استخدم تسجيل مفتاح. اترك الحقل فارغًا لإلغاء التعيين."
+
+msgid "Unbind shortcut"
+msgstr "إلغاء تعيين الاختصار"
 
 msgid "Undo"
 msgstr "تراجع"
@@ -735,17 +1518,53 @@ msgstr "تراجع"
 msgid "Undone"
 msgstr "تم التراجع"
 
+msgid "Unsaved Changes"
+msgstr "تغييرات غير محفوظة"
+
 msgid "Update Available - {title}"
 msgstr "يتوفر تحديث - {title}"
 
 msgid "Update available dialog"
 msgstr "مربع حوار توفر تحديث"
 
-msgid "Version {version}<br>{description}<br><br>{copyright}<br>License: {license}"
-msgstr "الإصدار {version}<br>{description}<br><br>{copyright}<br>الرخصة: {license}"
+msgid "Version {version}"
+msgstr "الإصدار {version}"
+
+msgid "View"
+msgstr "عرض"
 
 msgid "Viewer"
 msgstr "العارض"
+
+msgid "Visible"
+msgstr "مرئي"
+
+msgid "Wait for active jobs before exiting? Choose No to cancel them and exit after cleanup."
+msgstr "انتظار المهام النشطة قبل الخروج؟ اختر لا لإلغائها والخروج بعد التنظيف."
+
+msgid "WebP effort:"
+msgstr "جهد WebP:"
+
+msgid "Website"
+msgstr "الموقع الإلكتروني"
+
+msgid "When finished:"
+msgstr "عند الانتهاء:"
+
+msgid "White point"
+msgstr "نقطة الأبيض"
+
+msgid "Width (pixels)"
+msgstr "العرض (بالبكسل)"
+
+msgid "Width:"
+msgstr "العرض:"
+
+msgid "X:"
+msgstr "س:"
+
+msgid "Y:"
+msgstr "ص:"
 
 msgid "Zoom &In"
 msgstr "ت&كبير"
@@ -765,11 +1584,14 @@ msgstr "التكبير: 100%"
 msgid "Zoom: {percent:.0f}%"
 msgstr "التكبير: {percent:.0f}%"
 
-msgid "{action} in {section}, current shortcut: {shortcut}"
-msgstr "{action} في {section}، الاختصار الحالي: {shortcut}"
-
 msgid "{app} is up to date (version {version})."
 msgstr "{app} محدَّث (الإصدار {version})."
+
+msgid "{bytes} bytes; {count} decoded frames; {duration} ms total."
+msgstr "{bytes} بايت؛ {count} إطارا؛ {duration} مللي ثانية إجمالا."
+
+msgid "{count} frames, {width} × {height}, {duration} ms. GIF timing rounds to 10 ms; identical frames may merge."
+msgstr "{count} إطارا، {width} × {height}، {duration} مللي ثانية. يقرب GIF المدة إلى 10 مللي ثانية وقد يدمج الإطارات المتطابقة."
 
 msgid "{name} - collapsed"
 msgstr "{name} - مطوي"
@@ -777,8 +1599,8 @@ msgstr "{name} - مطوي"
 msgid "{name} - expanded"
 msgstr "{name} - موسّع"
 
-msgid "{name} already exists. Overwrite it?"
-msgstr "{name} موجود بالفعل. هل تريد الكتابة فوقه؟"
+msgid "{shortcut} is assigned to both {first} and {second}. Change or disable one binding."
+msgstr "تم تعيين {shortcut} لكل من {first} و{second}. غيّر أحد التعيينين أو عطّله."
 
 msgid "{title} value"
 msgstr "قيمة {title}"

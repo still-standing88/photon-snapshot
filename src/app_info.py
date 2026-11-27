@@ -8,8 +8,8 @@ import os
 
 
 APP_NAME = "Photon Snapshot"
-APP_DESCRIPTION = "A modern, accessible image viewer and editor."
-APP_VERSION = "1.1.0"
+APP_DESCRIPTION = "An accessible, cross-platform image viewer and editor with customizable hotkeys."
+APP_VERSION = "1.0.0"
 APP_PUBLISHER = "still-standing88"
 APP_AUTHOR = "still-standing88"
 APP_LICENSE = "MIT"

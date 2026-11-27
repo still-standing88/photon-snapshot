@@ -98,6 +98,12 @@ class DockManager:
             return
         available = screen.availableGeometry()
         frame = mw.frameGeometry()
+        extra_width = frame.width() - mw.width()
+        extra_height = frame.height() - mw.height()
+        if frame.width() > available.width() or frame.height() > available.height():
+            mw.resize(min(mw.width(), max(1, available.width()-extra_width)),
+                      min(mw.height(), max(1, available.height()-extra_height)))
+            frame = mw.frameGeometry()
         x = min(frame.x(), available.right() - frame.width() + 1)
         y = min(frame.y(), available.bottom() - frame.height() + 1)
         x = max(x, available.left())
@@ -130,6 +136,8 @@ class DockManager:
             mw.focusable_widgets.append(mw.explorer_widget)
 
         mw.focusable_widgets.append(mw.viewer)
+        if hasattr(mw, 'animation_panel') and mw.animation_panel.isVisible():
+            mw.focusable_widgets.append(mw.animation_panel)
         mw.focusable_widgets.append(mw.editor_panel)
 
         if hasattr(mw, "status_bar") and mw.status_bar.isVisible():

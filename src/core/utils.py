@@ -5,15 +5,13 @@ import io
 
 
 def pil_to_qpixmap(pil_image: PILImage.Image) -> QPixmap:
-    if pil_image.mode == "RGB":
-        r, g, b = pil_image.split()
-        pil_image = PILImage.merge("RGB", (b, g, r))
-    elif pil_image.mode == "RGBA":
-        r, g, b, a = pil_image.split()
-        pil_image = PILImage.merge("RGBA", (b, g, r, a))
-    elif pil_image.mode == "L":
-        pil_image = pil_image.convert("RGB")
-    
+    # Pillow's ImageQt already performs the RGB(A) -> QImage BGRA byte
+    # reordering internally (see PIL.ImageQt._toqclass_helper), so the
+    # channels must be passed through untouched - manually swapping R and B
+    # here double-swapped them, rendering every image with red and blue
+    # exchanged. Only normalize modes ImageQt can't consume directly.
+    if pil_image.mode not in ("RGB", "RGBA"):
+        pil_image = pil_image.convert("RGBA")
     qim = ImageQt.ImageQt(pil_image)
     qpixmap = QPixmap.fromImage(qim)
     return qpixmap
@@ -38,24 +36,18 @@ def qpixmap_to_pil(qpixmap: QPixmap) -> PILImage.Image:
 
 
 def get_image_formats():
-    return {
-        'JPEG': '*.jpg *.jpeg',
-        'PNG': '*.png',
-        'BMP': '*.bmp',
-        'GIF': '*.gif',
-        'TIFF': '*.tiff *.tif',
-        'WEBP': '*.webp'
-    }
+    from .formats import FORMATS
+    return {f.id: ' '.join('*' + e for e in f.extensions) for f in FORMATS if f.readable}
 
 
 def get_all_image_filter():
-    formats = get_image_formats()
-    all_formats = ' '.join(formats.values())
-    return f"Image files ({all_formats})"
+    from .formats import file_filter
+    return file_filter(projects=True)
 
 
 def get_save_formats():
-    return ['JPEG', 'PNG', 'BMP', 'TIFF', 'WEBP']
+    from .formats import FORMATS
+    return [f.id for f in FORMATS if f.writable]
 
 
 def scale_pixmap_smooth(pixmap: QPixmap, size, keep_aspect_ratio=True) -> QPixmap:
@@ -81,5 +73,5 @@ def get_file_size_str(size_bytes: int) -> str:
 
 
 def is_image_file(filename: str) -> bool:
-    image_extensions = {'.jpg', '.jpeg', '.png', '.bmp', '.gif', '.tiff', '.tif', '.webp'}
-    return any(filename.lower().endswith(ext) for ext in image_extensions)
+    from .formats import is_image_file as supported
+    return supported(filename) or str(filename).lower().endswith('.photonanim')

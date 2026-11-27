@@ -27,10 +27,26 @@ def _strip_v(tag: str) -> str:
     return tag.lstrip("vV")
 
 
+def _version_tuple(version_str: str) -> tuple:
+    """Parse 'v1.2.3', '1.2.3-beta.1', '1.2.3+build' etc. into a numeric
+    tuple, ignoring any pre-release/build suffix (a pre-release of X.Y.Z
+    compares equal to X.Y.Z here - close enough for release checking)."""
+    core = _strip_v(version_str).split("-", 1)[0].split("+", 1)[0]
+    parts = []
+    for piece in core.split("."):
+        digits = "".join(ch for ch in piece if ch.isdigit())
+        parts.append(int(digits) if digits else 0)
+    return tuple(parts)
+
+
 def _is_newer(remote_tag: str, local_version: str) -> bool:
     try:
-        remote = tuple(int(x) for x in _strip_v(remote_tag).split("."))
-        local = tuple(int(x) for x in _strip_v(local_version).split("."))
+        remote = _version_tuple(remote_tag)
+        local = _version_tuple(local_version)
+        # Zero-pad so e.g. 1.2 == 1.2.0 instead of comparing unequal lengths.
+        width = max(len(remote), len(local))
+        remote += (0,) * (width - len(remote))
+        local += (0,) * (width - len(local))
         return remote > local
     except Exception:
         return False

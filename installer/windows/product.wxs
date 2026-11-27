@@ -1,9 +1,9 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
-  <Product Id="*" Name="Photon Snapshot" Language="1033" Version="1.1.0"
+  <Product Id="*" Name="Photon Snapshot" Language="1033" Version="$(var.ProductVersion)"
            Manufacturer="still-standing88" UpgradeCode="12345678-1234-1234-1234-123456789012">
 
-    <Package InstallerVersion="200" Compressed="yes" InstallScope="perUser" 
+    <Package InstallerVersion="200" Compressed="yes" InstallScope="perUser" Platform="x64"
              Description="Photon Snapshot - Image Viewer/Editor"
              Comments="An advanced  image viewing application" />
     
@@ -12,12 +12,17 @@
 
     <UIRef Id="WixUI_InstallDir" />
     <Property Id="WIXUI_INSTALLDIR" Value="INSTALLFOLDER" />
-    <WixVariable Id="WixUILicenseRtf" Value="installer\windows\License.rtf" />
+    <WixVariable Id="WixUILicenseRtf" Value="$(var.LicenseFile)" />
+    <Icon Id="PhotonSnapshot.exe" SourceFile="$(var.SourceDir)\PhotonSnapshot.exe" />
+    <Property Id="ARPPRODUCTICON" Value="PhotonSnapshot.exe" />
+    <Property Id="ARPHELPLINK" Value="https://github.com/still-standing88/photon-snapshot" />
+    <Property Id="ARPURLINFOABOUT" Value="https://github.com/still-standing88" />
+    <Property Id="ARPNOREPAIR" Value="1" />
     
     <!-- <WixVariable Id="WixUIBannerBmp" Value="installer\windows\banner.bmp" />
     <WixVariable Id="WixUIDialogBmp" Value="installer\windows\dialog.bmp" /> -->
 
-    <Property Id="APPLICATIONFOLDER">
+    <Property Id="INSTALLFOLDER" Secure="yes">
       <RegistrySearch Id="ApplicationFolderRegistry" Root="HKCU" 
                       Key="Software\still-standing88\Photon Snapshot" Name="InstallDir" Type="raw" />
     </Property>
@@ -26,8 +31,7 @@
              Description="Main application files">
       <ComponentGroupRef Id="HarvestedFiles" />
       <ComponentRef Id="ApplicationShortcut" />
-      <ComponentRef Id="DesktopShortcut" />
-      <ComponentRef Id="ProgramMenuFolder" />
+      <ComponentRef Id="ApplicationRegistration" />
       <ComponentRef Id="FileAssociations" />
     </Feature>
 
@@ -100,13 +104,21 @@
         <RegistryValue Root="HKCU" Key="Software\Classes\.jpg\OpenWithProgids" 
                        Name="PhotonSnapshot.jpg" Value="" Type="string" />
         <RegistryValue Root="HKCU" Key="Software\Classes\.jpeg\OpenWithProgids" 
-                       Name="PhotonSnapshot.jpeg" Value="" Type="string" />
+                       Name="PhotonSnapshot.jpg" Value="" Type="string" />
         <RegistryValue Root="HKCU" Key="Software\Classes\.png\OpenWithProgids" 
-                       Name="PhotonSnapshot.png" Value="" Type="string" />
+                       Name="PhotonSnapshot.jpg" Value="" Type="string" />
         <RegistryValue Root="HKCU" Key="Software\Classes\.gif\OpenWithProgids" 
-                       Name="PhotonSnapshot.gif" Value="" Type="string" />
+                       Name="PhotonSnapshot.jpg" Value="" Type="string" />
         <RegistryValue Root="HKCU" Key="Software\Classes\.bmp\OpenWithProgids" 
-                       Name="PhotonSnapshot.bmp" Value="" Type="string" />
+                       Name="PhotonSnapshot.jpg" Value="" Type="string" />
+        <RegistryValue Root="HKCU" Key="Software\Classes\.webp\OpenWithProgids"
+                       Name="PhotonSnapshot.jpg" Value="" Type="string" />
+        <RegistryValue Root="HKCU" Key="Software\Classes\.tif\OpenWithProgids"
+                       Name="PhotonSnapshot.jpg" Value="" Type="string" />
+        <RegistryValue Root="HKCU" Key="Software\Classes\.tiff\OpenWithProgids"
+                       Name="PhotonSnapshot.jpg" Value="" Type="string" />
+        <RegistryValue Root="HKCU" Key="Software\Classes\.photonanim\OpenWithProgids"
+                       Name="PhotonSnapshot.jpg" Value="" Type="string" />
         
         <RegistryValue Root="HKCU" Key="Software\Classes\PhotonSnapshot.jpg" 
                        Value="Photon Snapshot Image" Type="string" />
@@ -124,9 +136,8 @@
   </Fragment>
 
   <Fragment>
-    <DirectoryRef Id="ProgramMenuFolder">
-      <Component Id="ProgramMenuFolder" Guid="*">
-        <RemoveFolder Id="ProgramMenuFolder" On="uninstall" />
+    <DirectoryRef Id="INSTALLFOLDER">
+      <Component Id="ApplicationRegistration" Guid="*">
         <RegistryValue Root="HKCU"
                        Key="Software\still-standing88\Photon Snapshot"
                        Name="InstallDir"
@@ -137,11 +148,4 @@
     </DirectoryRef>
   </Fragment>
 
-  <Icon Id="PhotonSnapshot.exe" SourceFile="PhotonSnapshot.exe" />
-  <Property Id="ARPPRODUCTICON" Value="PhotonSnapshot.exe" />
-  
-  <Property Id="ARPHELPLINK" Value="https://github.com/still-standing88/photon-snapshot" />
-  <Property Id="ARPURLINFOABOUT" Value="https://github.com/still-standing88" />
-  <Property Id="ARPNOREPAIR" Value="1" />
-  <Property Id="ARPNOMODIFY" Value="1" />
 </Wix>

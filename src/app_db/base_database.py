@@ -83,20 +83,26 @@ class WriteQueueWorker:
         self._thread.start()
 
     def _run(self) -> None:
-        while True:
-            item = self._queue.get()
-            if item is None:  # shutdown sentinel
-                self._queue.task_done()
-                break
-            func, args, kwargs, result_box, done_event = item
-            try:
-                result_box["value"] = func(*args, **kwargs)
-            except Exception as exc:  # noqa: BLE001 - re-raised in the caller's thread by run()
-                result_box["error"] = exc
-                logger.exception("AppDatabase write failed: %s", func)
-            finally:
-                done_event.set()
-                self._queue.task_done()
+        try:
+            while True:
+                item = self._queue.get()
+                if item is None:  # shutdown sentinel
+                    self._queue.task_done()
+                    break
+                func, args, kwargs, result_box, done_event = item
+                try:
+                    result_box["value"] = func(*args, **kwargs)
+                except Exception as exc:  # noqa: BLE001 - re-raised by run()
+                    result_box["error"] = exc
+                    logger.exception("AppDatabase write failed: %s", func)
+                finally:
+                    done_event.set()
+                    self._queue.task_done()
+        finally:
+            # Peewee connections are thread-local; the UI thread's close()
+            # cannot release the writer's connection on Windows.
+            if not database.is_closed():
+                database.close()
 
     def run(self, func: Callable, *args, **kwargs) -> Any:
         """Execute `func` on the writer thread and block the calling
@@ -124,6 +130,8 @@ class WriteQueueWorker:
             return
         self._queue.put(None)
         self._thread.join(timeout=timeout)
+        if self._thread.is_alive():
+            raise RuntimeError("Database writer did not finish shutting down")
         self._thread = None
 
 

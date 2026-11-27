@@ -155,16 +155,11 @@ class ToggleButton(QPushButton):
         self.opacityAnimation.setKeyValueAt(0.5, 0.7)
         self.opacityAnimation.setEndValue(1.0)
 
-        current_size = self.minimumSize()
-        if self.activated:
-            target_size = self.size() if self.size().isValid() else current_size
-            target_size.setWidth(max(target_size.width(), current_size.width() + 10))
-            target_size.setHeight(max(target_size.height(), current_size.height() + 2))
-        else:
-            target_size = current_size
-
-        self.sizeAnimation.setStartValue(current_size)
-        self.sizeAnimation.setEndValue(target_size)
+        # A not-yet-laid-out widget has a 640x480 default size. Animating
+        # minimumSize toward it permanently enlarged accordion headers.
+        # Keep layout constraints stable through every expand/collapse.
+        self.sizeAnimation.setStartValue(self.minimumSize())
+        self.sizeAnimation.setEndValue(self.minimumSize())
         self.animationGroup.start()
 
     def enterEvent(self, event):
