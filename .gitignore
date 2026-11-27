@@ -14,3 +14,6 @@ lang/**/*.mo
 
 # Local manual QA inputs, outputs and isolated preferences.
 qa-artifacts/
+
+# Local Claude worktrees have their own Git metadata.
+/.claude/worktrees/
