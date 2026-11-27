@@ -96,7 +96,7 @@ def build_executable():
             nuitka_args.append(f"--windows-icon-from-ico={icon_file}")
 
     elif current_platform == "darwin":
-        icon_file = assets_dir / "photon-snapshot.png"
+        icon_file = assets_dir / "photon-snapshot.icns"
         nuitka_args.extend([
             "--macos-create-app-bundle",
             f"--macos-app-name={app_info.APP_NAME}",
